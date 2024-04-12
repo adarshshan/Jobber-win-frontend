@@ -2,6 +2,7 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import LandingPage from './Pages/user/LandingPage';
 import UserHome from './Pages/user/UserHome';
 import Header from './Components/User/Header';
+import User from './Components/User/User';
 
 function App() {
   return (
@@ -23,15 +24,7 @@ function App() {
   );
 }
 
-function User() {
-  return (
-    <div>
-      <Header />
-      <h1>User Dashboard</h1>
-      <Outlet />
-    </div>
-  );
-}
+
 function Admin() {
   return (
     <div>
