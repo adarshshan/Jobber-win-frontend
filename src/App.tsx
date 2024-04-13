@@ -1,8 +1,8 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import LandingPage from './Pages/user/LandingPage';
 import UserHome from './Pages/user/UserHome';
-import Header from './Components/User/Header';
-import User from './Components/User/User';
+import Header from './Components/User/common/Header';
+import User from './Components/User/common/User';
 
 function App() {
   return (

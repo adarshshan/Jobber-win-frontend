@@ -1,11 +1,11 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Header from '../../Components/User/Header'
-import Footer from '../../Components/User/Footer'
+import Header from '../../Components/User/common/Header'
+import Footer from '../../Components/User/common/Footer'
 import { Link } from 'react-router-dom'
 import './css/LandingPage.css';
-import JobListingsPage from '../../Components/User/JobListingsPage'
-import LandingPageHeader from '../../Components/User/LandingPageHeader'
+import JobListingsPage from '../../Components/User/LandingPage/JobListingsPage'
+import LandingPageHeader from '../../Components/User/LandingPage/LandingPageHeader'
 
 function LandingPage() {
     return (

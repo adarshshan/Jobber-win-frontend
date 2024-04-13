@@ -1,5 +1,6 @@
 import React from 'react';
 import JobListing from './JobListing';
+import JobSearchBar from './JobSearchBar';
 
 const JobListingsPage: React.FC = () => {
     // Sample data for demonstration
@@ -50,8 +51,9 @@ const JobListingsPage: React.FC = () => {
     ];
 
     return (
-        <div className="container mx-auto  px-4 py-8">
+        <div className="container  mx-auto  px-4 py-8">
             <h1 className="text-3xl font-semibold mb-4">All Jobs</h1>
+            <JobSearchBar />
             <div className="flex flex-wrap -mx-2">
                 {jobs.map(job => (
                     <JobListing key={job.id} job={job} />
