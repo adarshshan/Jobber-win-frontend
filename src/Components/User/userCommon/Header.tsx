@@ -1,6 +1,6 @@
 import { initFlowbite } from 'flowbite';
 import React, { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Header() {
   useEffect(() => {
@@ -8,11 +8,13 @@ function Header() {
   }, [])
   return (
     <>
-      <nav className="bg-blue-900 text-white dark:bg-black dark:text-white">
+      <nav className="bg-gradient-to-b from-blue-800 
+                to-blue-950 bg-white 
+                shadow-lg text-white dark:bg-black dark:text-white">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
-          </a>
+          <Link to='/'>
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
+          </Link>
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
               <span className="sr-only">Open user menu</span>
@@ -67,8 +69,6 @@ function Header() {
           </div>
         </div>
       </nav>
-      <Outlet />
-
     </>
   );
 }

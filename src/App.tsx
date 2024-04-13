@@ -1,8 +1,10 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import LandingPage from './Pages/user/LandingPage';
 import UserHome from './Pages/user/UserHome';
-import Header from './Components/User/common/Header';
-import User from './Components/User/common/User';
+import Header from './Components/User/userCommon/Header';
+import User from './Components/User/userCommon/User';
+import LoginPage from './Pages/user/LoginPage';
+import SignupPage from './Pages/user/SignupPage';
 
 function App() {
   return (
@@ -11,18 +13,22 @@ function App() {
         <Route path='/' element={<LandingPage />} />
 
         <Route path="/user" element={<User />}>
-          <Route path='ad' element={<LandingPage />} />
           <Route path='home' element={<UserHome />} />
+          <Route path='login' element={<LoginPage />} />
+          <Route path='signup' element={<SignupPage />} />
         </Route>
 
         <Route path="/admin" element={<Admin />}>
-          <Route path='ad' element={<LandingPage />} />
+          <Route path='ad' element={<LoginPage />} />
           <Route path='home' element={<UserHome />} />
         </Route>
       </Routes>
     </main>
   );
 }
+
+export default App;
+
 
 
 function Admin() {
@@ -33,5 +39,3 @@ function Admin() {
     </div>
   );
 }
-
-export default App;

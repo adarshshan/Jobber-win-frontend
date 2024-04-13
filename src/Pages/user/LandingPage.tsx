@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Header from '../../Components/User/common/Header'
-import Footer from '../../Components/User/common/Footer'
+import Header from '../../Components/User/userCommon/Header'
+import Footer from '../../Components/User/userCommon/Footer'
 import { Link } from 'react-router-dom'
 import './css/LandingPage.css';
 import JobListingsPage from '../../Components/User/LandingPage/JobListingsPage'
