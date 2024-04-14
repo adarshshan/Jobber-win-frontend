@@ -1,12 +1,14 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from './Pages/user/LandingPage';
 import UserHome from './Pages/user/UserHome';
-import Header from './Components/User/userCommon/Header';
 import User from './Components/User/userCommon/User';
 import LoginPage from './Pages/user/LoginPage';
 import SignupPage from './Pages/user/SignupPage';
-import AdminHeader from './Components/Admin/AdminHeader';
-import AdminSideBar from './Components/Admin/AdminSideBar';
+import Admin from './Components/Admin/adminCommon/Admin';
+import AdminLogin from './Components/Admin/AdminLogin';
+import Users from './Components/Admin/Users';
+import Jobs from './Components/Admin/Jobs';
+import PageNotFound from './Components/Common/PageNotFound';
 
 function App() {
   return (
@@ -20,9 +22,15 @@ function App() {
           <Route path='signup' element={<SignupPage />} />
         </Route>
 
+        <Route path='/admin-login' element={<AdminLogin />} />
+
         <Route path="/admin" element={<Admin />}>
-          <Route path='ad' element={<AdminHeader />} />
+          <Route path='users' element={<Users />} />
+          <Route path='jobs' element={<Jobs />} />
         </Route>
+
+        <Route path='/*' element={<PageNotFound />} />
+
       </Routes>
     </main>
   );
@@ -31,13 +39,3 @@ function App() {
 export default App;
 
 
-
-function Admin() {
-  return (
-    <div>
-      <AdminSideBar />
-      <AdminHeader />
-      <Outlet />
-    </div>
-  );
-}

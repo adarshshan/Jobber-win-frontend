@@ -2,8 +2,9 @@ import React from 'react';
 import AdminNavbar from './AdminNavbar';
 import AdminFooter from './AdminFooter';
 import AdminSideBar from './AdminSideBar';
+import { Outlet } from 'react-router-dom';
 
-const AdminHeader: React.FC = () => {
+const Admin: React.FC = () => {
     return (
         <>
             <div>
@@ -12,7 +13,7 @@ const AdminHeader: React.FC = () => {
                     <AdminSideBar />
                     <div id="main-content" className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
 
-
+                        <Outlet />
                         {/* contents */}
 
 
@@ -26,4 +27,4 @@ const AdminHeader: React.FC = () => {
     )
 }
 
-export default AdminHeader;
+export default Admin;
