@@ -1,94 +1,169 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const SignupPage: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        location: '',
+        password: '',
+        confirmPassword: '',
+        role: '',
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
     return (
-        <section className="bg-white dark:bg-gray-900">
-            <div className="flex justify-center min-h-screen">
-                <div className="hidden bg-cover lg:block lg:w-2/5" style={{ backgroundImage: "url('https://www.franticpro.com/resource/newHeader/images/job-portal-website.png')"}}>
-            </div>
+        <>
+            <style>
+                {`
+                    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-            <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
-                <div className="w-full">
-                    <h1 className="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
-                        Get your free account now.
-                    </h1>
+                    html, body {
+                        font-family: 'Roboto', sans-serif;
+                    }
 
-                    <p className="mt-4 text-gray-500 dark:text-gray-400">
-                        Let’s get you all set up so you can verify your personal account and begin setting up your profile.
-                    </p>
-
-                    <div className="mt-6">
-                        <h1 className="text-gray-500 dark:text-gray-300">Select type of account</h1>
-
-                        <div className="mt-3 md:flex md:items-center md:-mx-2">
-                            <button className="flex justify-center w-full px-6 py-3 text-white bg-blue-500 rounded-md md:w-auto md:mx-2 focus:outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-
-                                <span className="mx-2">
-                                    User
-                                </span>
-                            </button>
-
-                            <button className="flex justify-center w-full px-6 py-3 mt-4 text-blue-500 border border-blue-500 rounded-md md:mt-0 md:w-auto md:mx-2 dark:border-blue-400 dark:text-blue-400 focus:outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-
-                                <span className="mx-2">
-                                    Recruiter
-                                </span>
-                            </button>
+                    .break-inside {
+                        -moz-column-break-inside: avoid;
+                        break-inside: avoid;
+                    }
+                    body {
+                        display: flex;
+                        justify-content: space-between;
+                        flex-direction: column;
+                        min-height: 100vh;
+                        line-height: 1.5;
+                    }
+                `}
+            </style>
+            <div className="bg-white min-h-screen flex">
+                <div className="w-full flex flex-row">
+                    <div className="hidden lg:flex flex-col justify-between bg-gradient-to-r from-blue-800 
+                to-blue-950 bg-white 
+                shadow-lg lg:p-8 xl:p-12 lg:max-w-sm xl:max-w-lg">
+                        <div className="flex items-center justify-start space-x-3">
+                            <span className="bg-black rounded-full w-8 h-8"></span>
+                            <Link to='/' className="font-medium text-xl">JobberWin</Link>
+                        </div>
+                        <div className="space-y-5">
+                            <h1 className="lg:text-3xl xl:text-5xl xl:leading-snug text-white font-extrabold">Enter your account and discover Your
+                                Future</h1>
+                            <p className="text-lg text-white">Already have an account?</p>
+                            <Link to='/user/login'>
+                                <button
+                                    className="inline-block flex-none px-4 py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Login
+                                    account here</button>
+                            </Link>
+                        </div>
+                        <p className="font-medium">©</p>
+                    </div>
+                    <div className="flex flex-1 flex-col items-center justify-center px-10 relative">
+                        <div className="flex lg:hidden justify-between items-center w-full py-4">
+                            <div className="flex items-center justify-start space-x-3">
+                                <span className="bg-black rounded-full w-6 h-6"></span>
+                                <a href="#" className="font-medium text-lg">Brand</a>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <span>already have an account? </span>
+                                <Link to='/user/login' className="underline font-medium text-[#070eff]">Login</Link>
+                            </div>
+                        </div>
+                        <div className="flex flex-1 flex-col justify-center space-y-5 max-w-md">
+                            <div className="flex flex-col space-y-2 text-center pt-3">
+                                <h2 className="text-3xl md:text-4xl font-bold">Create an account</h2>
+                                <p className="text-md md:text-xl">Sign up or log in to go straight, no password required!</p>
+                            </div>
+                            <div className="flex flex-col max-w-md space-y-5">
+                                
+                                <input 
+                                    type="text" 
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Name"
+                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
+                                />
+                                <input 
+                                    type="email" 
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Email"
+                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
+                                />
+                                <input 
+                                    type="text" 
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    placeholder="Phone"
+                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
+                                />
+                                <input 
+                                    type="text" 
+                                    name="location"
+                                    value={formData.location}
+                                    onChange={handleChange}
+                                    placeholder="Location"
+                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
+                                />
+                                <input 
+                                    type="password" 
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="Password"
+                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
+                                />
+                                <input 
+                                    type="password" 
+                                    name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={handleChange}
+                                    placeholder="Confirm Password"
+                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
+                                />
+                                <select
+                                    name="role"
+                                    value={formData.role}
+                                    onChange={handleChange}
+                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium text-black"
+                                >
+                                    <option value="">Select Role</option>
+                                    <option value="user">User</option>
+                                    <option value="recruiter">Recruiter</option>
+                                </select>
+                                <button className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
+                                <div className="flex justify-center items-center">
+                                    <span className="w-full border border-black"></span>
+                                    <span className="px-4">Or</span>
+                                    <span className="w-full border border-black"></span>
+                                </div>
+                                <button className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
+                                    <span className="absolute left-4">
+                                        {/* Google icon */}
+                                    </span>
+                                    <span>Sign in with Google</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="hidden lg:flex justify-between items-center w-full py-4">
+                            <div className="flex items-center space-x-2">
+                                <span>Already have an account? </span>
+                                <Link to='/user/login' className="underline font-medium text-[#070eff]">Login now</Link>
+                            </div>
                         </div>
                     </div>
-
-                    <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
-                        <div>
-                            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">First Name</label>
-                            <input type="text" placeholder="John" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                        </div>
-
-                        <div>
-                            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Last name</label>
-                            <input type="text" placeholder="Snow" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                        </div>
-
-                        <div>
-                            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Phone number</label>
-                            <input type="text" placeholder="XXX-XX-XXXX-XXX" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                        </div>
-
-                        <div>
-                            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email address</label>
-                            <input type="email" placeholder="johnsnow@example.com" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                        </div>
-
-                        <div>
-                            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Password</label>
-                            <input type="password" placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                        </div>
-
-                        <div>
-                            <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Confirm password</label>
-                            <input type="password" placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                        </div>
-
-                        <button
-                            className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                            <span>Sign Up </span>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clipRule="evenodd" />
-                            </svg>
-                        </button>
-                    </form>
                 </div>
             </div>
-        </div>
-        </section >
+        </>
     );
 };
 

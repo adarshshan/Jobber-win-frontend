@@ -5,6 +5,8 @@ import Header from './Components/User/userCommon/Header';
 import User from './Components/User/userCommon/User';
 import LoginPage from './Pages/user/LoginPage';
 import SignupPage from './Pages/user/SignupPage';
+import AdminHeader from './Components/Admin/AdminHeader';
+import AdminSideBar from './Components/Admin/AdminSideBar';
 
 function App() {
   return (
@@ -19,8 +21,7 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<Admin />}>
-          <Route path='ad' element={<LoginPage />} />
-          <Route path='home' element={<UserHome />} />
+          <Route path='ad' element={<AdminHeader />} />
         </Route>
       </Routes>
     </main>
@@ -34,7 +35,8 @@ export default App;
 function Admin() {
   return (
     <div>
-      <h1>Admin Dashboard</h1>
+      <AdminSideBar />
+      <AdminHeader />
       <Outlet />
     </div>
   );

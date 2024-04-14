@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
                             <h1 className="lg:text-3xl xl:text-5xl xl:leading-snug text-white font-extrabold">Enter your account and discover Your
                                 Future</h1>
                             <p className="text-lg text-white">You do not have an account?</p>
-                            <Link to='/user/sighup'>
+                            <Link to='/user/signup'>
                                 <button
                                     className="inline-block flex-none px-4 py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Create
                                     account here</button>
