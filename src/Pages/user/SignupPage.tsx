@@ -1,28 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GrFormLock } from 'react-icons/gr';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signup } from '../../Api/user';
+import { useAppSelector } from '../../app/store';
+
+export interface FormData {
+    name: string;
+    email: string;
+    phone: number;
+    location: string;
+    password: string;
+    confirmPassword?: string;
+    role: string;
+}
 
 const SignupPage: React.FC = () => {
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
+        phone: 0,
         location: '',
         password: '',
         confirmPassword: '',
         role: '',
     });
+    const navigate = useNavigate();
+
+    const { userData } = useAppSelector((state) => state.auth)
+
+    useEffect(() => {
+        if (userData) navigate('/user');
+    }, [userData]);
+
     const [err, setErr] = useState('');
     const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const mobileNumberRegex = /^[0-9]{10}$/;
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault()
+        setErr('');
         try {
             if (!emailPattern.test(formData.email.toString())) {
                 setErr('Enter a valid Email.!');
                 return;
             }
-            if (!formData.name.trim().length || !formData.email.trim().length || !formData.phone.length || !formData.location.length || !formData.password.length || !formData.confirmPassword.length || !formData.role.length) {
+            if (!formData.name.trim().length || !formData.email.trim().length || !formData.location.length || !formData.password.length || !formData.confirmPassword.length || !formData.role.length) {
                 setErr('input fields must not be blank!');
                 return;
             }
@@ -34,7 +56,10 @@ const SignupPage: React.FC = () => {
                 setErr('Enter a valid phone number!');
                 return;
             }
-            setErr('Everything is fine...');
+            let result = await signup(formData);
+            if (result) {
+                navigate('/user/otp-page');
+            }
         } catch (error) {
             console.log(error as Error);
         }

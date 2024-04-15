@@ -10,6 +10,7 @@ import Users from './Components/Admin/Users';
 import Jobs from './Components/Admin/Jobs';
 import PageNotFound from './Components/Common/PageNotFound';
 import { Toaster } from 'react-hot-toast';
+import OtpPage from './Pages/user/OtpPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='home' element={<UserHome />} />
           <Route path='login' element={<LoginPage />} />
           <Route path='signup' element={<SignupPage />} />
+          <Route path='otp-page' element={<OtpPage/>}/>
         </Route>
 
         <Route path='/admin-login' element={<AdminLogin />} />

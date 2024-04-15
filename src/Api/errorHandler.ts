@@ -1,24 +1,28 @@
-import { AxiosError } from 'axios'
-import toast from 'react-hot-toast';
+import { AxiosError } from "axios"
+import toast from "react-hot-toast";
 
 interface ErrorResponse {
-    status: number;
-    data: {
-        message: string;
-    };
+    message: string,
+    success?: Boolean
 }
-const errorHandler = async (error: Error | AxiosError): Promise<void> => {
+
+const errorHandler = async (error: Error | AxiosError) => {
+
     const axiosError = error as AxiosError;
 
     if (axiosError.response?.data) {
         const errorResponse = axiosError.response.data as ErrorResponse;
-        console.log(errorResponse.data.message);
-
-        const errorMessage = errorResponse.data.message || 'Something went wrong! Please try again.';
-        toast.error(errorMessage);
+        if (errorResponse.message === "User is blocked by admin!") {
+            toast.error(errorResponse.message);
+        } else if (errorResponse.message === "Professional is blocked by admin!") {
+            toast.error(errorResponse.message);
+        } else {
+            toast.error(errorResponse.message);
+        }
     } else {
-        toast.error('Something went wrong! Please try again.');
+        toast.error('Something went wrong. Please try again!');
     }
+
 }
 
-export default errorHandler;
+export default errorHandler

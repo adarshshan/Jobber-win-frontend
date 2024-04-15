@@ -5,7 +5,8 @@ export interface CounterState {
 }
 
 const initialState = {
-    adminData: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo') as string) : null
+    adminData: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo') as string) : null,
+    userData: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo') as string) : null,
 }
 
 export const authSlice = createSlice({
@@ -13,16 +14,17 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         setAdminCredential: (state, action) => {
-            console.log(state);
-            console.log(action);
-            console.log('these are the data s ')
             state.adminData = action.payload;
             localStorage.setItem('adminInfo', JSON.stringify(action.payload));
         },
+        setUserCredential: (state, action) => {
+            state.userData = action.payload;
+            localStorage.setItem('userInfo', JSON.stringify(action.payload));
+        }
     },
 })
 
 
-export const { setAdminCredential } = authSlice.actions
+export const { setAdminCredential, setUserCredential } = authSlice.actions
 
 export default authSlice.reducer;

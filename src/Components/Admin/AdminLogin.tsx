@@ -14,7 +14,7 @@ const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { adminData } = useAppSelector((state) => state.AdminLogin);
+  const { adminData } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (adminData) {
