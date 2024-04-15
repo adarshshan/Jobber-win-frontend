@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GrFormLock } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 
 const SignupPage: React.FC = () => {
@@ -11,6 +12,33 @@ const SignupPage: React.FC = () => {
         confirmPassword: '',
         role: '',
     });
+    const [err, setErr] = useState('');
+    const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const mobileNumberRegex = /^[0-9]{10}$/;
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
+        try {
+            if (!emailPattern.test(formData.email.toString())) {
+                setErr('Enter a valid Email.!');
+                return;
+            }
+            if (!formData.name.trim().length || !formData.email.trim().length || !formData.phone.length || !formData.location.length || !formData.password.length || !formData.confirmPassword.length || !formData.role.length) {
+                setErr('input fields must not be blank!');
+                return;
+            }
+            if (formData.password.trim() !== formData.confirmPassword.trim()) {
+                setErr('Passwords are not matching!');
+                return;
+            }
+            if (!mobileNumberRegex.test(formData.phone.toString())) {
+                setErr('Enter a valid phone number!');
+                return;
+            }
+            setErr('Everything is fine...');
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -80,80 +108,84 @@ const SignupPage: React.FC = () => {
                                 <h2 className="text-3xl md:text-4xl font-bold">Create an account</h2>
                                 <p className="text-md md:text-xl">Sign up or log in to go straight, no password required!</p>
                             </div>
-                            <div className="flex flex-col max-w-md space-y-5">
-                                
-                                <input 
-                                    type="text" 
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    placeholder="Name"
-                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
-                                />
-                                <input 
-                                    type="email" 
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="Email"
-                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
-                                />
-                                <input 
-                                    type="text" 
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    placeholder="Phone"
-                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
-                                />
-                                <input 
-                                    type="text" 
-                                    name="location"
-                                    value={formData.location}
-                                    onChange={handleChange}
-                                    placeholder="Location"
-                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
-                                />
-                                <input 
-                                    type="password" 
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="Password"
-                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
-                                />
-                                <input 
-                                    type="password" 
-                                    name="confirmPassword"
-                                    value={formData.confirmPassword}
-                                    onChange={handleChange}
-                                    placeholder="Confirm Password"
-                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" 
-                                />
-                                <select
-                                    name="role"
-                                    value={formData.role}
-                                    onChange={handleChange}
-                                    className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium text-black"
-                                >
-                                    <option value="">Select Role</option>
-                                    <option value="user">User</option>
-                                    <option value="recruiter">Recruiter</option>
-                                </select>
-                                <button className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
-                                <div className="flex justify-center items-center">
-                                    <span className="w-full border border-black"></span>
-                                    <span className="px-4">Or</span>
-                                    <span className="w-full border border-black"></span>
+                            <p className="text-red-500">{err}</p>
+                            <form onSubmit={handleSubmit} >
+                                <div className="flex flex-col max-w-md space-y-5">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        placeholder="Name"
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                    />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        placeholder="Email"
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                    />
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        placeholder="Phone"
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                    />
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        value={formData.location}
+                                        onChange={handleChange}
+                                        placeholder="Location"
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                    />
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        placeholder="Password"
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                    />
+                                    <input
+                                        type="password"
+                                        name="confirmPassword"
+                                        value={formData.confirmPassword}
+                                        onChange={handleChange}
+                                        placeholder="Confirm Password"
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                    />
+                                    <select
+                                        name="role"
+                                        value={formData.role}
+                                        onChange={handleChange}
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium text-black"
+                                    >
+                                        <option value="">Select Role</option>
+                                        <option value="user">User</option>
+                                        <option value="recruiter">Recruiter</option>
+                                    </select>
+                                    <button type='submit' className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
+
+                                    <div className="flex justify-center items-center">
+                                        <span className="w-full border border-black"></span>
+                                        <span className="px-4">Or</span>
+                                        <span className="w-full border border-black"></span>
+                                    </div>
+                                    <button className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
+                                        <span className="absolute left-4">
+                                            {/* Google icon */}
+                                        </span>
+                                        <span>Sign in with Google</span>
+                                    </button>
                                 </div>
-                                <button className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
-                                    <span className="absolute left-4">
-                                        {/* Google icon */}
-                                    </span>
-                                    <span>Sign in with Google</span>
-                                </button>
-                            </div>
+                            </form>
                         </div>
+
                         <div className="hidden lg:flex justify-between items-center w-full py-4">
                             <div className="flex items-center space-x-2">
                                 <span>Already have an account? </span>

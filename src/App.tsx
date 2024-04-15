@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Router } from 'react-router-dom';
 import LandingPage from './Pages/user/LandingPage';
 import UserHome from './Pages/user/UserHome';
 import User from './Components/User/userCommon/User';
@@ -9,10 +9,12 @@ import AdminLogin from './Components/Admin/AdminLogin';
 import Users from './Components/Admin/Users';
 import Jobs from './Components/Admin/Jobs';
 import PageNotFound from './Components/Common/PageNotFound';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <main>
+      <Toaster position='top-right' reverseOrder={false} />
       <Routes>
         <Route path='/' element={<LandingPage />} />
 
@@ -32,6 +34,7 @@ function App() {
         <Route path='/*' element={<PageNotFound />} />
 
       </Routes>
+
     </main>
   );
 }
