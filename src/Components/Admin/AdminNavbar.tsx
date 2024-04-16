@@ -1,8 +1,23 @@
 import React from 'react'
 import { IoMdLogOut } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../Api/admin';
+import { adminLogout } from '../../app/slice/AuthSlice';
+import toast from 'react-hot-toast';
 
 const AdminNavbar = () => {
+
+    const dispatch = useDispatch();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            dispatch(adminLogout());
+            toast.success("You are logged out!")
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <div>
             <nav className="bg-white border-b border-gray-200 fixed z-30 w-full">
@@ -34,7 +49,7 @@ const AdminNavbar = () => {
                             </form>
                         </div>
                         <div className="flex items-center">
-                            <Link to='#' className='text-3xl text-red-600'><IoMdLogOut /></Link>
+                            <span onClick={handleLogout} className='text-3xl text-red-600'><IoMdLogOut /></span>
                         </div>
                     </div>
                 </div>

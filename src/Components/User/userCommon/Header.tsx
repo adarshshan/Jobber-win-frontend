@@ -14,11 +14,13 @@ function Header() {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    const result = await logout();
-    console.log(`the logout result is ${result}`);
-    console.log(result);
-    dispatch(userLogout());
-    toast.success("You are logged out!")
+    try {
+      await logout();
+      dispatch(userLogout());
+      toast.success("You are logged out!")
+    } catch (error) {
+      console.log(error as Error);
+    }
   }
   return (
     <>

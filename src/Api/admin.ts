@@ -6,11 +6,35 @@ import errorHandler from "./errorHandler";
 
 const login = async (email: string, password: string) => {
     try {
-        console.log('login from adminRoutes.ts is present')
         let result = await Api.post(adminRoutes.login, { email, password });
-        console.log(result);
         return result;
     } catch (error) {
+        errorHandler(error as Error);
+    }
+}
+const getAllUsers = async () => {
+    try {
+        let result = await Api.get(adminRoutes.getAllUsers);
+        return result;
+    } catch (error) {
+        errorHandler(error as Error);
+    }
+}
+const blockUser = async (id: string) => {
+    try {
+        console.log(id);
+        console.log('your id is above...');
+        let result = await Api.put(`${adminRoutes.blockUser}${id}`);
+        return result;
+    } catch (error) {
+        errorHandler(error as Error);
+    }
+}
+const logout = async () => {
+    try {
+        let result=await Api.get(adminRoutes.logout);
+    } catch (error) {
+        console.log(error as Error);
         errorHandler(error as Error);
     }
 }
@@ -20,5 +44,7 @@ const login = async (email: string, password: string) => {
 
 export {
     login,
-
+    getAllUsers,
+    blockUser,
+    logout
 }
