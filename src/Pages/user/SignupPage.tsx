@@ -3,6 +3,7 @@ import { GrFormLock } from 'react-icons/gr';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../Api/user';
 import { useAppSelector } from '../../app/store';
+import { EMAIL_PATTERN,MOBILE_NUM_REGEX } from '../../constants/commonConstants';
 
 export interface FormData {
     name: string;
@@ -34,13 +35,11 @@ const SignupPage: React.FC = () => {
     }, [userData]);
 
     const [err, setErr] = useState('');
-    const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const mobileNumberRegex = /^[0-9]{10}$/;
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setErr('');
         try {
-            if (!emailPattern.test(formData.email.toString())) {
+            if (!EMAIL_PATTERN.test(formData.email.toString())) {
                 setErr('Enter a valid Email.!');
                 return;
             }
@@ -52,7 +51,7 @@ const SignupPage: React.FC = () => {
                 setErr('Passwords are not matching!');
                 return;
             }
-            if (!mobileNumberRegex.test(formData.phone.toString())) {
+            if (!MOBILE_NUM_REGEX.test(formData.phone.toString())) {
                 setErr('Enter a valid phone number!');
                 return;
             }

@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../Api/admin';
 import { setAdminCredential } from '../../app/slice/AuthSlice';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState, useAppSelector } from '../../app/store';
+import { useAppSelector } from '../../app/store';
+import {EMAIL_PATTERN} from '../../constants/commonConstants';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -22,13 +22,12 @@ const AdminLogin: React.FC = () => {
     }
   }, [adminData])
 
-  const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
     try {
       console.log('submitHandler present...');
-      if (!emailPattern.test(email)) {
+      if (!EMAIL_PATTERN.test(email)) {
         setErr('Enter a valid Email!');
         return;
       }
@@ -42,7 +41,6 @@ const AdminLogin: React.FC = () => {
         dispatch(setAdminCredential(result.data.data.token))
         navigate('/admin');
       }
-
     } catch (error) {
       console.log(error as Error);
     }
@@ -69,7 +67,7 @@ const AdminLogin: React.FC = () => {
           <div>
             <input
               className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
-              type="text"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"

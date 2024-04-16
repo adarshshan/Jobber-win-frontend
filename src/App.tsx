@@ -13,6 +13,8 @@ import { Toaster } from 'react-hot-toast';
 import OtpPage from './Pages/user/OtpPage';
 import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
+import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
+import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
 
 function App() {
   return (
@@ -20,11 +22,10 @@ function App() {
       <Toaster position='top-right' reverseOrder={false} />
       <Routes>
 
+
+        {/* User Side */}
+
         <Route path='' element={<UserLoggedOut />}><Route path='/' element={<LandingPage />} /></Route>
-
-
-
-
 
         <Route path="/user" element={<User />}>
 
@@ -41,13 +42,20 @@ function App() {
 
         </Route>
 
-        <Route path='/admin-login' element={<AdminLogin />} />
+        {/* Admin Side */}
 
-        <Route path="/admin" element={<Admin />}>
-          <Route path='users' element={<Users />} />
-          <Route path='jobs' element={<Jobs />} />
+        <Route path='' element={<AdminLoggedOut />}>
+          <Route path='/admin-login' element={<AdminLogin />} />
         </Route>
 
+        <Route path="/admin" element={<Admin />}>
+          <Route path='' element={<AdminLoggedIn />}>
+            <Route path='users' element={<Users />} />
+            <Route path='jobs' element={<Jobs />} />
+          </Route>
+        </Route>
+
+        {/* Page Not Found */}
         <Route path='/*' element={<PageNotFound />} />
 
       </Routes>
