@@ -11,19 +11,34 @@ import Jobs from './Components/Admin/Jobs';
 import PageNotFound from './Components/Common/PageNotFound';
 import { Toaster } from 'react-hot-toast';
 import OtpPage from './Pages/user/OtpPage';
+import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
+import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 
 function App() {
   return (
     <main>
       <Toaster position='top-right' reverseOrder={false} />
       <Routes>
-        <Route path='/' element={<LandingPage />} />
+
+        <Route path='' element={<UserLoggedOut />}><Route path='/' element={<LandingPage />} /></Route>
+
+
+
+
 
         <Route path="/user" element={<User />}>
-          <Route path='home' element={<UserHome />} />
-          <Route path='login' element={<LoginPage />} />
-          <Route path='signup' element={<SignupPage />} />
-          <Route path='otp-page' element={<OtpPage/>}/>
+
+          <Route path='/user' element={<UserLoggedOut />}>
+            <Route path='login' element={<LoginPage />} />
+            <Route path='signup' element={<SignupPage />} />
+            <Route path='otp-page' element={<OtpPage />} />
+          </Route>
+
+          <Route path='' element={<UserLoggedIn />}>
+            <Route path='home' element={<UserHome />} />
+          </Route>
+
+
         </Route>
 
         <Route path='/admin-login' element={<AdminLogin />} />

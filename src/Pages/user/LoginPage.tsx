@@ -1,30 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './css/LoginPage.css'
+import { login } from '../../Api/user';
+import { setUserCredential } from '../../app/slice/AuthSlice';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../app/store';
 
 const LoginPage: React.FC = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [err, setErr] = useState('');
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+    const { userData } = useAppSelector((state) => state.auth)
+
+    const loginHandler = async () => {
+        try {
+            const result = await login(email, password);
+            if (result) {
+                dispatch(setUserCredential(result));
+                navigate('/user/home');
+            }
+        } catch (error) {
+            console.log(error as Error);
+            setErr(error as string);
+        }
+    }
+
     return (
         <>
-            <style>
-                {`
-          @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-  
-          html, body{
-            font-family: 'Roboto', sans-serif;
-          }
-  
-          .break-inside {
-            -moz-column-break-inside: avoid;
-            break-inside: avoid;
-          }
-          body {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            min-height: 100vh;
-            line-height: 1.5;
-          }
-        `}
-            </style>
             <div className="bg-white min-h-screen flex">
                 <div className="w-full flex flex-row">
                     <div className="hidden lg:flex flex-col justify-between bg-gradient-to-r from-blue-800 
@@ -64,11 +71,12 @@ const LoginPage: React.FC = () => {
                                 <p className="text-md md:text-xl">Sign up or log in to go stright ,no password require!</p>
                             </div>
                             <div className="flex flex-col max-w-md space-y-5">
-                                <input type="email" placeholder="Email"
+                                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
                                     className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
-                                <input type="password" placeholder="Password"
+                                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
                                     className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
-                                <button className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
+                                <button onClick={loginHandler} className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
+
                                 <div className="flex justify-center items-center">
                                     <span className="w-full border border-black"></span>
                                     <span className="px-4">Or</span>

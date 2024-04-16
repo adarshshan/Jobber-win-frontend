@@ -1,13 +1,16 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Header from '../../Components/User/userCommon/Header'
 import Footer from '../../Components/User/userCommon/Footer'
 import { Link } from 'react-router-dom'
 import './css/LandingPage.css';
 import JobListingsPage from '../../Components/User/LandingPage/JobListingsPage'
 import LandingPageHeader from '../../Components/User/LandingPage/LandingPageHeader'
+import { useAppSelector } from '../../app/store'
 
 function LandingPage() {
+
+
     return (
         <>
             <LandingPageHeader />

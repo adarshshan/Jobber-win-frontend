@@ -1,11 +1,25 @@
 import { initFlowbite } from 'flowbite';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from '../../../Api/user';
+import { useDispatch } from 'react-redux';
+import { userLogout } from '../../../app/slice/AuthSlice';
+import toast from 'react-hot-toast';
 
 function Header() {
   useEffect(() => {
     initFlowbite()
   }, [])
+
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    const result = await logout();
+    console.log(`the logout result is ${result}`);
+    console.log(result);
+    dispatch(userLogout());
+    toast.success("You are logged out!")
+  }
   return (
     <>
       <nav className="bg-gradient-to-b from-blue-800 
@@ -13,7 +27,7 @@ function Header() {
                 shadow-lg text-white dark:bg-black dark:text-white">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to='/'>
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
           </Link>
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
@@ -36,8 +50,9 @@ function Header() {
                 <li>
                   <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
                 </li>
-                <li>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  onClick={handleLogout}>
+                  Sign out
                 </li>
               </ul>
             </div>

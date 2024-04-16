@@ -10,7 +10,12 @@ const OTPComponent: React.FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-   
+
+    const { userData } = useAppSelector((state) => state.auth)
+
+    useEffect(() => {
+        if (userData) navigate('/user/home');
+    }, [userData]);
 
     const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setOTP(e.target.value);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { GrFormLock } from 'react-icons/gr';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../Api/user';
@@ -30,13 +30,13 @@ const SignupPage: React.FC = () => {
     const { userData } = useAppSelector((state) => state.auth)
 
     useEffect(() => {
-        if (userData) navigate('/user');
+        if (userData) navigate('/user/home');
     }, [userData]);
 
     const [err, setErr] = useState('');
     const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const mobileNumberRegex = /^[0-9]{10}$/;
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setErr('');
         try {
