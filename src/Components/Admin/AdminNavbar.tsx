@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../Api/admin';
 import { adminLogout } from '../../app/slice/AuthSlice';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2'
 
 const AdminNavbar = () => {
 
@@ -11,9 +12,26 @@ const AdminNavbar = () => {
 
     const handleLogout = async () => {
         try {
-            await logout();
-            dispatch(adminLogout());
-            toast.success("You are logged out!")
+            Swal.fire({
+                title: "Logout ?",
+                text: "",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Logout"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    logout().then(()=>console.log('logout'));
+                    dispatch(adminLogout());
+                    toast.success("You are logged out!")
+                    Swal.fire({
+                        title: "Logged Out!",
+                        text: "",
+                        icon: "success"
+                    });
+                }
+            });
         } catch (error) {
             console.log(error as Error);
         }

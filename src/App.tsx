@@ -15,6 +15,7 @@ import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
+import ProfilePage from './Pages/user/ProfilePage';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
 
           <Route path='' element={<UserLoggedIn />}>
             <Route path='home' element={<UserHome />} />
+            <Route path='profile' element={<ProfilePage />} />
           </Route>
 
 

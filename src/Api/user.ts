@@ -18,7 +18,6 @@ const login = async (email: string, password: string) => {
 const signup = async ({ name, phone, email, password, confirmPassword, role }: FormData) => {
     try {
         const result = await Api.post(userRoutes.signup, { name, phone, email, password, role });
-        console.log(result);
         if (result.data.success) {
             return true;
         } else {
@@ -48,10 +47,19 @@ const logout = async () => {
         errorHandler(error as Error);
     }
 }
+const getProfile = async () => {
+    try {
+        const result = await Api.get(userRoutes.getProfile);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export {
     signup,
     verifyOtp,
     login,
-    logout
+    logout,
+    getProfile
 }

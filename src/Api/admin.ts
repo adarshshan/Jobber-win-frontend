@@ -9,6 +9,7 @@ const login = async (email: string, password: string) => {
         let result = await Api.post(adminRoutes.login, { email, password });
         return result;
     } catch (error) {
+        console.log(error as Error);
         errorHandler(error as Error);
     }
 }
@@ -22,8 +23,6 @@ const getAllUsers = async () => {
 }
 const blockUser = async (id: string) => {
     try {
-        console.log(id);
-        console.log('your id is above...');
         let result = await Api.put(`${adminRoutes.blockUser}${id}`);
         return result;
     } catch (error) {

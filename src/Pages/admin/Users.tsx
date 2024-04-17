@@ -1,5 +1,7 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { blockUser, getAllUsers } from '../../Api/admin';
+import Swal from 'sweetalert2';
+import { Button, Pagination, Tooltip } from '@nextui-org/react';
 
 interface UserData {
   _id: string;
@@ -12,19 +14,43 @@ interface UserData {
 const UsersTable: React.FC = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const [block, setBlock] = useState(false);
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     const fetctData = async () => {
-      const res = await getAllUsers()
-      setUsers(res?.data.data.users);
+      try {
+        const res = await getAllUsers()
+        setUsers(res?.data.data.users);
+      } catch (error) {
+        console.log(error as Error);
+      }
     }
     fetctData();
   }, [block])
 
   const handleBlock = async (id: string) => {
     try {
-      const result = await blockUser(id);
-      setBlock(!block);
-      console.log(result);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          blockUser(id).then((result) => {
+            console.log('this is REsult');
+            console.log(result?.data.success)
+            if (result?.data.success) setBlock(!block);
+          });
+          Swal.fire({
+            title: "success!",
+            text: "",
+            icon: "success"
+          });
+        }
+      });
     } catch (error) {
       console.log(error as Error);
     }
@@ -52,14 +78,18 @@ const UsersTable: React.FC = () => {
                 <td className="p-3 px-5 cursor-pointer"><input type="email" value={row.email} className="bg-transparent cursor-pointer" readOnly /></td>
                 <td className="p-3 px-5"><input type="text" value={row.role} className="bg-transparent cursor-pointer" readOnly /> </td>
                 <td className="p-3 px-5 flex justify-end">
-                  {row.isBlocked && <button onClick={() => handleBlock(row._id)} type="button" className="mr-3 text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Unblock</button>}
-                  {!row.isBlocked && <button onClick={() => handleBlock(row._id)} type="button" className="mr-3 text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Block</button>}
+                 
+                  <Tooltip content={row.isBlocked ? 'click to unblock' : 'click to block'}>
+                    <Button onClick={() => handleBlock(row._id)} style={{color:row.isBlocked?'green':'red'}}>{row.isBlocked ? 'unblock' : 'block'}</Button>
+                  </Tooltip>
+
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <Pagination className='ms-10 mb-3 ' total={10} initialPage={1} />
     </div>
   );
 };

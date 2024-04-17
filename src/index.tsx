@@ -5,6 +5,7 @@ import '../src/index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { NextUIProvider } from '@nextui-org/react';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <NextUIProvider>
+        <App />
+      </NextUIProvider>
     </Provider>
   </BrowserRouter>
 );

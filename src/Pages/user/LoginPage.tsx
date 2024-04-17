@@ -70,6 +70,7 @@ const LoginPage: React.FC = () => {
                                 <h2 className="text-3xl md:text-4xl font-bold">Sign in to account</h2>
                                 <p className="text-md md:text-xl">Sign up or log in to go stright ,no password require!</p>
                             </div>
+                            <p className="text-red-500">{err}</p>
                             <div className="flex flex-col max-w-md space-y-5">
                                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
                                     className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
