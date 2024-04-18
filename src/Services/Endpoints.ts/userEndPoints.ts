@@ -4,6 +4,7 @@ const userRoutes = {
     veryfyOtp: "/user/veryfy-otp",
     logout: "/user/logout",
     getProfile: "/user/profile",
+    googleLogin: "/user/google-login",
 }
 
 

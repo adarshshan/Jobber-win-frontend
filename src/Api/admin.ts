@@ -5,6 +5,7 @@ import errorHandler from "./errorHandler";
 
 
 const login = async (email: string, password: string) => {
+    console.log('ehlldfksl')
     try {
         let result = await Api.post(adminRoutes.login, { email, password });
         return result;
@@ -31,7 +32,7 @@ const blockUser = async (id: string) => {
 }
 const logout = async () => {
     try {
-        let result=await Api.get(adminRoutes.logout);
+        let result = await Api.get(adminRoutes.logout);
     } catch (error) {
         console.log(error as Error);
         errorHandler(error as Error);

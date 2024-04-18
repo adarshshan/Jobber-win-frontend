@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { getProfile } from '../../Api/user';
+import { useAppSelector } from '../../app/store';
 
 interface UserData {
     _id?: string;
@@ -12,6 +13,9 @@ interface UserData {
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState<UserData | undefined>();
+
+    const { user } = useAppSelector((state) => state.auth)
+    console.log(user.name); console.log('this is saved data');
 
     useEffect(() => {
         const fetchData = async () => {

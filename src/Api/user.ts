@@ -8,8 +8,7 @@ import errorHandler from "./errorHandler";
 const login = async (email: string, password: string) => {
     try {
         const result = await Api.post(userRoutes.login, { email, password });
-        const userData = result.data.data.token;
-        return userData;
+        return result;
     } catch (error) {
         console.log(error as Error);
         errorHandler(error as Error);
@@ -28,6 +27,17 @@ const signup = async ({ name, phone, email, password, confirmPassword, role }: F
         errorHandler(error as Error);
     }
 }
+const googleLogin = async (name: string | null, email: string | null, googlePhotoUrl: string | null) => {
+    try {
+        if (!name || !email) return;
+        const result = await Api.post(userRoutes.googleLogin, { name, email, googlePhotoUrl })
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+        if (error) console.log(error)
+        console.log('error coming from here...');
+    }
+}
 const verifyOtp = async (otpnum: string) => {
     try {
         const otp = parseInt(otpnum);
@@ -37,7 +47,6 @@ const verifyOtp = async (otpnum: string) => {
         console.log(error as Error);
         errorHandler(error as Error);
     }
-
 }
 const logout = async () => {
     try {
@@ -61,5 +70,6 @@ export {
     verifyOtp,
     login,
     logout,
-    getProfile
+    getProfile,
+    googleLogin
 }

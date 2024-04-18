@@ -3,7 +3,8 @@ import { GrFormLock } from 'react-icons/gr';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../Api/user';
 import { useAppSelector } from '../../app/store';
-import { EMAIL_PATTERN,MOBILE_NUM_REGEX } from '../../constants/commonConstants';
+import { EMAIL_PATTERN, MOBILE_NUM_REGEX } from '../../constants/commonConstants';
+import OAuth from '../../Components/User/userCommon/OAuth';
 
 export interface FormData {
     name: string;
@@ -195,17 +196,13 @@ const SignupPage: React.FC = () => {
                                     </select>
                                     <button type='submit' className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
 
+
                                     <div className="flex justify-center items-center">
                                         <span className="w-full border border-black"></span>
                                         <span className="px-4">Or</span>
                                         <span className="w-full border border-black"></span>
                                     </div>
-                                    <button className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
-                                        <span className="absolute left-4">
-                                            {/* Google icon */}
-                                        </span>
-                                        <span>Sign in with Google</span>
-                                    </button>
+                                    <OAuth />
                                 </div>
                             </form>
                         </div>

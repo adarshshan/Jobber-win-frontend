@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { setUserCredential } from '../../app/slice/AuthSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../app/store';
+import { Link } from 'react-router-dom';
 
 const OTPComponent: React.FC = () => {
     const [otp, setOTP] = useState<string>('');
+    const [seconds, setSeconds] = useState(300);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -16,6 +18,16 @@ const OTPComponent: React.FC = () => {
     useEffect(() => {
         if (userData) navigate('/user/home');
     }, [userData]);
+    useEffect(() => {
+        if (seconds > 0) {
+            const timer = setInterval(() => setSeconds(seconds - 1), 1000);
+            return () => clearInterval(timer);
+        }
+    }, [seconds]);
+
+
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
 
     const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setOTP(e.target.value);
@@ -48,9 +60,10 @@ const OTPComponent: React.FC = () => {
                 </div>
                 <div className="flex items-center flex-col justify-between mb-6">
                     <p className="text-gray-600 text-sm">Didn't receive code?</p>
-                    <div className="flex items-center space-x-2">
-                        <button className="px-3 py-2 text-sm font-medium text-center rounded text-gray-500 hover:text-blue-500">Request via Call</button>
-                        <button className="px-3 py-2 text-sm font-medium text-center rounded text-gray-500 hover:text-blue-500">Request Again (00:00:36)</button>
+                    <div className="ps-1">
+                        {seconds <= 0 ? <div>Otp Expired <span className='text-blue-500'>Request another ?</span></div> :
+                            <div>Otp expires in {minutes} min {remainingSeconds} sec</div>
+                        }
                     </div>
                 </div>
                 <button onClick={handleVerify} className="w-full px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">Verify</button>

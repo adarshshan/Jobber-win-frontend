@@ -36,7 +36,6 @@ const AdminLogin: React.FC = () => {
         return;
       }
       let result = await login(email, password);
-      console.log(result);
       if (result?.data.data.success) {
         dispatch(setAdminCredential(result.data.data.token))
         navigate('/admin');

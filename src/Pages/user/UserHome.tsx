@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { FaHeart } from "react-icons/fa";
 import PostMessage from '../../Components/User/PostPage/PostMessage';
+import { Accordion, AccordionItem, Avatar } from '@nextui-org/react';
 
 
 interface WrapperProps {
@@ -114,8 +115,24 @@ const App: React.FC = () => {
               <span className="text-lg font-bold">34</span>
             </a>
           </div>
-
-          <PostMessage />
+          <Accordion selectionMode="multiple">
+            <AccordionItem
+              key="1"
+              aria-label="Chung Miller"
+              startContent={
+                <Avatar
+                  isBordered
+                  color="primary"
+                  radius="lg"
+                  src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                />
+              }
+              subtitle="4 unread messages"
+              title="Chung Miller"
+            >
+              <PostMessage />
+            </AccordionItem>
+          </Accordion>
 
         </article>
         <h2 className="mb-4 text-2xl font-bold">Comments</h2>

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { stat } from 'fs';
 
 export interface CounterState {
     value: number
@@ -7,6 +8,7 @@ export interface CounterState {
 const initialState = {
     adminData: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo') as string) : null,
     userData: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo') as string) : null,
+    user: localStorage.getItem('userAddress') ? JSON.parse(localStorage.getItem('userAddress') as any) : null,
 }
 
 export const authSlice = createSlice({
@@ -16,6 +18,10 @@ export const authSlice = createSlice({
         setAdminCredential: (state, action) => {
             state.adminData = action.payload;
             localStorage.setItem('adminInfo', JSON.stringify(action.payload));
+        },
+        saveUser: (state, action) => {
+            state.user = action.payload;
+            localStorage.setItem('userAddress', JSON.stringify(action.payload));
         },
         setUserCredential: (state, action) => {
             state.userData = action.payload;
@@ -36,6 +42,7 @@ export const authSlice = createSlice({
 export const {
     setAdminCredential,
     setUserCredential,
-    adminLogout,userLogout } = authSlice.actions
+    adminLogout, userLogout,
+    saveUser } = authSlice.actions
 
 export default authSlice.reducer;
