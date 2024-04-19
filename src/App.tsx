@@ -1,4 +1,4 @@
-import { Routes, Route, Router } from 'react-router-dom';
+import { Routes, Route, Router, RouterProvider } from 'react-router-dom';
 import LandingPage from './Pages/user/LandingPage';
 import UserHome from './Pages/user/UserHome';
 import User from './Components/User/userCommon/User';
@@ -17,7 +17,12 @@ import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
 import ProfilePage from './Pages/user/ProfilePage';
 
-function App() {
+
+interface IAppProps {
+
+}
+
+const App: React.FunctionComponent<IAppProps> = () => {
   return (
     <main>
       <Toaster position='top-right' reverseOrder={false} />

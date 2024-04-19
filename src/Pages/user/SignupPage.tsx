@@ -18,15 +18,27 @@ export interface FormData {
 
 const SignupPage: React.FC = () => {
 
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: 0,
-        location: '',
-        password: '',
-        confirmPassword: '',
-        role: '',
-    });
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState<number>(0)
+    const [location, setLocation] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [role, setRole] = useState('')
+
+    const [nameErr, setNameErr] = useState('')
+    const [phoneError, setPhoneError] = useState('');
+    const [emailErr, setEmailErr] = useState('');
+    const [locationErr, setLocationErr] = useState('');
+    const [passwordErr, setPasswordErr] = useState('');
+    const [confirmPasswordErr, setConfirmPasswordErr] = useState('');
+    const [roleErr, setRoleErr] = useState('');
+
+    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
+
+    const [err, setErr] = useState('');
+
     const navigate = useNavigate();
 
     const { userData } = useAppSelector((state) => state.auth)
@@ -35,27 +47,42 @@ const SignupPage: React.FC = () => {
         if (userData) navigate('/user/home');
     }, [userData]);
 
-    const [err, setErr] = useState('');
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setErr('');
         try {
-            if (!EMAIL_PATTERN.test(formData.email.toString())) {
-                setErr('Enter a valid Email.!');
-                return;
-            }
-            if (!formData.name.trim().length || !formData.email.trim().length || !formData.location.length || !formData.password.length || !formData.confirmPassword.length || !formData.role.length) {
+            if (!name.trim().length) {
                 setErr('input fields must not be blank!');
                 return;
             }
-            if (formData.password.trim() !== formData.confirmPassword.trim()) {
-                setErr('Passwords are not matching!');
+            if (!EMAIL_PATTERN.test(email.toString())) {
+                setErr('Enter a valid Email.!');
                 return;
             }
-            if (!MOBILE_NUM_REGEX.test(formData.phone.toString())) {
+            if (!MOBILE_NUM_REGEX.test(phone.toString())) {
                 setErr('Enter a valid phone number!');
                 return;
             }
+            if (!name.trim().length || !phone || !email.trim().length || !location.length || !password.length || !confirmPassword.length) {
+                setErr('input fields must not be blank!');
+                return;
+            }
+            if (!strongRegex.test(password)) {
+                setErr('Your password is too weak, please enter a strong one.');
+                return;
+            }
+            if (password.trim() !== confirmPassword.trim()) {
+                setErr('Passwords are not matching!');
+                return;
+            }
+            if (!role) {
+                setErr('Please select the role!');
+                return;
+            }
+
+
+            const formData = { name, email, location, phone, password, confirmPassword, role } as const;
             let result = await signup(formData);
             if (result) {
                 navigate('/user/otp-page');
@@ -65,37 +92,23 @@ const SignupPage: React.FC = () => {
         }
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+    const isValidName = (): void => {
+        const nameRegex = /^[a-zA-Z]+(?: [a-zA-Z]+)?$/;
+        !nameRegex.test(name) ? setNameErr('') : setNameErr('Enter your full name!');
+        name.trim().length ? setNameErr('') : setNameErr('Input Field must not be blank!');
+    }
+    const validatePhone = () => {
+        MOBILE_NUM_REGEX.test(phone.toString()) ? setPhoneError('') : setPhoneError('Enter a valid phone number.')
+        !phone ? setPhoneError('input field must not be blank!') : setPasswordErr('');
+    }
+    const validatePassword = () => {
+        strongRegex.test(password) ? setPasswordErr('') : setPasswordErr('password is too weak. make a strong one.');
+    }
+
+
 
     return (
         <>
-            <style>
-                {`
-                    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-                    html, body {
-                        font-family: 'Roboto', sans-serif;
-                    }
-
-                    .break-inside {
-                        -moz-column-break-inside: avoid;
-                        break-inside: avoid;
-                    }
-                    body {
-                        display: flex;
-                        justify-content: space-between;
-                        flex-direction: column;
-                        min-height: 100vh;
-                        line-height: 1.5;
-                    }
-                `}
-            </style>
             <div className="bg-white min-h-screen flex">
                 <div className="w-full flex flex-row">
                     <div className="hidden lg:flex flex-col justify-between bg-gradient-to-r from-blue-800 
@@ -139,55 +152,66 @@ const SignupPage: React.FC = () => {
                                     <input
                                         type="text"
                                         name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        onKeyUp={() => isValidName()}
                                         placeholder="Name"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
+                                    <p className="text-red-500">{nameErr}</p>
                                     <input
                                         type="email"
                                         name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        onKeyUp={() => EMAIL_PATTERN.test(email.toString()) ? setEmailErr('') : setEmailErr('Enter a valid Email Address!')}
                                         placeholder="Email"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
+                                    <p className="text-red-500">{emailErr}</p>
                                     <input
                                         type="text"
                                         name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
+                                        onChange={(e) => setPhone(parseInt(e.target.value))}
+                                        onKeyUp={() => validatePhone()}
                                         placeholder="Phone"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
+                                    <p className="text-red-500">{phoneError}</p>
                                     <input
                                         type="text"
                                         name="location"
-                                        value={formData.location}
-                                        onChange={handleChange}
+                                        value={location}
+                                        onChange={(e) => setLocation(e.target.value)}
+                                        onKeyUp={() => location.trim().length ? setLocationErr('') : setLocationErr('Input field must not be blank!')}
                                         placeholder="Location"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
+                                    <p className="text-red-500">{locationErr}</p>
                                     <input
                                         type="password"
                                         name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        onKeyUp={validatePassword}
                                         placeholder="Password"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
+                                    <p className="text-red-500">{passwordErr}</p>
                                     <input
                                         type="password"
                                         name="confirmPassword"
-                                        value={formData.confirmPassword}
-                                        onChange={handleChange}
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        onKeyUp={() => password !== confirmPassword ? setConfirmPasswordErr('passwords are not matching!') : setConfirmPasswordErr('')}
                                         placeholder="Confirm Password"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
+                                    <p className="text-red-500">{confirmPasswordErr}</p>
                                     <select
                                         name="role"
-                                        value={formData.role}
-                                        onChange={handleChange}
+                                        value={role}
+                                        onChange={(e) => setRole(e.target.value)}
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium text-black"
                                     >
                                         <option value="">Select Role</option>

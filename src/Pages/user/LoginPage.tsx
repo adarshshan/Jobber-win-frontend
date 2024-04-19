@@ -6,6 +6,7 @@ import { saveUser, setUserCredential } from '../../app/slice/AuthSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../app/store';
 import OAuth from '../../Components/User/userCommon/OAuth';
+import { EMAIL_PATTERN } from '../../constants/commonConstants';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -20,6 +21,8 @@ const LoginPage: React.FC = () => {
 
     const loginHandler = async () => {
         try {
+            setErr('');
+            if (!email || !password) return setErr('input fields must not be blank!')
             const result = await login(email, password);
             if (result) {
                 console.log(result.data.data.data);
@@ -76,8 +79,10 @@ const LoginPage: React.FC = () => {
                             <p className="text-red-500">{err}</p>
                             <div className="flex flex-col max-w-md space-y-5">
                                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
+                                    onKeyUp={() => !EMAIL_PATTERN.test(email) ? setErr('Enter a valid Email address') : setErr('')}
                                     className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
                                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
+                                    onKeyUp={() => !password.trim().length ? setErr('Enter the password!') : setErr('')}
                                     className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
                                 <button onClick={loginHandler} className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
 
@@ -87,7 +92,7 @@ const LoginPage: React.FC = () => {
                                     <span className="px-4">Or</span>
                                     <span className="w-full border border-black"></span>
                                 </div>
-                                <OAuth />   
+                                <OAuth />
                             </div>
                         </div>
                         <div className="hidden lg:flex justify-between items-center w-full py-4">

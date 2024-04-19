@@ -45,7 +45,7 @@ function Header() {
     <>
       <nav className="bg-gradient-to-b from-blue-800 
                 to-blue-950 bg-white 
-                shadow-lg text-white dark:bg-black dark:text-white">
+                shadow-lg text-white dark:bg-black dark:text-white sticky top-0">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to='/'>
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
