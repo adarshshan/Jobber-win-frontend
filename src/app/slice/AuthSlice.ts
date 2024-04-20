@@ -30,6 +30,7 @@ export const authSlice = createSlice({
         userLogout: (state) => {
             state.userData = null;
             localStorage.removeItem('userInfo');
+            localStorage.removeItem('userAddress');
         },
         adminLogout: (state) => {
             state.adminData = null;

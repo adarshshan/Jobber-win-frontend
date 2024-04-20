@@ -18,7 +18,6 @@ import { AlertDialogAction } from '../../../@/components/ui/alert-dialog';
 function Header() {
 
   const { user } = useAppSelector((state) => state.auth)
-  console.log(user.name); console.log('this is saved data');
 
   useEffect(() => {
     initFlowbite()
@@ -59,7 +58,7 @@ function Header() {
   return (
     <>
       <nav className="bg-gradient-to-b from-blue-800 
-                to-blue-950 bg-white 
+                to-blue-950 bg-white  z-50
                 shadow-lg text-white dark:bg-black dark:text-white sticky top-0">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to='/'>
@@ -71,7 +70,7 @@ function Header() {
               {/* <img className="w-8 h-8 rounded-full" src={user.profilePicture} alt="user photo" /> */}
               <Avatar
                 radius="full"
-                src={user.profilePicture}
+                src={user ? user.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
               />
             </button>
             {/* Dropdown menu */}
@@ -80,12 +79,12 @@ function Header() {
                 <Badge content="" color="success" shape="circle" placement="bottom-right">
                   <Avatar
                     radius="full"
-                    src={user.profilePicture}
+                    src={user ? user.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
                   />
                 </Badge>
                 <div className='ms-3'>
-                  <span className="block text-sm text-gray-900 dark:text-white">{user.name}</span>
-                  <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user.email}</span>
+                  <span className="block text-sm text-gray-900 dark:text-white">{user ? user.name : 'user'}</span>
+                  <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user ? user.email : ''}</span>
                 </div>
 
               </Link>
