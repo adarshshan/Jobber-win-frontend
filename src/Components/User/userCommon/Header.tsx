@@ -8,6 +8,12 @@ import toast from 'react-hot-toast';
 import { Avatar, Badge } from '@nextui-org/react';
 import Swal from 'sweetalert2';
 import { useAppSelector } from '../../../app/store';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTrigger } from '../../../@/components/ui/alert-dialog';
+import { AlertDialogTitle } from '../../../@/components/ui/alert-dialog';
+import { AlertDialogDescription } from '../../../@/components/ui/alert-dialog';
+import { AlertDialogFooter } from '../../../@/components/ui/alert-dialog';
+import { AlertDialogCancel } from '../../../@/components/ui/alert-dialog';
+import { AlertDialogAction } from '../../../@/components/ui/alert-dialog';
 
 function Header() {
 
@@ -37,6 +43,15 @@ function Header() {
           toast.success("You are logged out!")
         }
       });
+    } catch (error) {
+      console.log(error as Error);
+    }
+  }
+  const handl = async () => {
+    try {
+      await logout()
+      dispatch(userLogout());
+      toast.success("You are logged out!")
     } catch (error) {
       console.log(error as Error);
     }
@@ -86,6 +101,21 @@ function Header() {
                 </li>
                 <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer"
                   onClick={handleLogout}>
+                  {/* <AlertDialog>
+                    <AlertDialogTrigger>Logout</AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          .
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handl}>Continue</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog> */}
                   Sign out
                 </li>
               </ul>

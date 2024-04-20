@@ -1,21 +1,26 @@
 import { Routes, Route, Router, RouterProvider } from 'react-router-dom';
-import LandingPage from './Pages/user/LandingPage';
-import UserHome from './Pages/user/UserHome';
+
 import User from './Components/User/userCommon/User';
-import LoginPage from './Pages/user/LoginPage';
-import SignupPage from './Pages/user/SignupPage';
 import Admin from './Components/Admin/Admin';
 import AdminLogin from './Pages/admin/AdminLogin';
 import Users from './Pages/admin/Users';
 import Jobs from './Pages/admin/Jobs';
 import PageNotFound from './Components/Common/PageNotFound';
 import { Toaster } from 'react-hot-toast';
-import OtpPage from './Pages/user/OtpPage';
 import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
-import ProfilePage from './Pages/user/ProfilePage';
+import Test from './Pages/user/Test';
+import React, { Suspense, lazy } from 'react';
+import { Skeleton } from './@/components/ui/skeleton';
+
+const LandingPage = lazy(() => import('./Pages/user/LandingPage'))
+const UserHome = lazy(() => import('./Pages/user/UserHome'))
+const LoginPage = lazy(() => import('./Pages/user/LoginPage'))
+const SignupPage = lazy(() => import('./Pages/user/SignupPage'))
+const OtpPage = lazy(() => import('./Pages/user/OtpPage'))
+const ProfilePage = lazy(() => import('./Pages/user/ProfilePage'))
 
 
 interface IAppProps {
@@ -31,19 +36,21 @@ const App: React.FunctionComponent<IAppProps> = () => {
 
         {/* User Side */}
 
-        <Route path='' element={<UserLoggedOut />}><Route path='/' element={<LandingPage />} /></Route>
+        <Route path='' element={<UserLoggedOut />}><Route path='/' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
+        }><LandingPage /></Suspense>} /></Route>
 
         <Route path="/user" element={<User />}>
 
           <Route path='' element={<UserLoggedOut />}>
-            <Route path='login' element={<LoginPage />} />
-            <Route path='signup' element={<SignupPage />} />
-            <Route path='otp-page' element={<OtpPage />} />
+            <Route path='login' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><LoginPage /></Suspense>} />
+            <Route path='signup' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><SignupPage /></Suspense>} />
+            <Route path='otp-page' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><OtpPage /></Suspense>} />
           </Route>
 
           <Route path='' element={<UserLoggedIn />}>
-            <Route path='home' element={<UserHome />} />
-            <Route path='profile' element={<ProfilePage />} />
+            <Route path='home' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><UserHome /></Suspense>} />
+            <Route path='profile' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ProfilePage /></Suspense>} />
+            <Route path='test' element={<Test />} />
           </Route>
 
 
