@@ -2,6 +2,7 @@ import { UserData } from '@/components/user/ProfilePage'
 import { Image, Tab, Tabs } from '@nextui-org/react'
 import React from 'react'
 
+
 interface IProfileCardProps {
     data: UserData | null;
 }
