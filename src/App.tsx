@@ -11,7 +11,7 @@ import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
-import Test from './Pages/user/Home';
+import Test from './Pages/user/Test';
 import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
 import MyNetworkPage from './Pages/user/MyNetworkPage';
@@ -54,6 +54,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='profile' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ProfilePage /></Suspense>} />
             <Route path='my-network' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><MyNetworkPage /></Suspense>} />
             <Route path='find-jobs' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><FindJobPage /></Suspense>} />
+            <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
           </Route>
 
 
