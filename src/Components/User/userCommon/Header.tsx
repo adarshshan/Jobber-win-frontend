@@ -5,7 +5,7 @@ import { logout } from '../../../Api/user';
 import { useDispatch } from 'react-redux';
 import { userLogout } from '../../../app/slice/AuthSlice';
 import toast from 'react-hot-toast';
-import { Avatar, Badge } from '@nextui-org/react';
+import { Avatar, Badge, Input } from '@nextui-org/react';
 import Swal from 'sweetalert2';
 import { useAppSelector } from '../../../app/store';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTrigger } from '../../../@/components/ui/alert-dialog';
@@ -61,9 +61,13 @@ function Header() {
                 to-blue-950 bg-white  z-50
                 shadow-lg text-white dark:bg-black dark:text-white sticky top-0">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to='/'>
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
-          </Link>
+          <div className="flex">
+            <Link to='/'>
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
+            </Link>
+            <input type="search" className='bg-transparent border border-gray-950 shadow-black  ms-14 rounded-full p-2' placeholder='Search' />
+          </div>
+
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
               <span className="sr-only">Open user menu</span>
@@ -132,16 +136,16 @@ function Header() {
                 <Link to='/user/home' className="block py-2 px-3 text-white bg-gray-200 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500">Home</Link>
               </li>
               <li>
-                <a href="#" className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">My Network</a>
+                <Link to='/user/my-network' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">My Network</Link>
               </li>
               <li>
-                <a href="#" className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Find Jobs</a>
+                <Link to='/user/find-jobs' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Find Jobs</Link>
               </li>
               <li>
-                <a href="#" className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Messaging</a>
+                <Link to='/user/messaging' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Messaging</Link>
               </li>
               <li>
-                <a href="#" className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Notifications</a>
+                <Link to='/user/notifications' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Notifications</Link>
               </li>
             </ul>
           </div>
