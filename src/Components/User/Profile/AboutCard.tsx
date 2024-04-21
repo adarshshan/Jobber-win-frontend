@@ -7,7 +7,7 @@ interface IAboutCardProps {
 const AboutCard: React.FC<IAboutCardProps> = () => {
     return (
         <>
-            <div className="w-full min-h-[50px] bg-gray-100 mt-4 rounded-lg pt-8 p-4 shadow-lg">
+            <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
                 <div className="flex justify-between">
                     <h1 className="text-xl font-semibold ms-5">About</h1>
                     <CiEdit className="font-semibold text-2xl me-8" />

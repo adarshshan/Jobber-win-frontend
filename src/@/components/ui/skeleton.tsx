@@ -11,6 +11,7 @@ function Skeleton({
       <div className={cn("animate-pulse rounded-md bg-gray-200", className)} />
       <div className={cn("animate-pulse rounded-md bg-gray-200", className)} />
       <div className={cn("animate-pulse rounded-md bg-gray-200", className)} />
+
     </>
   )
 }

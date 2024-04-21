@@ -11,12 +11,12 @@ import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
-import Test from './Pages/user/Test';
+import Test from './Pages/user/Home';
 import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
 
 const LandingPage = lazy(() => import('./Pages/user/LandingPage'))
-const UserHome = lazy(() => import('./Pages/user/UserHome'))
+const Home = lazy(() => import('./Pages/user/Home'))
 const LoginPage = lazy(() => import('./Pages/user/LoginPage'))
 const SignupPage = lazy(() => import('./Pages/user/SignupPage'))
 const OtpPage = lazy(() => import('./Pages/user/OtpPage'))
@@ -48,9 +48,8 @@ const App: React.FunctionComponent<IAppProps> = () => {
           </Route>
 
           <Route path='' element={<UserLoggedIn />}>
-            <Route path='home' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><UserHome /></Suspense>} />
+            <Route path='home' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Home /></Suspense>} />
             <Route path='profile' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ProfilePage /></Suspense>} />
-            <Route path='test' element={<Test />} />
           </Route>
 
 

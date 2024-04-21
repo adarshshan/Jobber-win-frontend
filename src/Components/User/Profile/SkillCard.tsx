@@ -9,7 +9,7 @@ interface ISillCardProps {
 const SkillCard: React.FC<ISillCardProps> = () => {
     return (
         <>
-            <div className="w-full min-h-[50px] bg-gray-100 mt-4 rounded-lg pt-8 p-4 shadow-lg">
+            <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
                 <div className="flex justify-between text-2xl mx-2">
                     <h1 className="font-semibold">Skills</h1>
                     <div className="flex">

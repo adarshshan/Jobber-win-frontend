@@ -11,7 +11,7 @@ interface IPostCardProps {
 const PostCard: React.FC<IPostCardProps> = () => {
     return (
         <>
-            <div className="w-full min-h-[50px] bg-gray-100 mt-4 rounded-lg pt-8 p-4 shadow-lg">
+            <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
                 <div className="flex justify-between">
                     <div>
                         <h1 className="text-2xl font-semibold">Activity</h1>
