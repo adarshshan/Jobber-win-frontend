@@ -1,14 +1,35 @@
 import { UserData } from '@/components/user/ProfilePage';
 import { Button } from '../../../@/components/ui/button'
 import { Textarea } from '@nextui-org/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
+import { updateAbout } from 'Api/user';
+import { useDispatch } from 'react-redux';
+import { changeAbout } from 'app/slice/AuthSlice';
 
 interface IAboutScreenProps {
     setAboutScreen: React.Dispatch<React.SetStateAction<boolean>>;
-    userProfile: React.Dispatch<React.SetStateAction<UserData>> | null;
+    userProfile: UserData | null;
 }
+
 const AboutScreen: React.FC<IAboutScreenProps> = ({ setAboutScreen, userProfile }) => {
+    const [about, setAbout] = useState(userProfile?.aboutInfo || '');
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        setAbout(userProfile?.aboutInfo || '')
+    }, [userProfile])
+    const handleUpdateAbout = async () => {
+        try {
+            if (!userProfile) return;
+            await updateAbout(userProfile?._id, about);
+            dispatch(changeAbout(about));
+            setAboutScreen(false);
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <>
             <div className="w-[700px] h-[500px] bg-gray-900 shadow-2xl rounded-2xl fixed top-[100px] left-[300px] text-white">
@@ -22,12 +43,14 @@ const AboutScreen: React.FC<IAboutScreenProps> = ({ setAboutScreen, userProfile 
                         variant={"faded"}
                         label="Description"
                         labelPlacement="outside"
-                        placeholder={userProfile?.aboutInfo}
+                        placeholder='type here'
+                        onChange={(e) => setAbout(e.target.value)}
+                        value={about}
                         className="col-span-12 md:col-span-6 mb-6 md:mb-0 border border-white mt-5 h-60"
                     />
                 </div>
                 <div className="flex justify-end p-5">
-                    <Button variant="secondary">Save</Button>
+                    <Button onClick={handleUpdateAbout} variant="secondary">Save</Button>
                 </div>
             </div>
         </>

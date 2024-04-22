@@ -1,5 +1,5 @@
+import { Action } from '@radix-ui/react-alert-dialog';
 import { createSlice } from '@reduxjs/toolkit'
-import { stat } from 'fs';
 
 export interface CounterState {
     value: number
@@ -9,6 +9,7 @@ const initialState = {
     adminData: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo') as string) : null,
     userData: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo') as string) : null,
     user: localStorage.getItem('userAddress') ? JSON.parse(localStorage.getItem('userAddress') as any) : null,
+    about: null
 }
 
 export const authSlice = createSlice({
@@ -35,6 +36,9 @@ export const authSlice = createSlice({
         adminLogout: (state) => {
             state.adminData = null;
             localStorage.removeItem('adminInfo');
+        },
+        changeAbout: (state, action) => {
+            state.about = action.payload;
         }
     },
 })
@@ -43,7 +47,9 @@ export const authSlice = createSlice({
 export const {
     setAdminCredential,
     setUserCredential,
-    adminLogout, userLogout,
-    saveUser } = authSlice.actions
+    adminLogout,
+    userLogout,
+    saveUser,
+    changeAbout } = authSlice.actions
 
 export default authSlice.reducer;

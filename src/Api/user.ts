@@ -3,6 +3,7 @@ import { FormData } from "../Pages/user/SignupPage";
 import userRoutes from "../Services/Endpoints.ts/userEndPoints";
 import Api from "../Services/axios";
 import errorHandler from "./errorHandler";
+import toast from "react-hot-toast";
 
 
 const login = async (email: string, password: string) => {
@@ -64,6 +65,23 @@ const getProfile = async () => {
         console.log(error);
     }
 }
+const updateAbout = async (id: string, about: string) => {
+    try {
+        const result = await Api.put(`${userRoutes.updateAbout}${id}`, { aboutInfo: about });
+        if (result.data.success) toast.success(result.data.message);
+        return result.data;
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
+const setProfilePic = async (pic: string, id: string) => {
+    try {
+        const result = await Api.put(userRoutes.updateProfile, { pic, id });
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -71,5 +89,7 @@ export {
     login,
     logout,
     getProfile,
-    googleLogin
+    googleLogin,
+    updateAbout,
+    setProfilePic
 }

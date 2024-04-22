@@ -5,10 +5,12 @@ import React from 'react'
 
 interface IProfileCardProps {
     data: UserData | null;
-    setAddProfilescreen: React.Dispatch<React.SetStateAction<boolean>>
+    setAddProfilescreen: React.Dispatch<React.SetStateAction<boolean>>;
+    pic:string
 }
-const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen }) => {
-    console.log(data); console.log('data from profile page');
+const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen,pic }) => {
+    
+    
     return (
         <>
             <div id="profileCard" className='shadow-lg bg-white rounded-lg'>
@@ -23,7 +25,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen })
                         onClick={() => setAddProfilescreen(true)}
                         className="absolute top-[-80px] left-10 b-10 rounded-full"
                         alt="NextUI hero Image"
-                        src={data?.profile_picture}
+                        src={pic}
                     />
                 </div>
                 <div className="min-h-[250px] rounded-lg">

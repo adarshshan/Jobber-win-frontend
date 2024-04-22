@@ -5,6 +5,8 @@ const userRoutes = {
     logout: "/user/logout",
     getProfile: "/user/profile",
     googleLogin: "/user/google-login",
+    updateAbout: "/user/edit-about/",
+    updateProfile: "/user/set-profile",
 }
 
 
