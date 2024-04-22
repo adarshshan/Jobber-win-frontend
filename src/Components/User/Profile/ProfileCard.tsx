@@ -6,11 +6,11 @@ import React from 'react'
 interface IProfileCardProps {
     data: UserData | null;
     setAddProfilescreen: React.Dispatch<React.SetStateAction<boolean>>;
-    pic:string
+    pic: string
 }
-const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen,pic }) => {
-    
-    
+const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen, pic }) => {
+
+
     return (
         <>
             <div id="profileCard" className='shadow-lg bg-white rounded-lg'>
@@ -20,8 +20,10 @@ const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen,pi
                         alt="NextUI hero Image"
                         src={data?.cover_image ? data.cover_image : 'https://images.template.net/wp-content/uploads/2014/11/Natural-Facebook-Cover-Photo.jpg'}
                     />
+                    {/* <img onClick={() => setAddProfilescreen(true)} className="absolute top-[100px] left-16 b-10 rounded-full w-[150px] h-[150px]" src={pic} alt="Pic will be loaded" /> */}
                     <Image
                         width={150}
+                        height={150}
                         onClick={() => setAddProfilescreen(true)}
                         className="absolute top-[-80px] left-10 b-10 rounded-full"
                         alt="NextUI hero Image"

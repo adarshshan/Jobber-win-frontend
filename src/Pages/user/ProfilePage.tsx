@@ -10,6 +10,11 @@ import AboutScreen from "Components/User/Profile/AboutScreen";
 import { useDispatch } from "react-redux";
 import { changeAbout } from "app/slice/AuthSlice";
 import PhotoScreen from "Components/User/Profile/PhotoScreen";
+import { IoMdClose } from "react-icons/io";
+import { Button, Textarea, Tooltip } from "@nextui-org/react";
+import { GoFileMedia } from "react-icons/go";
+import { FaRegSmile } from "react-icons/fa";
+import CreatePostScreen from "Components/User/Profile/CreatePostScreen";
 
 export interface UserData {
     _id: string;
@@ -25,6 +30,7 @@ export interface UserData {
 const ProfilePage: React.FC = () => {
     const [userProfile, setUserProfile] = useState<UserData | null>(null);
     const [addProfilescreen, setAddProfilescreen] = useState(false);
+    const [createPostScreen, setCreatePostScreen] = useState(false);
     const [aboutScreen, setAboutScreen] = useState(false);
     const [pic, setPic] = useState('');
 
@@ -56,7 +62,7 @@ const ProfilePage: React.FC = () => {
                 <div className="sm:col-span-9 min-h-[100px] rounded-lg">
                     <ProfileCard data={userProfile} pic={pic} setAddProfilescreen={setAddProfilescreen} />
                     <AboutCard setAboutScreen={setAboutScreen} userProfile={userProfile} />
-                    <PostCard />
+                    <PostCard setCreatePostScreen={setCreatePostScreen} />
                     <SkillCard />
                 </div>
                 <div className="sm:col-span-3 min-h-[100px] rounded-lg">
@@ -64,6 +70,7 @@ const ProfilePage: React.FC = () => {
                 </div>
                 {addProfilescreen && <PhotoScreen setAddProfilescreen={setAddProfilescreen} pic={pic} setPic={setPic} userProfile={userProfile} />}
                 {aboutScreen && <AboutScreen setAboutScreen={setAboutScreen} userProfile={userProfile} />}
+                {createPostScreen && <CreatePostScreen setCreatePostScreen={setCreatePostScreen} />}
 
             </div>
         </>
