@@ -1,5 +1,6 @@
 
 import ProfileCard from 'Components/User/Home/ProfileCard';
+import ContactCard from 'Components/User/Mynetwork/ContactCard';
 import LeftSideBar from 'Components/User/Mynetwork/LeftSideBar';
 import React, { useState } from 'react'
 
@@ -28,7 +29,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
                                     users && users.map((item, index) => {
                                         return (
                                             <div key={index} className='w-full sm:w-1/2 md:w-1/3 p-4'>
-                                                <ProfileCard isFollowed={true} />
+                                                <ContactCard  />
                                             </div>
                                         )
                                     })

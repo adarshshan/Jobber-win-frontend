@@ -5,9 +5,11 @@ import { Divider } from '@nextui-org/react'
 import PostListItem from './PostListItem'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { getAllPosts } from 'Api/user'
+import toast from 'react-hot-toast'
 
 interface IPostCardProps {
     setCreatePostScreen: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: string | undefined;
 }
 export interface PostInterface extends Document {
     userId?: string;
@@ -17,22 +19,26 @@ export interface PostInterface extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
-const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen }) => {
+const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => {
+    console.log(userId); console.log('this is the id from the postCArd');
     const [posts, setPosts] = useState<PostInterface[]>();
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const result = await getAllPosts();
-                if (result?.data.success) {
-                    setPosts(result.data.data);
+                if (userId) {
+                    const result = await getAllPosts(userId);
+                    if (result?.data.success) {
+                        setPosts(result.data.data);
+                    }
                 }
+
             } catch (error) {
                 console.log(error as Error);
             }
         }
         fetchPosts();
-    }, [])
+    }, [userId, setCreatePostScreen])
     console.log(posts);
     return (
         <>

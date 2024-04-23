@@ -27,7 +27,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen, p
                         onClick={() => setAddProfilescreen(true)}
                         className="absolute top-[-80px] left-10 b-10 rounded-full"
                         alt="NextUI hero Image"
-                        src={pic}
+                        src={data?.profile_picture}
                     />
                 </div>
                 <div className="min-h-[250px] rounded-lg">

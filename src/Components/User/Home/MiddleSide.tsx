@@ -6,9 +6,10 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import PostComponent from './PostComponent'
 import { Skeleton } from '../../../@/components/ui/skeleton'
 import { getAllHomePosts } from 'Api/user'
+import { UserData } from '@/components/user/ProfilePage'
 
 interface IMiddleSideProps {
-
+    userProfile:UserData | null;
 }
 interface UserInterfaces {
     _id: string;
@@ -36,7 +37,7 @@ export interface IPostInterface {
     result: UserInterfaces[];
 }
 
-const MiddleSide: React.FC<IMiddleSideProps> = () => {
+const MiddleSide: React.FC<IMiddleSideProps> = ({userProfile}) => {
     const [dataSource, setDataSource] = useState<IPostInterface[]>();
     useEffect(() => {
         const fetchData = async () => {
@@ -53,7 +54,7 @@ const MiddleSide: React.FC<IMiddleSideProps> = () => {
     return (
         <>
             <div className="sm:col-span-6 shadow-lg min-h-[100px] rounded-lg bg-transparent">
-                <MiddleCreatePost />
+                <MiddleCreatePost userProfile={userProfile} />
                 <InfiniteScroll
                     dataLength={dataSource?.length ?? 0}
                     next={() => console.log('fetching data...')}

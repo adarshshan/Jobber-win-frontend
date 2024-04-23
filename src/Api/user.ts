@@ -90,9 +90,9 @@ const createPost = async (pic: string, id: string, caption: string) => {
         console.log(error as Error);
     }
 }
-const getAllPosts = async () => {
+const getAllPosts = async (userId:string) => {
     try {
-        const result = await Api.get(userRoutes.getAllPosts);
+        const result = await Api.get(`${userRoutes.getAllPosts}/${userId}`);
         return result;
     } catch (error) {
         console.log(error as Error);

@@ -43,10 +43,9 @@ const ProfilePage: React.FC = () => {
         const fetchData = async () => {
             try {
                 const response = await getProfile();
-                console.log(response); console.log('this is the response....');
                 if (response) {
                     setUserProfile(response.data);
-                    setPic(response.data?.profile_picture); console.log(pic); console.log('this is first updated pic in profile page');
+                    setPic(response.data?.profile_picture);
                 }
                 dispatch(changeAbout(userProfile?.aboutInfo));
             } catch (error) {
@@ -63,7 +62,7 @@ const ProfilePage: React.FC = () => {
                 <div className="sm:col-span-9 min-h-[100px] rounded-lg">
                     <ProfileCard data={userProfile} pic={pic} setAddProfilescreen={setAddProfilescreen} />
                     <AboutCard setAboutScreen={setAboutScreen} userProfile={userProfile} />
-                    <PostCard setCreatePostScreen={setCreatePostScreen} />
+                    <PostCard setCreatePostScreen={setCreatePostScreen} userId={userProfile?._id}  />
                     <SkillCard setSkillAdd={setSkillAdd} userId={userProfile?._id}  />
                 </div>
                 <div className="sm:col-span-3 min-h-[100px] rounded-lg">

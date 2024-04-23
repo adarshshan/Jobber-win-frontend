@@ -2,10 +2,10 @@ import { UserData } from '@/components/user/ProfilePage';
 import { Button, Divider, Image } from '@nextui-org/react'
 import React, { useLayoutEffect, useRef } from 'react'
 
-interface IProfilCardProps {
-    userProfile: UserData | null;
+interface IContactCardProps {
+    
 }
-const ProfileCard: React.FC<IProfilCardProps> = ({ userProfile }) => {
+const ContactCard: React.FC<IContactCardProps> = () => {
     const parentRef = useRef<HTMLDivElement>(null);
     const childRef = useRef<HTMLImageElement>(null);
 
@@ -41,14 +41,14 @@ const ProfileCard: React.FC<IProfilCardProps> = ({ userProfile }) => {
                         alt="NextUI hero Image"
                         src='https://images.template.net/wp-content/uploads/2014/11/Natural-Facebook-Cover-Photo.jpg'
                     />
-                    {/* <img ref={childRef} className="absolute top-[10px] ms-2 left-[95px] b-10 w-32 h-32 sm:w-24 sm:h-24 rounded-full" src="https://avatars.githubusercontent.com/u/137256030?v=4" alt="" /> */}
-                    <img ref={childRef} className="absolute top-[10px] ms-2 left-[95px] b-10 w-32 h-32 sm:w-24 sm:h-24 rounded-full" src={userProfile?.profile_picture} alt="\\profile image" />
+                    <img ref={childRef} className="absolute top-[10px] ms-2 left-[95px] b-10 w-32 h-32 sm:w-24 sm:h-24 rounded-full" src="https://avatars.githubusercontent.com/u/137256030?v=4" alt="" />
+                    {/* <img ref={childRef} className="absolute top-[10px] ms-2 left-[95px] b-10 w-32 h-32 sm:w-24 sm:h-24 rounded-full" src={userProfile?.profile_picture} alt="\\profile image" /> */}
 
                 </div>
                 <div className="flex justify-center text-center">
                     <div className='mt-14 mb-10'>
-                        <h1 className='font-semibold text-xl'>{userProfile?.name}</h1>
-                        <p>{userProfile?.email}</p>
+                        <h1 className='font-semibold text-xl'>Adarsh C</h1>
+                        <p>Mern Stack Developer</p>
                         <span className='outline-slate-300 border-1 text-blue-400 mt-5'>View Profile</span>
                         <button className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Follow</button>
                     </div>
@@ -59,4 +59,4 @@ const ProfileCard: React.FC<IProfilCardProps> = ({ userProfile }) => {
     )
 }
 
-export default ProfileCard
+export default ContactCard;

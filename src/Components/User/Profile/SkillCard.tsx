@@ -12,7 +12,7 @@ interface ISillCardProps {
 const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
 
     const [skill, setSkill] = useState<string[]>();
-    const [showSkill, setShowSkill] = useState(2);
+    const [showSkill, setShowSkill] = useState(2); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +27,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
             }
         }
         fetchData();
-    })
+    }, [showSkill]);
     const handleDeleteSkill = async (skill: string) => {
         try {
             const result = await deleteSkill(userId, skill);

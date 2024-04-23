@@ -1,15 +1,16 @@
 import React from 'react'
 import ProfileCard from './ProfileCard'
+import { UserData } from '@/components/user/ProfilePage';
 
 interface ILeftSideProps {
-
+    userProfile: UserData | null;
 }
-const LeftSide: React.FC<ILeftSideProps> = () => {
+const LeftSide: React.FC<ILeftSideProps> = ({ userProfile }) => {
 
     return (
         <>
             <div className="sm:col-span-3 shadow-lg text-lg min-h-[100px] bg-transparent rounded-lg">
-                <ProfileCard />
+                <ProfileCard userProfile={userProfile} />
             </div>
         </>
     )
