@@ -1,5 +1,5 @@
 import { Button, Textarea, Tooltip } from '@nextui-org/react'
-import { createPost } from 'Api/user'
+import { createPost, getAllPosts } from 'Api/user'
 import { useAppSelector } from 'app/store'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -18,9 +18,7 @@ const CreatePostScreen: React.FC<ICreatePostScreenProps> = ({ setCreatePostScree
 
 
     const { user } = useAppSelector((state) => state.auth);
-    useEffect(() => {
-
-    }, [])
+    
     const openGallery = () => {
         const butn = document.getElementById('openGallery');
         if (butn) butn.click();
@@ -54,15 +52,15 @@ const CreatePostScreen: React.FC<ICreatePostScreenProps> = ({ setCreatePostScree
     }
     const handleSubmit = async () => {
         try {
-            if(!pic.length){
+            if (!pic.length) {
                 toast.error('Please select an image');
-            }else{
+            } else {
                 const result = await createPost(pic, user._id, caption);
                 console.log(result); console.log('this is the result from the createpostScreen');
-                if (result){
+                if (result) {
                     toast.success('post uploaded successfully.')
                     setCreatePostScreen(false)
-                } else{
+                } else {
                     toast.error('somthing went wrong while posting.');
                 }
             }

@@ -90,6 +90,14 @@ const createPost = async (pic: string, id: string, caption: string) => {
         console.log(error as Error);
     }
 }
+const getAllPosts = async () => {
+    try {
+        const result = await Api.get(userRoutes.getAllPosts);
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -100,5 +108,6 @@ export {
     googleLogin,
     updateAbout,
     setProfilePic,
-    createPost
+    createPost,
+    getAllPosts
 }

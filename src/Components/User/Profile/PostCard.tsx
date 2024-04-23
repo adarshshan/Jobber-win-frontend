@@ -1,14 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdModeEdit } from 'react-icons/md'
 import MenuTabs from './MenuTabs'
 import { Divider } from '@nextui-org/react'
 import PostListItem from './PostListItem'
 import { FaArrowRightLong } from 'react-icons/fa6'
+import { getAllPosts } from 'Api/user'
 
 interface IPostCardProps {
     setCreatePostScreen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+export interface PostInterface extends Document {
+    userId?: string;
+    caption?: string;
+    imageUrl?: string;
+    isPrivate: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
 const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen }) => {
+    const [posts, setPosts] = useState<PostInterface[]>();
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const result = await getAllPosts();
+                if (result?.data.success) {
+                    setPosts(result.data.data);
+                }
+            } catch (error) {
+                console.log(error as Error);
+            }
+        }
+        fetchPosts();
+    }, [])
+    console.log(posts);
     return (
         <>
             <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
@@ -23,12 +48,14 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen }) => {
                     </div>
                 </div>
                 <MenuTabs />
-                <Divider className="my-4" />
-                <PostListItem like={100} />
-                <Divider className="my-4" />
-                <PostListItem like={407} />
-                <Divider className="my-4" />
-                <PostListItem like={47} />
+                {posts?.length && posts.map((postItem, index) => {
+                    return (
+                        <>
+                            <Divider className="my-4" />
+                            <PostListItem postItem={postItem} like={100} />
+                        </>
+                    )
+                })}
                 <Divider className="my-4" />
                 <div id="postListFooter" className=" flex justify-center w-full">
                     <p>Show all Posts </p>

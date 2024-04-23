@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { getProfile } from "../../Api/user";
+import { getAllPosts, getProfile } from "../../Api/user";
 import ProfileCard from "Components/User/Profile/ProfileCard";
 import AboutCard from "Components/User/Profile/AboutCard";
 import PostCard from "Components/User/Profile/PostCard";
@@ -29,6 +29,8 @@ const ProfilePage: React.FC = () => {
     const [createPostScreen, setCreatePostScreen] = useState(false);
     const [aboutScreen, setAboutScreen] = useState(false);
     const [pic, setPic] = useState('');
+    
+
 
 
     const dispatch = useDispatch()
@@ -51,6 +53,7 @@ const ProfilePage: React.FC = () => {
         }
         fetchData();
     }, [])
+    
 
     return (
         <>
