@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { changeAbout } from "app/slice/AuthSlice";
 import PhotoScreen from "Components/User/Profile/PhotoScreen";
 import CreatePostScreen from "Components/User/Profile/CreatePostScreen";
+import AddSkillScreen from "Components/User/Profile/AddSkillScreen";
 
 export interface UserData {
     _id: string;
@@ -28,8 +29,9 @@ const ProfilePage: React.FC = () => {
     const [addProfilescreen, setAddProfilescreen] = useState(false);
     const [createPostScreen, setCreatePostScreen] = useState(false);
     const [aboutScreen, setAboutScreen] = useState(false);
+    const [skillAdd, setSkillAdd] = useState(false);
     const [pic, setPic] = useState('');
-    
+
 
 
 
@@ -53,7 +55,7 @@ const ProfilePage: React.FC = () => {
         }
         fetchData();
     }, [])
-    
+
 
     return (
         <>
@@ -62,7 +64,7 @@ const ProfilePage: React.FC = () => {
                     <ProfileCard data={userProfile} pic={pic} setAddProfilescreen={setAddProfilescreen} />
                     <AboutCard setAboutScreen={setAboutScreen} userProfile={userProfile} />
                     <PostCard setCreatePostScreen={setCreatePostScreen} />
-                    <SkillCard />
+                    <SkillCard setSkillAdd={setSkillAdd} userId={userProfile?._id}  />
                 </div>
                 <div className="sm:col-span-3 min-h-[100px] rounded-lg">
                     <FriendSuggession />
@@ -70,6 +72,7 @@ const ProfilePage: React.FC = () => {
                 {addProfilescreen && <PhotoScreen setAddProfilescreen={setAddProfilescreen} pic={pic} setPic={setPic} userProfile={userProfile} />}
                 {aboutScreen && <AboutScreen setAboutScreen={setAboutScreen} userProfile={userProfile} />}
                 {createPostScreen && <CreatePostScreen setCreatePostScreen={setCreatePostScreen} />}
+                {skillAdd && <AddSkillScreen setSkillAdd={setSkillAdd} userId={userProfile?._id} />}
 
             </div>
         </>

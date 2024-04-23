@@ -10,6 +10,8 @@ const userRoutes = {
     createPost: "/user/new-post",
     getAllPosts: "/user/getposts",
     getAllHomePosts: "/user/get-posts-home",
+    addSkill: "/user/add-skill/",
+    getAllSkills: "/user/get-skills/"
 }
 
 

@@ -106,6 +106,21 @@ const getAllHomePosts = async () => {
         console.log(error as Error);
     }
 }
+const addSkill = async (id: string, skill: string) => {
+    try {
+        const result = await Api.patch(`${userRoutes.addSkill}${id}`, { skill });
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getAllSkills = async (id: string) => {
+    try {
+        return await Api.get(`${userRoutes.getAllSkills}${id}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -118,5 +133,7 @@ export {
     setProfilePic,
     createPost,
     getAllPosts,
-    getAllHomePosts
+    getAllHomePosts,
+    addSkill,
+    getAllSkills
 }
