@@ -32,7 +32,7 @@ const PhotoScreen: React.FC<IPhotoScreenProps> = ({ setAddProfilescreen, setPic,
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data.url.toString());
-                    setPic(data.url.toString()); console.log(pic + 'heeee'); console.log('after set up the profile pic in the usestate...');
+                    setPic(data.url.toString()); console.log(pic + 'heeee');
                     if (userProfile) setProfilePic(data.url.toString(), userProfile?._id).then((result) => setAddProfilescreen(false));
                 })
                 .catch((err) => {

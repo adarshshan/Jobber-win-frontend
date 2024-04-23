@@ -7,6 +7,7 @@ const userRoutes = {
     googleLogin: "/user/google-login",
     updateAbout: "/user/edit-about/",
     updateProfile: "/user/set-profile",
+    createPost: "/user/new-post",
 }
 
 

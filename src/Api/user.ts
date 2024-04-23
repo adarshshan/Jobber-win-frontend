@@ -82,6 +82,14 @@ const setProfilePic = async (pic: string, id: string) => {
         console.log(error as Error);
     }
 }
+const createPost = async (pic: string, id: string, caption: string) => {
+    try {
+        const result = await Api.post(userRoutes.createPost, { userId: id, imageUrl: pic, caption: caption })
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -91,5 +99,6 @@ export {
     getProfile,
     googleLogin,
     updateAbout,
-    setProfilePic
+    setProfilePic,
+    createPost
 }

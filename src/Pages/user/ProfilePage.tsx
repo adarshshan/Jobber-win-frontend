@@ -10,10 +10,6 @@ import AboutScreen from "Components/User/Profile/AboutScreen";
 import { useDispatch } from "react-redux";
 import { changeAbout } from "app/slice/AuthSlice";
 import PhotoScreen from "Components/User/Profile/PhotoScreen";
-import { IoMdClose } from "react-icons/io";
-import { Button, Textarea, Tooltip } from "@nextui-org/react";
-import { GoFileMedia } from "react-icons/go";
-import { FaRegSmile } from "react-icons/fa";
 import CreatePostScreen from "Components/User/Profile/CreatePostScreen";
 
 export interface UserData {
