@@ -1,6 +1,7 @@
 import { Divider } from '@nextui-org/react'
-import { getAllSkills } from 'Api/user';
+import { deleteSkill, getAllSkills } from 'Api/user';
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 import { FaArrowRightLong, FaPlus } from 'react-icons/fa6'
 import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
 
@@ -27,6 +28,16 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
         }
         fetchData();
     })
+    const handleDeleteSkill = async (skill: string) => {
+        try {
+            const result = await deleteSkill(userId, skill);
+            if (result) toast.success('skill deleted successfully');
+            else toast.error('somthing went wrong while deleting the skill!');
+        } catch (error) {
+            console.log(error as Error);
+            toast.error('somthing went wrong while deleting the skill!');
+        }
+    }
     return (
         <>
             <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
@@ -44,7 +55,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
                                 <Divider className="my-4" />
                                 <div className="flex justify-between mx-5">
                                     <h1 key={index}>{item}</h1>
-                                    <MdOutlineDeleteForever />
+                                    <MdOutlineDeleteForever onClick={() => handleDeleteSkill(item)} />
                                 </div>
                             </div>
                         )

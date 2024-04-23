@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+
 import { FormData } from "../Pages/user/SignupPage";
 import userRoutes from "../Services/Endpoints.ts/userEndPoints";
 import Api from "../Services/axios";
@@ -121,6 +121,13 @@ const getAllSkills = async (id: string) => {
         console.log(error as Error);
     }
 }
+const deleteSkill = async (id: string | undefined, skill: string) => {
+    try {
+        if (id) return await Api.delete(`${userRoutes.deleteSkill}${skill}/${id}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -135,5 +142,6 @@ export {
     getAllPosts,
     getAllHomePosts,
     addSkill,
-    getAllSkills
+    getAllSkills,
+    deleteSkill
 }

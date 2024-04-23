@@ -11,7 +11,8 @@ const userRoutes = {
     getAllPosts: "/user/getposts",
     getAllHomePosts: "/user/get-posts-home",
     addSkill: "/user/add-skill/",
-    getAllSkills: "/user/get-skills/"
+    getAllSkills: "/user/get-skills/",
+    deleteSkill: "/user/remove-skill/",
 }
 
 
