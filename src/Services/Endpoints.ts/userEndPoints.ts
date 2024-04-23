@@ -9,6 +9,7 @@ const userRoutes = {
     updateProfile: "/user/set-profile",
     createPost: "/user/new-post",
     getAllPosts: "/user/getposts",
+    getAllHomePosts: "/user/get-posts-home",
 }
 
 

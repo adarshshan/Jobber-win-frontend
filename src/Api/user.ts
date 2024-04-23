@@ -98,6 +98,14 @@ const getAllPosts = async () => {
         console.log(error as Error);
     }
 }
+const getAllHomePosts = async () => {
+    try {
+        const result = await Api.get(userRoutes.getAllHomePosts);
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -109,5 +117,6 @@ export {
     updateAbout,
     setProfilePic,
     createPost,
-    getAllPosts
+    getAllPosts,
+    getAllHomePosts
 }
