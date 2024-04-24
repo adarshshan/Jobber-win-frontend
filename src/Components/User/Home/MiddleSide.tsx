@@ -63,7 +63,7 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({userProfile}) => {
                 >
                     {dataSource?.map((item, index) => {
                         return (
-                            <PostComponent key={index} item={item} />
+                            <PostComponent key={index} item={item} userProfile={userProfile} />
                         )
                     })}
                 </InfiniteScroll>

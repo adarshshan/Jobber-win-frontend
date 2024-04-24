@@ -4,11 +4,13 @@ import { FaRegCommentAlt } from 'react-icons/fa';
 import { IoIosShareAlt } from 'react-icons/io';
 import { VscSave } from 'react-icons/vsc';
 import { IPostInterface } from './MiddleSide';
+import { UserData } from '@/components/user/ProfilePage';
 
 interface IPostComponentProps {
     item: IPostInterface;
+    userProfile: UserData | null;
 }
-const PostComponent: React.FC<IPostComponentProps> = ({ item }) => {
+const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => {
     return (
         <main className="h-full w-full bg-transparent flex items-center justify-center shadow-lg rounded-xl">
             <div className="border max-w-screen-md w-full bg-transparent mt-6 rounded-2xl p-4">
@@ -61,7 +63,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item }) => {
                 </div>
                 <div className="flex items-center justify-between mt-4">
                     <img
-                        src="https://images.unsplash.com/photo-1595152452543-e5fc28ebc2b8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+                        src={userProfile?.profile_picture}
                         className="bg-yellow-500 rounded-full w-10 h-10 object-cover border"
                         alt="User Avatar"
                     />

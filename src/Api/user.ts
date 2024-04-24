@@ -90,7 +90,7 @@ const createPost = async (pic: string, id: string, caption: string) => {
         console.log(error as Error);
     }
 }
-const getAllPosts = async (userId:string) => {
+const getAllPosts = async (userId: string) => {
     try {
         const result = await Api.get(`${userRoutes.getAllPosts}/${userId}`);
         return result;
@@ -128,6 +128,23 @@ const deleteSkill = async (id: string | undefined, skill: string) => {
         console.log(error as Error);
     }
 }
+const updateUser = async (userId: string, name: string | undefined, headLine: string | undefined, gender: string | undefined, qualification: string | undefined, location: string | undefined, phoneNumber: number | undefined) => {
+    try {
+        if (userId) {
+            return await Api.put(`${userRoutes.updateUser}${userId}`, { name, headLine, gender, qualification, location, phoneNumber });
+        }
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const removeProfilePic = async (id: string|undefined) => {
+    try {
+        const result = await Api.delete(`${userRoutes.removeProfilePic}${id}`);
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -143,5 +160,7 @@ export {
     getAllHomePosts,
     addSkill,
     getAllSkills,
-    deleteSkill
+    deleteSkill,
+    updateUser,
+    removeProfilePic
 }

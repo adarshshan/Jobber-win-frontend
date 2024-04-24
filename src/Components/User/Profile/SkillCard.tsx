@@ -20,10 +20,10 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
                 if (userId) {
                     const result = await getAllSkills(userId);
                     setSkill(result?.data.data);
-                    console.log(result?.data.data); console.log('data from skillcard.....');
                 }
             } catch (error) {
                 console.log(error);
+                toast.error('somthing went wrong while fetching data!');
             }
         }
         fetchData();

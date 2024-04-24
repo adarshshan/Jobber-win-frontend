@@ -1,17 +1,19 @@
 import { UserData } from '@/components/user/ProfilePage';
 import React from 'react'
 import { MdOutlinePermMedia } from 'react-icons/md'
+import { Link } from 'react-router-dom';
 interface IMiddleCreatePostProps {
-    userProfile:UserData | null;
+    userProfile: UserData | null;
 }
-const MiddleCreatePost: React.FC<IMiddleCreatePostProps> = ({userProfile}) => {
+const MiddleCreatePost: React.FC<IMiddleCreatePostProps> = ({ userProfile }) => {
     return (
         <>
             <div className="w-full rounded-lg border shadow-lg mb-3 min-h-[50px]">
                 <div className="flex">
                     <div className='w-2/12 p-2'>
-                        {/* <img src="https://avatars.githubusercontent.com/u/137256030?v=4" alt="" className=" rounded-full  md:w-full md:h-full ms-3" /> */}
-                        <img src={userProfile?.profile_picture} alt="\\profile picture" className=" rounded-full  md:w-full md:h-full ms-3" />
+                        <Link to='/user/profile'>
+                            <img src={userProfile?.profile_picture} alt="\\profile picture" className=" rounded-full  md:w-full md:h-full ms-3" />
+                        </Link>
                     </div>
                     <div className="w-10/12 p-7">
                         <input type="text" className='border border-gray-300 focus:border-blue-500 rounded-full p-3 w-full sm:w-full' placeholder='Start a Post' />

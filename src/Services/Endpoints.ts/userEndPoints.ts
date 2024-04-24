@@ -13,6 +13,8 @@ const userRoutes = {
     addSkill: "/user/add-skill/",
     getAllSkills: "/user/get-skills/",
     deleteSkill: "/user/remove-skill/",
+    updateUser: "/user/edit-user/",
+    removeProfilePic: "/user/delete-profile/"
 }
 
 

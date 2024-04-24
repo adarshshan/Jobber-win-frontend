@@ -1,5 +1,5 @@
 import { UserData } from '@/components/user/ProfilePage';
-import { setProfilePic } from 'Api/user';
+import { removeProfilePic, setProfilePic } from 'Api/user';
 import React, { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import { IoCameraSharp } from 'react-icons/io5';
@@ -43,6 +43,14 @@ const PhotoScreen: React.FC<IPhotoScreenProps> = ({ setAddProfilescreen, setPic,
             setPicMessage('please select a valid image.');
         }
     }
+    const handleDeleteProfilePic = async () => {
+        try {
+            const result = await removeProfilePic(userProfile?._id);
+            console.log(result); console.log('final result from jsx');
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <>
             <div className="w-[700px] h-[500px] bg-gray-900 shadow-2xl rounded-2xl absolute top-[100px] left-[300px] text-white">
@@ -52,7 +60,7 @@ const PhotoScreen: React.FC<IPhotoScreenProps> = ({ setAddProfilescreen, setPic,
                 </div>
                 <p className="text-red-400 font-semibold m-5">{picMessages}</p>
                 <div className="flex justify-center">
-                    <img className="rounded-full w-[280px] h-[280px]" src={pic ?? "https://image.europafm.com/clipping/cmsimages01/2022/07/19/8AC3EBBD-873A-4532-8F0D-68C945D6BAB6/emilia-clarke-actriz-britanica-35-anos_98.jpg?crop=3355,1888,x0,y19&width=1900&height=1069&optimize=low&format=webply"} alt="" />
+                    <img className="rounded-full w-[280px] h-[280px]" src={pic.length ? pic : "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"} alt="" />
                 </div>
                 <input type="file" id="openGallery" className="hidden"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => postDetails(e.target.files?.[0] ?? null)} />
@@ -63,7 +71,7 @@ const PhotoScreen: React.FC<IPhotoScreenProps> = ({ setAddProfilescreen, setPic,
                         <h1 id="openGallery">Add Photo</h1>
                     </div>
                     <div className="text-center">
-                        <MdDelete className="text-4xl ms-2" />
+                        <MdDelete onClick={handleDeleteProfilePic} className="text-4xl ms-2" />
                         <h1>Delete</h1>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 import { UserData } from '@/components/user/ProfilePage';
 import { Button, Divider, Image } from '@nextui-org/react'
 import React, { useLayoutEffect, useRef } from 'react'
+import { Link } from 'react-router-dom';
 
 interface IProfilCardProps {
     userProfile: UserData | null;
@@ -49,8 +50,9 @@ const ProfileCard: React.FC<IProfilCardProps> = ({ userProfile }) => {
                     <div className='mt-14 mb-10'>
                         <h1 className='font-semibold text-xl'>{userProfile?.name}</h1>
                         <p>{userProfile?.email}</p>
-                        <span className='outline-slate-300 border-1 text-blue-400 mt-5'>View Profile</span>
-                        <button className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Follow</button>
+                        <Link to='/user/profile'>
+                            <span className='outline-slate-300 border-1 text-blue-400 mt-5'>View Profile</span>
+                        </Link>
                     </div>
                 </div>
                 <Divider className="my-4 pb-5" />
