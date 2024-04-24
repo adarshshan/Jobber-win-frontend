@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { verifyOtp } from '../../Api/user';
 import { useNavigate } from 'react-router-dom';
-import { setUserCredential } from '../../app/slice/AuthSlice';
+import { saveUser, setUserCredential } from '../../app/slice/AuthSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../app/store';
 import { Link } from 'react-router-dom';
@@ -41,6 +41,7 @@ const OTPComponent: React.FC = () => {
             console.log(`everything is fine your token is `)
             console.log(result.data.data.token);
             dispatch(setUserCredential(result.data.data.token))
+            dispatch(saveUser(result.data.data.data));
             navigate('/user')
         }
     }

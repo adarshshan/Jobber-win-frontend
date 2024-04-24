@@ -58,7 +58,7 @@ const ProfilePage: React.FC = () => {
             }
         }
         fetchData();
-    }, [])
+    }, [updateScreen])
 
 
     return (

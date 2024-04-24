@@ -128,7 +128,7 @@ const deleteSkill = async (id: string | undefined, skill: string) => {
         console.log(error as Error);
     }
 }
-const updateUser = async (userId: string, name: string | undefined, headLine: string | undefined, gender: string | undefined, qualification: string | undefined, location: string | undefined, phoneNumber: number | undefined) => {
+const updateUser = async (userId: string, name: string | undefined, headLine: string | undefined, gender: string | undefined, qualification: string | undefined, location: string | undefined, phoneNumber: string | undefined) => {
     try {
         if (userId) {
             return await Api.put(`${userRoutes.updateUser}${userId}`, { name, headLine, gender, qualification, location, phoneNumber });

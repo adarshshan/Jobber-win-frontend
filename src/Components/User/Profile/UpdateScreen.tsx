@@ -1,7 +1,9 @@
 import { updateUser } from 'Api/user';
+import { saveUser } from 'app/slice/AuthSlice';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { IoMdClose } from 'react-icons/io'
+import { useDispatch } from 'react-redux';
 interface IUpdateScreenProps {
     setUpdateScreen: React.Dispatch<React.SetStateAction<boolean>>;
     userId: string | undefined;
@@ -12,7 +14,9 @@ const UpdateScreen: React.FC<IUpdateScreenProps> = ({ setUpdateScreen, userId })
     const [gender, setGender] = useState<string | undefined>();
     const [qualification, setQualification] = useState<string | undefined>();
     const [location, setLocation] = useState<string>();
-    const [phoneNumber, setPhoneNumber] = useState<number | undefined>();
+    const [phoneNumber, setPhoneNumber] = useState<string | undefined>();
+
+    const dispatch = useDispatch();
 
     const handleSubmitForm = async () => {
         try {
@@ -20,6 +24,7 @@ const UpdateScreen: React.FC<IUpdateScreenProps> = ({ setUpdateScreen, userId })
                 const result = await updateUser(userId, name, headLine, gender, qualification, location, phoneNumber);
                 if (result?.data.success) toast.success('user details updated successfully');
                 else toast.error(result?.data.message);
+                dispatch(saveUser(result?.data.data));
                 setUpdateScreen(false);
             }
         } catch (error) {
@@ -56,7 +61,7 @@ const UpdateScreen: React.FC<IUpdateScreenProps> = ({ setUpdateScreen, userId })
                 </div>
                 <div className="mx-5">
                     <label htmlFor="">Phone number</label>
-                    <input value={phoneNumber} onChange={(e) => setPhoneNumber(parseInt(e.target.value))} type="number" className="p-3 w-full border border-gray-300 rounded-full bg-transparent m-2" />
+                    <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="number" className="p-3 w-full border border-gray-300 rounded-full bg-transparent m-2" />
                 </div>
                 <div className="flex justify-end m-4 text-white">
                     <button onClick={handleSubmitForm} className="border border-gray-300 p-3 rounded-2xl hover:bg-gray-400 hover:text-black">Save Changes</button>

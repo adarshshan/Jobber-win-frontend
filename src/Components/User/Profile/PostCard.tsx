@@ -38,7 +38,7 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
             }
         }
         fetchPosts();
-    }, [userId, setCreatePostScreen])
+    }, [userId])
     console.log(posts);
     return (
         <>
