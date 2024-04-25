@@ -1,15 +1,26 @@
 
+import { getAllUsers } from 'Api/user';
 import ProfileCard from 'Components/User/Home/ProfileCard';
 import ContactCard from 'Components/User/Mynetwork/ContactCard';
 import LeftSideBar from 'Components/User/Mynetwork/LeftSideBar';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { UserData } from './ProfilePage';
 
 
 interface IMyNetworkPageProps {
 
 }
 const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
-    const [users, setUsers] = useState(Array.from({ length: 10 }));
+    const [users, setUsers] = useState<UserData[]|undefined>();
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await getAllUsers();
+            if (res?.data.success) {
+                setUsers(res.data.data)
+            }
+        }
+        fetchData();
+    }, [])
     return (
         <>
             <div className="container  p-3 bg-slate-200">
@@ -29,12 +40,12 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
                                     users && users.map((item, index) => {
                                         return (
                                             <div key={index} className='w-full sm:w-1/2 md:w-1/3 p-4'>
-                                                <ContactCard  />
+                                                <ContactCard item={item} />
                                             </div>
                                         )
                                     })
                                 }
-                                {!users.length && <h1 className='text-xl font-semibold'>No suggessions...</h1>}
+                                {!users?.length && <h1 className='text-xl font-semibold'>No suggessions...</h1>}
                             </div>
 
                         </div>

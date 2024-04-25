@@ -14,7 +14,11 @@ const userRoutes = {
     getAllSkills: "/user/get-skills/",
     deleteSkill: "/user/remove-skill/",
     updateUser: "/user/edit-user/",
-    removeProfilePic: "/user/delete-profile/"
+    removeProfilePic: "/user/delete-profile/",
+
+    getAllUsers: "/user/get-alluser",
+    getUserProfile: "/user/get-user-profile/",
+    getUserPosts: "/user/get-user-posts/",
 }
 
 

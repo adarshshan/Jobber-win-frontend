@@ -137,9 +137,35 @@ const updateUser = async (userId: string, name: string | undefined, headLine: st
         console.log(error as Error);
     }
 }
-const removeProfilePic = async (id: string|undefined) => {
+const removeProfilePic = async (id: string | undefined) => {
     try {
         const result = await Api.delete(`${userRoutes.removeProfilePic}${id}`);
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+
+//netWork
+const getAllUsers = async () => {
+    try {
+        const result = await Api.get(userRoutes.getAllUsers);
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getUserProfile = async (userId: string) => {
+    try {
+        const result = await Api.get(`${userRoutes.getUserProfile}${userId}`);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+const getUserPosts = async (userId: string) => {
+    try {
+        const result = await Api.get(`${userRoutes.getUserPosts}${userId}`)
         return result;
     } catch (error) {
         console.log(error as Error);
@@ -162,5 +188,8 @@ export {
     getAllSkills,
     deleteSkill,
     updateUser,
-    removeProfilePic
+    removeProfilePic,
+    getAllUsers,
+    getUserProfile,
+    getUserPosts
 }

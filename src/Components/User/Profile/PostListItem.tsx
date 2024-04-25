@@ -6,18 +6,17 @@ interface IPostListItemProps {
     like: number;
     postItem: PostInterface;
 }
-const PostListItem: React.FC<IPostListItemProps> = ({ like, postItem }) => {
-
-    const truncateDescription = (description: string, maxLength: number) => {
-        const words = description.split(' ');
-        const truncatedWords = words.slice(0, maxLength);
-        const truncatedDescription = truncatedWords.join(' ');
-        if (words.length > maxLength) {
-            return truncatedDescription + ' ...';
-        } else {
-            return truncatedDescription;
-        }
+export const truncateDescription = (description: string, maxLength: number) => {
+    const words = description.split(' ');
+    const truncatedWords = words.slice(0, maxLength);
+    const truncatedDescription = truncatedWords.join(' ');
+    if (words.length > maxLength) {
+        return truncatedDescription + ' ...';
+    } else {
+        return truncatedDescription;
     }
+}
+const PostListItem: React.FC<IPostListItemProps> = ({ like, postItem }) => {
 
     // Example usage
     const description = "Your big description goes here...";

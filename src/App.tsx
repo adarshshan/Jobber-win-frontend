@@ -16,6 +16,7 @@ import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
 import MyNetworkPage from './Pages/user/MyNetworkPage';
 import FindJobPage from './Pages/user/FindJobPage';
+import ViewUserProfile from './Pages/user/ViewUserProfile';
 
 const LandingPage = lazy(() => import('./Pages/user/LandingPage'))
 const Home = lazy(() => import('./Pages/user/Home'))
@@ -52,6 +53,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
           <Route path='' element={<UserLoggedIn />}>
             <Route path='home' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Home /></Suspense>} />
             <Route path='profile' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ProfilePage /></Suspense>} />
+            <Route path='view-user-profile/:userId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ViewUserProfile /></Suspense>} />
             <Route path='my-network' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><MyNetworkPage /></Suspense>} />
             <Route path='find-jobs' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><FindJobPage /></Suspense>} />
             <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
