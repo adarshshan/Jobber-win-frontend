@@ -41,13 +41,13 @@ const App: React.FunctionComponent<IAppProps> = () => {
         <Route path='' element={<UserLoggedOut />}><Route path='/' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
         }><LandingPage /></Suspense>} /></Route>
 
-        <Route path="/user" element={<User />}>
+        <Route path='' element={<UserLoggedOut />}>
+          <Route path='/user/login' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><LoginPage /></Suspense>} />
+          <Route path='/user/signup' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><SignupPage /></Suspense>} />
+          <Route path='/user/otp-page' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><OtpPage /></Suspense>} />
+        </Route>
 
-          <Route path='' element={<UserLoggedOut />}>
-            <Route path='login' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><LoginPage /></Suspense>} />
-            <Route path='signup' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><SignupPage /></Suspense>} />
-            <Route path='otp-page' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><OtpPage /></Suspense>} />
-          </Route>
+        <Route path="/user" element={<User />}>
 
           <Route path='' element={<UserLoggedIn />}>
             <Route path='home' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Home /></Suspense>} />

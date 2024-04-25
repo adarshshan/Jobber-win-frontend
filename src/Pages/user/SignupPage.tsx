@@ -1,10 +1,10 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import { GrFormLock } from 'react-icons/gr';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../Api/user';
 import { useAppSelector } from '../../app/store';
-import { EMAIL_PATTERN, MOBILE_NUM_REGEX } from '../../constants/commonConstants';
 import OAuth from '../../Components/User/userCommon/OAuth';
+import { useFormik, Formik, Form, Field } from 'formik';
+import { SignupValidation } from '../../Components/Common/Validations';
 
 export interface FormData {
     name: string;
@@ -15,6 +15,26 @@ export interface FormData {
     confirmPassword?: string;
     role: string;
 }
+interface initialVal {
+    name: string;
+    email: string;
+    phone: string;
+    location: string;
+    password: string;
+    cpassword: string;
+    role: string;
+}
+const initialValues: initialVal = {
+    name: '',
+    email: '',
+    phone: '',
+    location: '',
+    password: '',
+    cpassword: '',
+    role: ''
+}
+
+
 
 const SignupPage: React.FC = () => {
 
@@ -26,19 +46,6 @@ const SignupPage: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [role, setRole] = useState('')
 
-    const [nameErr, setNameErr] = useState('')
-    const [phoneError, setPhoneError] = useState('');
-    const [emailErr, setEmailErr] = useState('');
-    const [locationErr, setLocationErr] = useState('');
-    const [passwordErr, setPasswordErr] = useState('');
-    const [confirmPasswordErr, setConfirmPasswordErr] = useState('');
-    const [roleErr, setRoleErr] = useState('');
-
-    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-
-
-    const [err, setErr] = useState('');
-
     const navigate = useNavigate();
 
     const { userData } = useAppSelector((state) => state.auth)
@@ -47,41 +54,16 @@ const SignupPage: React.FC = () => {
         if (userData) navigate('/user/home');
     }, [userData]);
 
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const { values, handleBlur, handleChange, handleSubmit, errors } = useFormik({
+        initialValues: initialValues,
+        validationSchema: SignupValidation,
+        onSubmit: values => {
+            console.log(values);
+        },
+    });
+    const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setErr('');
         try {
-            if (!name.trim().length) {
-                setErr('input fields must not be blank!');
-                return;
-            }
-            if (!EMAIL_PATTERN.test(email.toString())) {
-                setErr('Enter a valid Email.!');
-                return;
-            }
-            if (!MOBILE_NUM_REGEX.test(phone.toString())) {
-                setErr('Enter a valid phone number!');
-                return;
-            }
-            if (!name.trim().length || !phone || !email.trim().length || !location.length || !password.length || !confirmPassword.length) {
-                setErr('input fields must not be blank!');
-                return;
-            }
-            if (!strongRegex.test(password)) {
-                setErr('Your password is too weak, please enter a strong one.');
-                return;
-            }
-            if (password.trim() !== confirmPassword.trim()) {
-                setErr('Passwords are not matching!');
-                return;
-            }
-            if (!role) {
-                setErr('Please select the role!');
-                return;
-            }
-
-
             const formData = { name, email, location, phone, password, confirmPassword, role } as const;
             let result = await signup(formData);
             if (result) {
@@ -91,21 +73,6 @@ const SignupPage: React.FC = () => {
             console.log(error as Error);
         }
     }
-
-    const isValidName = (): void => {
-        const nameRegex = /^[a-zA-Z]+(?: [a-zA-Z]+)?$/;
-        !nameRegex.test(name) ? setNameErr('') : setNameErr('Enter your full name!');
-        name.trim().length ? setNameErr('') : setNameErr('Input Field must not be blank!');
-    }
-    const validatePhone = () => {
-        MOBILE_NUM_REGEX.test(phone.toString()) ? setPhoneError('') : setPhoneError('Enter a valid phone number.')
-        !phone ? setPhoneError('input field must not be blank!') : setPasswordErr('');
-    }
-    const validatePassword = () => {
-        strongRegex.test(password) ? setPasswordErr('') : setPasswordErr('password is too weak. make a strong one.');
-    }
-
-
 
     return (
         <>
@@ -118,6 +85,7 @@ const SignupPage: React.FC = () => {
                             <span className="bg-black rounded-full w-8 h-8"></span>
                             <Link to='/' className="font-medium text-xl">JobberWin</Link>
                         </div>
+
                         <div className="space-y-5">
                             <h1 className="lg:text-3xl xl:text-5xl xl:leading-snug text-white font-extrabold">Enter your account and discover Your
                                 Future</h1>
@@ -146,78 +114,79 @@ const SignupPage: React.FC = () => {
                                 <h2 className="text-3xl md:text-4xl font-bold">Create an account</h2>
                                 <p className="text-md md:text-xl">Sign up or log in to go straight, no password required!</p>
                             </div>
-                            <p className="text-red-500">{err}</p>
                             <form onSubmit={handleSubmit} >
                                 <div className="flex flex-col max-w-md space-y-5">
                                     <input
                                         type="text"
                                         name="name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        onKeyUp={() => isValidName()}
+                                        value={values.name}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
                                         placeholder="Name"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
-                                    <p className="text-red-500">{nameErr}</p>
+                                    {errors.name && <small className='text-red-500'>{errors.name}</small>}
                                     <input
                                         type="email"
                                         name="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        onKeyUp={() => EMAIL_PATTERN.test(email.toString()) ? setEmailErr('') : setEmailErr('Enter a valid Email Address!')}
+                                        value={values.email}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
                                         placeholder="Email"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
-                                    <p className="text-red-500">{emailErr}</p>
+                                    {errors.email && <small className='text-red-500'>{errors.email}</small>}
                                     <input
                                         type="text"
                                         name="phone"
-                                        onChange={(e) => setPhone(parseInt(e.target.value))}
-                                        onKeyUp={() => validatePhone()}
+                                        value={values.phone}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
                                         placeholder="Phone"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
-                                    <p className="text-red-500">{phoneError}</p>
+                                    {errors.phone && <small className='text-red-500'>{errors.phone}</small>}
                                     <input
                                         type="text"
                                         name="location"
-                                        value={location}
-                                        onChange={(e) => setLocation(e.target.value)}
-                                        onKeyUp={() => location.trim().length ? setLocationErr('') : setLocationErr('Input field must not be blank!')}
+                                        value={values.location}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
                                         placeholder="Location"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
-                                    <p className="text-red-500">{locationErr}</p>
+                                    {errors.location && <small className='text-red-500'>{errors.location}</small>}
                                     <input
                                         type="password"
                                         name="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        onKeyUp={validatePassword}
+                                        value={values.password}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
                                         placeholder="Password"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
-                                    <p className="text-red-500">{passwordErr}</p>
+                                    {errors.password && <small className='text-red-500'>{errors.password}</small>}
                                     <input
                                         type="password"
-                                        name="confirmPassword"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        onKeyUp={() => password !== confirmPassword ? setConfirmPasswordErr('passwords are not matching!') : setConfirmPasswordErr('')}
+                                        name="cpassword"
+                                        value={values.cpassword}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
                                         placeholder="Confirm Password"
                                         className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                     />
-                                    <p className="text-red-500">{confirmPasswordErr}</p>
+                                    {errors.cpassword && <small className='text-red-500'>{errors.cpassword}</small>}
                                     <select
                                         name="role"
-                                        value={role}
-                                        onChange={(e) => setRole(e.target.value)}
-                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium text-black"
-                                    >
+                                        value={values.role}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium text-black" >
                                         <option value="">Select Role</option>
                                         <option value="user">User</option>
                                         <option value="recruiter">Recruiter</option>
                                     </select>
+                                    {errors.role && <small className='text-red-500'>{errors.role}</small>}
                                     <button type='submit' className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Submit</button>
 
 
