@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../Api/user';
 import { useAppSelector } from '../../app/store';
 import OAuth from '../../Components/User/userCommon/OAuth';
-import { useFormik, Formik, Form, Field } from 'formik';
+import { useFormik } from 'formik';
 import { SignupValidation } from '../../Components/Common/Validations';
 
 export interface FormData {
     name: string;
     email: string;
-    phone: number;
+    phone: string;
     location: string;
     password: string;
     confirmPassword?: string;
@@ -37,43 +37,31 @@ const initialValues: initialVal = {
 
 
 const SignupPage: React.FC = () => {
-
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState<number>(0)
-    const [location, setLocation] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [role, setRole] = useState('')
-
     const navigate = useNavigate();
-
     const { userData } = useAppSelector((state) => state.auth)
 
     useEffect(() => {
         if (userData) navigate('/user/home');
     }, [userData]);
 
-    const { values, handleBlur, handleChange, handleSubmit, errors } = useFormik({
+    const {  values, handleBlur, handleChange, handleSubmit, errors } = useFormik({
         initialValues: initialValues,
         validationSchema: SignupValidation,
         onSubmit: values => {
-            console.log(values);
+            const formData = { name: values.name, email: values.email, location: values.location, phone: values.phone, password: values.password, confirmPassword: values.cpassword, role: values.role }
+            const hanSub = async () => {
+                try {
+                    let result = await signup(formData);
+                    if (result) {
+                        navigate('/user/otp-page');
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            hanSub()
         },
     });
-    const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        try {
-            const formData = { name, email, location, phone, password, confirmPassword, role } as const;
-            let result = await signup(formData);
-            if (result) {
-                navigate('/user/otp-page');
-            }
-        } catch (error) {
-            console.log(error as Error);
-        }
-    }
-
     return (
         <>
             <div className="bg-white min-h-screen flex">
