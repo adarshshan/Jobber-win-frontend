@@ -3,17 +3,17 @@ import React from 'react'
 import { IoIosContacts } from 'react-icons/io'
 
 interface ILeftSideBar {
-
+    toatalFriends: number
 }
-const LeftSideBar: React.FC<ILeftSideBar> = () => {
+const LeftSideBar: React.FC<ILeftSideBar> = ({ toatalFriends }) => {
     return (
         <>
             <div className="sm:col-span-3 min-h-[100px] bg-white shadow-xl rounded-lg">
                 <div className='p-3'>
                     <h1 className='font-bold text-xl '>Manage My network</h1>
                     <div className="flex justify-between">
-                        <p className='flex text-xl mt-2 ms-3'><IoIosContacts className='text-2xl mt-1 me-3' /> Connections </p>
-                        <p className='mt-2'>989</p>
+                        <p className='flex text-xl mt-2 ms-3'><IoIosContacts className='text-2xl mt-1 me-3' /> Friends </p>
+                        <p className='mt-2 me-5'>{toatalFriends}</p>
                     </div>
 
                 </div>
@@ -56,11 +56,9 @@ const LeftSideBar: React.FC<ILeftSideBar> = () => {
                     }}
                 >
                     <AccordionItem aria-label="" title={<h1 className='hover:bg-slate-300 p-3'>Show more</h1>}>
-                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>box</div>
-                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>box</div>
-                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>box</div>
-                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>box</div>
-                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>box</div>
+                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>Followers</div>
+                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>Following</div>
+                        <div className='w-full hover:bg-gray-700 hover:text-white hover:font-semibold mt-2 border border-gray-900 p-2 rounded-sm bg-gray-50'>Recruiters</div>
                     </AccordionItem>
                 </Accordion>
             </div>

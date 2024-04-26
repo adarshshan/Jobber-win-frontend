@@ -100,16 +100,14 @@ const getAllPosts = async (userId: string) => {
 }
 const getAllHomePosts = async () => {
     try {
-        const result = await Api.get(userRoutes.getAllHomePosts);
-        return result;
+        return await Api.get(userRoutes.getAllHomePosts);
     } catch (error) {
         console.log(error as Error);
     }
 }
 const addSkill = async (id: string, skill: string) => {
     try {
-        const result = await Api.patch(`${userRoutes.addSkill}${id}`, { skill });
-        return result;
+        return await Api.patch(`${userRoutes.addSkill}${id}`, { skill });
     } catch (error) {
         console.log(error as Error);
     }
@@ -130,17 +128,14 @@ const deleteSkill = async (id: string | undefined, skill: string) => {
 }
 const updateUser = async (userId: string, name: string | undefined, headLine: string | undefined, gender: string | undefined, qualification: string | undefined, location: string | undefined, phoneNumber: string | undefined) => {
     try {
-        if (userId) {
-            return await Api.put(`${userRoutes.updateUser}${userId}`, { name, headLine, gender, qualification, location, phoneNumber });
-        }
+        if (userId) return await Api.put(`${userRoutes.updateUser}${userId}`, { name, headLine, gender, qualification, location, phoneNumber });
     } catch (error) {
         console.log(error as Error);
     }
 }
 const removeProfilePic = async (id: string | undefined) => {
     try {
-        const result = await Api.delete(`${userRoutes.removeProfilePic}${id}`);
-        return result;
+        return await Api.delete(`${userRoutes.removeProfilePic}${id}`);
     } catch (error) {
         console.log(error as Error);
     }
@@ -149,26 +144,52 @@ const removeProfilePic = async (id: string | undefined) => {
 //netWork
 const getAllUsers = async () => {
     try {
-        const result = await Api.get(userRoutes.getAllUsers);
-        return result;
+        return await Api.get(userRoutes.getAllUsers);
     } catch (error) {
         console.log(error as Error);
     }
 }
 const getUserProfile = async (userId: string) => {
     try {
-        const result = await Api.get(`${userRoutes.getUserProfile}${userId}`);
-        return result;
+        return await Api.get(`${userRoutes.getUserProfile}${userId}`);
     } catch (error) {
         console.log(error);
     }
 }
 const getUserPosts = async (userId: string) => {
     try {
-        const result = await Api.get(`${userRoutes.getUserPosts}${userId}`)
-        return result;
+        return await Api.get(`${userRoutes.getUserPosts}${userId}`)
     } catch (error) {
         console.log(error as Error);
+    }
+}
+const sendRequest = async (receiverId: string) => {
+    try {
+        return await Api.post(userRoutes.sendRequest, { receiverId });
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getAllRequests = async () => {
+    try {
+        const res = await Api.get(userRoutes.getAllRequests);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+const addToFriend = async (id: string) => {
+    try {
+        return await Api.put(`${userRoutes.addToFriend}${id}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getAllFriends = async () => {
+    try {
+        return await Api.get(userRoutes.getAllFriends);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -191,5 +212,9 @@ export {
     removeProfilePic,
     getAllUsers,
     getUserProfile,
-    getUserPosts
+    getUserPosts,
+    sendRequest,
+    getAllRequests,
+    addToFriend,
+    getAllFriends
 }

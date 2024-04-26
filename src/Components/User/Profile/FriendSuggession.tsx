@@ -26,12 +26,10 @@ const FriendSuggession: React.FC<IFriendSuggessionProps> = () => {
                 <h1 className="text-lg font-semibold">People you may know</h1>
                 {users?.slice(0, 4).map((item, index) => {
                     return (
-                        <>
-                            <div key={index}>
-                                <Divider className="my-4" />
-                                <SingleUser name={item.name} description={item.headLine} imageUrl={item.profile_picture} />
-                            </div>
-                        </>
+                        <div key={index + Math.random()}>
+                            <Divider className="my-4" />
+                            <SingleUser id={item._id} name={item.name} description={item.headLine} imageUrl={item.profile_picture} />
+                        </div>
                     )
                 })}
                 <div className="flex justify-center text-xl font-bold text-gray-400">

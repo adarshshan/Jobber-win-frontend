@@ -19,6 +19,10 @@ const userRoutes = {
     getAllUsers: "/user/get-alluser",
     getUserProfile: "/user/get-user-profile/",
     getUserPosts: "/user/get-user-posts/",
+    sendRequest: "/user/sendrequest",
+    getAllRequests: "/user/getallrequests",
+    addToFriend: "/user/add-tofriend/",
+    getAllFriends: "/user/get-friends",
 }
 
 

@@ -1,5 +1,6 @@
 import { UserData } from '@/components/user/ProfilePage';
 import { Button, Divider, Image } from '@nextui-org/react'
+import { sendRequest } from 'Api/user';
 import React, { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -33,6 +34,14 @@ const ContactCard: React.FC<IContactCardProps> = ({ item }) => {
             window.removeEventListener('resize', centerChild);
         };
     }, []);
+    const handleSendRequest = async (receiverId: string) => {
+        try {
+            const result = await sendRequest(receiverId);
+            console.log(result);
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <>
             <div id="profileCard" className='bg-white rounded-xl shadow-lg'>
@@ -52,7 +61,7 @@ const ContactCard: React.FC<IContactCardProps> = ({ item }) => {
                         <Link to={`/user/view-user-profile/${item._id}`}>
                             <span className='outline-slate-300 border-1 text-blue-400 mt-5'>View Profile</span>
                         </Link>
-                        <button className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Follow</button>
+                        <button onClick={() => handleSendRequest(item._id)} className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Follow</button>
                     </div>
                 </div>
                 <Divider className="my-4 pb-5" />

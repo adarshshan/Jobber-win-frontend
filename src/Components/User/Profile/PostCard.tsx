@@ -56,10 +56,10 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
                 <MenuTabs />
                 {posts?.length && posts.map((postItem, index) => {
                     return (
-                        <>
+                        <div key={Math.random()}>
                             <Divider className="my-4" />
                             <PostListItem postItem={postItem} like={100} />
-                        </>
+                        </div>
                     )
                 })}
                 <Divider className="my-4" />

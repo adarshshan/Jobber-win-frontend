@@ -13,9 +13,8 @@ const Home: React.FC<ITestProps> = () => {
         const fetchData = async () => {
             try {
                 const response = await getProfile();
-                if (response) {
-                    setUserProfile(response.data);
-                }
+                if (response) setUserProfile(response.data);
+
             } catch (error) {
                 console.error('Error:', error);
             }

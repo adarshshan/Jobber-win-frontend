@@ -23,8 +23,10 @@ export interface UserData {
     profile_picture: string;
     skills: string[];
 }
+interface IViewUserProfileProps {
 
-const ViewUserProfile: React.FC = () => {
+}
+const ViewUserProfile: React.FC<IViewUserProfileProps> = () => {
     const [userProfile, setUserProfile] = useState<UserData | null>(null);
     const [userPosts, setUserPosts] = useState<IPostInterface[]>();
 
@@ -34,7 +36,7 @@ const ViewUserProfile: React.FC = () => {
         const fetchData = async () => {
             try {
                 if (userId) {
-                    const response = await getUserProfile(userId); console.log(response);
+                    const response = await getUserProfile(userId);
                     setUserProfile(response?.data.data);
                 }
             } catch (error) {
@@ -53,9 +55,7 @@ const ViewUserProfile: React.FC = () => {
         }
         fetchData();
         getPosts();
-    }, [])
-    console.log(userProfile);
-    console.log(userPosts);
+    }, [userId])
 
     return (
         <>
@@ -68,7 +68,6 @@ const ViewUserProfile: React.FC = () => {
                                 alt="NextUI hero Image"
                                 src={'https://images.template.net/wp-content/uploads/2014/11/Natural-Facebook-Cover-Photo.jpg'}
                             />
-                            {/* <img onClick={() => setAddProfilescreen(true)} className="absolute top-[100px] left-16 b-10 rounded-full w-[150px] h-[150px]" src={pic} alt="Pic will be loaded" /> */}
                             <Image
                                 width={150}
                                 height={150}
@@ -82,6 +81,7 @@ const ViewUserProfile: React.FC = () => {
                                 <div className="mt-5 pt-16 ms-5">
                                     <h1 className="text-2xl">{userProfile?.name}</h1>
                                     <p className="text-xl">{userProfile?.headLine}</p>
+                                    <p className="text-xl">{userProfile?.email}</p>
                                     <p className="mt-2">{userProfile?.location}, Kerala, India  <span className="text-blue-300 font-semibold">contact info</span></p>
                                     <p className="text-blue-300">500+ Connections</p>
                                 </div>
@@ -121,7 +121,7 @@ const ViewUserProfile: React.FC = () => {
                                             <img className="w-[90px] h-[90px] ms-4" src={item.imageUrl} alt="///PostImage" />
                                         </div>
                                         <div className="w-10/12 min-h-3 ps-3">
-                                            {truncateDescription(item.caption,40)}
+                                            {truncateDescription(item.caption, 40)}
                                         </div>
                                     </div>
                                     <div className="flex justify-between">
