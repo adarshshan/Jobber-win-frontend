@@ -192,6 +192,35 @@ const getAllFriends = async () => {
         console.log(error);
     }
 }
+const unFriend = async (id: string) => {
+    try {
+        return await Api.delete(`${userRoutes.unFriend}${id}`);
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
+const removeRequest = async (id: string) => {
+    try {
+        return await Api.put(`${userRoutes.removeRequest}${id}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getSendRequests = async () => {
+    try {
+        return await Api.get(userRoutes.getAllSendRequests);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const cancelRequest = async (id: string) => {
+    try {
+        const res = await Api.delete(`${userRoutes.withdrawSendRequest}${id}`);
+        return res;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -216,5 +245,9 @@ export {
     sendRequest,
     getAllRequests,
     addToFriend,
-    getAllFriends
+    getAllFriends,
+    unFriend,
+    removeRequest,
+    getSendRequests,
+    cancelRequest
 }

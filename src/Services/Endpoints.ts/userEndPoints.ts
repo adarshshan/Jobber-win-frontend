@@ -23,6 +23,10 @@ const userRoutes = {
     getAllRequests: "/user/getallrequests",
     addToFriend: "/user/add-tofriend/",
     getAllFriends: "/user/get-friends",
+    unFriend: "/user/unfriend/",
+    removeRequest: "/user/remove-request/",
+    getAllSendRequests: "/user/getsend-requests",
+    withdrawSendRequest: "/user/withdraw-request/",
 }
 
 

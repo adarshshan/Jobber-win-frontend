@@ -1,13 +1,18 @@
 import { UserData } from '@/components/user/ProfilePage';
 import { Button, Divider, Image } from '@nextui-org/react'
-import { sendRequest } from 'Api/user';
-import React, { useLayoutEffect, useRef } from 'react'
+import { cancelRequest, getSendRequests, sendRequest } from 'Api/user';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 interface IContactCardProps {
     item: UserData;
+    sendReq: string[] | undefined;
+    setConfirmFriend: React.Dispatch<React.SetStateAction<boolean>>;
+    confirmFriend: boolean;
 }
-const ContactCard: React.FC<IContactCardProps> = ({ item }) => {
+const ContactCard: React.FC<IContactCardProps> = ({ item, sendReq, setConfirmFriend, confirmFriend }) => {
+
+
     const parentRef = useRef<HTMLDivElement>(null);
     const childRef = useRef<HTMLImageElement>(null);
 
@@ -37,9 +42,18 @@ const ContactCard: React.FC<IContactCardProps> = ({ item }) => {
     const handleSendRequest = async (receiverId: string) => {
         try {
             const result = await sendRequest(receiverId);
+            if (result) setConfirmFriend(!confirmFriend);
             console.log(result);
         } catch (error) {
             console.log(error as Error);
+        }
+    }
+    const withdrawRequest = async (id: string) => {
+        try {
+            const res = await cancelRequest(id);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
         }
     }
     return (
@@ -61,7 +75,8 @@ const ContactCard: React.FC<IContactCardProps> = ({ item }) => {
                         <Link to={`/user/view-user-profile/${item._id}`}>
                             <span className='outline-slate-300 border-1 text-blue-400 mt-5'>View Profile</span>
                         </Link>
-                        <button onClick={() => handleSendRequest(item._id)} className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Follow</button>
+                        {sendReq?.includes(item._id) ? <button onClick={() => withdrawRequest(item._id)} className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Requested</button>
+                            : <button onClick={() => handleSendRequest(item._id)} className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Add Friend</button>}
                     </div>
                 </div>
                 <Divider className="my-4 pb-5" />
