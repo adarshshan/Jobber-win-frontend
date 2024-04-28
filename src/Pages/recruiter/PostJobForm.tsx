@@ -1,29 +1,36 @@
 
+import { postNewJob } from 'Api/recruiter';
 import { JobPostValidation } from 'Components/Common/Validations';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { IoIosClose } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 const skillsList: string[] = ['JavaScript', 'React', 'Node.js', 'Python', 'HTML', 'CSS', 'Java', 'SQL', 'Angular', 'Vue.js', 'Ruby', 'C#', 'PHP', 'Swift', 'Go', 'TypeScript', 'Mongodb'];
 
-interface initialVal {
+export interface JobInterface {
     title: string;
+    company_name: string;
     industry: string;
     description: string;
     total_vaccancy: number;
     location: string;
     job_type: string;
+    experience: number;
     min_salary: number;
     max_salary: number;
 }
-const initialValues: initialVal = {
+const initialValues: JobInterface = {
     title: '',
+    company_name: '',
     industry: '',
     description: '',
     total_vaccancy: 0,
     location: '',
     job_type: '',
+    experience: 0,
     min_salary: 0,
     max_salary: 0
 }
@@ -36,6 +43,8 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [picErr, setPicErr] = useState('');
     const [pic, setPic] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSkillInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: string = event.target.value;
@@ -67,17 +76,24 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                     if (!pic) return setPicErr('Please Select an Image!');
                     const formData = {
                         title: values.title,
+                        company_name: values.company_name,
                         description: values.description,
                         job_type: values.job_type,
                         industry: values.industry,
                         location: values.location,
                         total_vaccancy: values.total_vaccancy,
+                        experience: values.experience,
                         min_salary: values.min_salary,
                         max_salary: values.max_salary,
                         job_img: pic,
                         skills: skills
                     }
-                    console.log(formData); console.log('these are the result.');
+                    const result = await postNewJob(formData);
+                    if (result?.data.success) {
+                        toast.success(result.data.message);
+                        navigate('/recruiter/all-jobs');
+                    } else toast.error(result?.data.message);
+                    console.log(result); console.log('these are the final result.');
                 } catch (error) {
                     console.log(error);
                 }
@@ -130,7 +146,7 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                                     <form
                                         onSubmit={handleSubmit}
                                         className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                                        <div className="md:col-span-5">
+                                        <div className="md:col-span-3">
                                             <label htmlFor="full_name">Job Title</label>
                                             <input
                                                 type="text"
@@ -140,6 +156,17 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                                                 onChange={handleChange}
                                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
                                             {errors.title && <small className='text-red-500'>{errors.title}</small>}
+                                        </div>
+                                        <div className="md:col-span-2">
+                                            <label htmlFor="full_name">Company name</label>
+                                            <input
+                                                type="text"
+                                                name="company_name"
+                                                value={values.company_name}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                            {errors.company_name && <small className='text-red-500'>{errors.company_name}</small>}
                                         </div>
                                         <div className="md:col-span-3">
                                             <label htmlFor="full_name">Job Industry</label>
@@ -271,6 +298,17 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                                                 onChange={handleChange}
                                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
                                             {errors.total_vaccancy && <small className='text-red-500'>{errors.total_vaccancy}</small>}
+                                        </div>
+                                        <div className="md:col-span-2">
+                                            <label htmlFor="full_name">Experience Needed.</label>
+                                            <input
+                                                type="number"
+                                                name="experience"
+                                                value={values.experience}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                            {errors.experience && <small className='text-red-500'>{errors.experience}</small>}
                                         </div>
 
                                         <div className="md:col-span-5 text-right">
