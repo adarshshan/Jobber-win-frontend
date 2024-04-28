@@ -1,8 +1,7 @@
-import { Routes, Route, Router, RouterProvider } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 import User from './Components/User/userCommon/User';
 import Admin from './Components/Admin/Admin';
-import AdminLogin from './Pages/admin/AdminLogin';
 import Users from './Pages/admin/Users';
 import Jobs from './Pages/admin/Jobs';
 import PageNotFound from './Components/Common/PageNotFound';
@@ -14,17 +13,22 @@ import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
 import Test from './Pages/user/Test';
 import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
-import MyNetworkPage from './Pages/user/MyNetworkPage';
-import FindJobPage from './Pages/user/FindJobPage';
-import ViewUserProfile from './Pages/user/ViewUserProfile';
 
+
+const AdminLogin = lazy(() => import('./Pages/admin/AdminLogin'));
 const LandingPage = lazy(() => import('./Pages/user/LandingPage'))
 const Home = lazy(() => import('./Pages/user/Home'))
 const LoginPage = lazy(() => import('./Pages/user/LoginPage'))
 const SignupPage = lazy(() => import('./Pages/user/SignupPage'))
 const OtpPage = lazy(() => import('./Pages/user/OtpPage'))
 const ProfilePage = lazy(() => import('./Pages/user/ProfilePage'))
-
+const ViewUserProfile = lazy(() => import('./Pages/user/ViewUserProfile'));
+const FindJobPage = lazy(() => import('./Pages/user/FindJobPage'));
+const MyNetworkPage = lazy(() => import('./Pages/user/MyNetworkPage'));
+const Recruiter = lazy(() => import('./Pages/recruiter/Recruiter'))
+const AllJobsComponent = lazy(() => import('./Pages/recruiter/AllJobsComponents'))
+const PostJobForm = lazy(() => import('./Pages/recruiter/PostJobForm'));
+const DashBoard = lazy(() => import('./Pages/recruiter/Dashboard'))
 
 interface IAppProps {
 
@@ -49,7 +53,6 @@ const App: React.FunctionComponent<IAppProps> = () => {
         </Route>
 
         <Route path="/user" element={<User />}>
-
           <Route path='' element={<UserLoggedIn />}>
             <Route path='home' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Home /></Suspense>} />
             <Route path='profile' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ProfilePage /></Suspense>} />
@@ -58,9 +61,18 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='find-jobs' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><FindJobPage /></Suspense>} />
             <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
           </Route>
-
-
         </Route>
+        
+          <Route path='/recruiter' element={<Recruiter />}>
+            <Route path='' element={<UserLoggedIn />}>
+              <Route path='' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><DashBoard /></Suspense>} />
+              <Route path='all-jobs' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><AllJobsComponent /></Suspense>} />
+              <Route path='post-jobform' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><PostJobForm /></Suspense>} />
+            </Route>
+          </Route>
+          
+
+
 
         {/* Admin Side */}
 

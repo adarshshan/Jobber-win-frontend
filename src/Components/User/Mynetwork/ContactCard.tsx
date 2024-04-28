@@ -3,6 +3,18 @@ import { Button, Divider, Image } from '@nextui-org/react'
 import { cancelRequest, getSendRequests, sendRequest } from 'Api/user';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "../../../@/components/ui/alert-dialog"
+
 
 interface IContactCardProps {
     item: UserData;
@@ -51,6 +63,7 @@ const ContactCard: React.FC<IContactCardProps> = ({ item, sendReq, setConfirmFri
     const withdrawRequest = async (id: string) => {
         try {
             const res = await cancelRequest(id);
+            if (res) setConfirmFriend(!confirmFriend);
             console.log(res);
         } catch (error) {
             console.log(error);
@@ -75,7 +88,22 @@ const ContactCard: React.FC<IContactCardProps> = ({ item, sendReq, setConfirmFri
                         <Link to={`/user/view-user-profile/${item._id}`}>
                             <span className='outline-slate-300 border-1 text-blue-400 mt-5'>View Profile</span>
                         </Link>
-                        {sendReq?.includes(item._id) ? <button onClick={() => withdrawRequest(item._id)} className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Requested</button>
+                        {sendReq?.includes(item._id) ?
+                            <AlertDialog>
+                                <AlertDialogTrigger> <button className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Requested</button></AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Do you want to withdraw the request?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This will be withdraw the request
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction><p onClick={() => withdrawRequest(item._id)}>yes</p></AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                             : <button onClick={() => handleSendRequest(item._id)} className='outline-2 rounded-full px-2 bg-slate-300 hover:bg-blue-300 ms-2 mt-2'>Add Friend</button>}
                     </div>
                 </div>

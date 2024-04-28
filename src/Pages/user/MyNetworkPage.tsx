@@ -10,6 +10,17 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import toast from 'react-hot-toast';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "../../@/components/ui/alert-dialog"
 
 
 interface IMyNetworkPageProps {
@@ -37,7 +48,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
             }
         }
         fetchData();
-    }, [])
+    }, [confirmFriend])
     useEffect(() => {
         const fetchRequests = async () => {
             try {
@@ -74,7 +85,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
             }
         }
         fetchSentRequest()
-    }, [])
+    }, [confirmFriend])
     console.log(sendReq);
     const handleAddFriend = async (id: string) => {
         try {
@@ -157,7 +168,21 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
                                         </div>
                                         <div className="flex justify-end gap-3">
                                             <button className='font-semibold text-blue-400 mb-4'>Message</button>
-                                            <button onClick={() => handleUnfriend(item._id)} className='font-semibold text-blue-400 mb-4'>Unfriend</button>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger><button className='font-semibold text-blue-400 mb-4'>Unfriend</button></AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Do you want to unfriend?</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This will remove the user from your friend list
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction><p onClick={() => handleUnfriend(item._id)}>yes</p></AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
                                         </div>
                                     </div>
                                 </div>

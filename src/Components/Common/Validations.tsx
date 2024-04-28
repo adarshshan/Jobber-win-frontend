@@ -17,3 +17,16 @@ export const LoginValidation = Yup.object({
     email: Yup.string().email("please Enter a valid Email Address!").required("please Enter Email!"),
     password: Yup.string().required("please Enter your password!")
 })
+
+export const JobPostValidation = Yup.object({
+    title: Yup.string().min(3).required("please Fill the Title."),
+    industry: Yup.string().required('please select somthing'),
+    description: Yup.string().min(15).required("Please fill the description"),
+    total_vaccancy: Yup.number().required("please fill the vaccancy").positive('invalid input!'),
+    location: Yup.string().min(3).required("please fill the location"),
+    job_type: Yup.string().required("please fill the field"),
+    min_salary: Yup.number().positive("Please enter a valid salary.").required("Please fill the field."),
+    max_salary: Yup.number().when('min_salary', (min_salary, schema: any) => {
+        return schema.moreThan(min_salary, "Maximum salary must be less than minimum salary.");
+    }).required("Please fill the field.")
+})

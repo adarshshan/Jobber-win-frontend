@@ -215,8 +215,7 @@ const getSendRequests = async () => {
 }
 const cancelRequest = async (id: string) => {
     try {
-        const res = await Api.delete(`${userRoutes.withdrawSendRequest}${id}`);
-        return res;
+        return await Api.delete(`${userRoutes.withdrawSendRequest}${id}`);
     } catch (error) {
         console.log(error as Error);
     }
