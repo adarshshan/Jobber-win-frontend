@@ -29,6 +29,7 @@ const Recruiter = lazy(() => import('./Pages/recruiter/Recruiter'))
 const AllJobsComponent = lazy(() => import('./Pages/recruiter/AllJobsComponents'))
 const PostJobForm = lazy(() => import('./Pages/recruiter/PostJobForm'));
 const DashBoard = lazy(() => import('./Pages/recruiter/Dashboard'))
+const JobDetails = lazy(() => import('./Pages/user/JobDetails'))
 
 interface IAppProps {
 
@@ -60,11 +61,12 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='my-network' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><MyNetworkPage /></Suspense>} />
             <Route path='find-jobs' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><FindJobPage /></Suspense>} />
             <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
+            <Route path='job-details/:jobId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><JobDetails /></Suspense>} />
           </Route>
         </Route>
 
         {/* Recruiter Side */}
-        
+
         <Route path='/recruiter' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><Recruiter /></Suspense>}>
           <Route path='' element={<UserLoggedIn />}>
             <Route path='' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><DashBoard /></Suspense>} />

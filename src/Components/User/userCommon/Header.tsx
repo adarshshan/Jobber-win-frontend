@@ -1,5 +1,5 @@
 import { initFlowbite } from 'flowbite';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from '../../../Api/user';
 import { useDispatch } from 'react-redux';
@@ -14,6 +14,10 @@ import { AlertDialogDescription } from '../../../@/components/ui/alert-dialog';
 import { AlertDialogFooter } from '../../../@/components/ui/alert-dialog';
 import { AlertDialogCancel } from '../../../@/components/ui/alert-dialog';
 import { AlertDialogAction } from '../../../@/components/ui/alert-dialog';
+import { IoIosPeople, IoMdHome } from 'react-icons/io';
+import { FaShoppingBag } from 'react-icons/fa';
+import { MdOutlineMessage } from 'react-icons/md';
+import { FaBell } from 'react-icons/fa6';
 
 function Header() {
 
@@ -93,9 +97,10 @@ function Header() {
               </Link>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <Link to='/recruiter' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                  {user.role === 'recruiter' && <Link to='/recruiter' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                     Go to Recruiter Dashboard
-                  </Link>
+                  </Link>}
+
                 </li>
                 <li>
                   <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Get started with Premium</a>
@@ -119,19 +124,41 @@ function Header() {
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <Link to='/user/home' className="block py-2 px-3 text-white bg-gray-200 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500">Home</Link>
+                <Link to='/user/home' className="block py-2 px-3 text-white bg-gray-200 rounded md:bg-transparent">
+                  <div className=''>
+                    <IoMdHome className='ms-3 text-2xl' />
+                    <span className='mb-4'>Home</span>
+                  </div>
+                </Link>
               </li>
               <li>
-                <Link to='/user/my-network' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">My Network</Link>
+                <Link to='/user/my-network' className="py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                  <div>
+                    <IoIosPeople className=' ms-7 text-2xl' />
+                    <span className=''>My Network</span>
+                  </div>
+                </Link>
+
               </li>
               <li>
-                <Link to='/user/find-jobs' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Find Jobs</Link>
+                <Link to='/user/find-jobs' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                  <div>
+                    <FaShoppingBag className='ms-6 text-2xl' />
+                    <span>Find Jobs</span>
+                  </div>
+                </Link>
               </li>
               <li>
-                <Link to='/user/messaging' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Messaging</Link>
+                <Link to='/user/messaging' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                  <MdOutlineMessage className='ms-6 text-2xl' />
+                  <span>Messaging</span>
+                </Link>
               </li>
               <li>
-                <Link to='/user/notifications' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Notifications</Link>
+                <Link to='/user/notifications' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                  <FaBell className='text-2xl ms-8' />
+                  <span>Notifications</span>
+                </Link>
               </li>
             </ul>
           </div>

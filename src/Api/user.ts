@@ -221,6 +221,22 @@ const cancelRequest = async (id: string) => {
     }
 }
 
+//jobs
+const getAllJobs = async () => {
+    try {
+        return await Api.get(userRoutes.getAllJobs);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getSingleJob = async (jobId: string) => {
+    try {
+        return await Api.get(`${userRoutes.getSingleJob}${jobId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+
 export {
     signup,
     verifyOtp,
@@ -248,5 +264,7 @@ export {
     unFriend,
     removeRequest,
     getSendRequests,
-    cancelRequest
+    cancelRequest,
+    getAllJobs,
+    getSingleJob
 }

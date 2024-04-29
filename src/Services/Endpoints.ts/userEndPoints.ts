@@ -27,6 +27,9 @@ const userRoutes = {
     removeRequest: "/user/remove-request/",
     getAllSendRequests: "/user/getsend-requests",
     withdrawSendRequest: "/user/withdraw-request/",
+
+    getAllJobs: "/user/get-all-jobs",
+    getSingleJob: "/user/get-single-jobs/"
 }
 
 

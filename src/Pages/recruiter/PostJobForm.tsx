@@ -17,7 +17,7 @@ export interface JobInterface {
     description: string;
     total_vaccancy: number;
     location: string;
-    job_img?:string;
+    job_img?: string;
     job_type: string;
     experience: number;
     min_salary: number;
@@ -272,7 +272,7 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                                             <input
                                                 type='number'
                                                 name='min_salary'
-                                                value={values.min_salary}
+                                                value={values.min_salary === 0 ? '' : values.min_salary}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
@@ -283,7 +283,7 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                                             <input
                                                 type='number'
                                                 name='max_salary'
-                                                value={values.max_salary}
+                                                value={values.max_salary === 0 ? '' : values.max_salary}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
@@ -294,7 +294,7 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                                             <input
                                                 type="text"
                                                 name='total_vaccancy'
-                                                value={values.total_vaccancy}
+                                                value={values.total_vaccancy === 0 ? '' : values.total_vaccancy}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
@@ -305,7 +305,7 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                                             <input
                                                 type="number"
                                                 name="experience"
-                                                value={values.experience}
+                                                value={values.experience === 0 ? '' : values.experience}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
