@@ -12,7 +12,15 @@ const postNewJob = async (data: JobInterface) => {
         console.log(error as Error);
     }
 }
+const getAllJobsOfRecruiter = async () => {
+    try {
+        return await Api.get(recruiterRoutes.getAllJobsOfRecruiter);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     postNewJob,
+    getAllJobsOfRecruiter
 }

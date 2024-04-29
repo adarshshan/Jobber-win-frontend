@@ -1,8 +1,8 @@
-import React, { lazy } from 'react'
+import Header from 'Components/Recruiter/Header'
+import Sidebar from 'Components/Recruiter/Sidebar'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-const Sidebar = lazy(() => import('Components/Recruiter/Sidebar'));
-const Header = lazy(() => import('Components/Recruiter/Header'))
 
 
 

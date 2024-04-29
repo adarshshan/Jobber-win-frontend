@@ -17,6 +17,7 @@ export interface JobInterface {
     description: string;
     total_vaccancy: number;
     location: string;
+    job_img?:string;
     job_type: string;
     experience: number;
     min_salary: number;

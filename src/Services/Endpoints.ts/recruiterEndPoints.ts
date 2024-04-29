@@ -1,6 +1,6 @@
 const recruiterRoutes = {
     postNewJob: "/recruiter/post-new-job",
-    getAllJobs: "/recruiter/get-alljobs",
+    getAllJobsOfRecruiter: "/recruiter/get-alljobs",
     deleteJob: "/recruiter/delete-job",
     editJobDetails: "/recruiter/edit-jobs",
 }

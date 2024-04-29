@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import JobItem from '../../Components/Recruiter/JobItem'
+import { getAllJobsOfRecruiter } from 'Api/recruiter'
+import toast from 'react-hot-toast'
+import { JobInterface } from './PostJobForm'
 
 interface IAllJobsComponentProps {
 
 }
 const AllJobsComponent: React.FC<IAllJobsComponentProps> = () => {
+
+    const [jobs, setJobs] = useState<JobInterface[]>();
+
+    useEffect(() => {
+        const fetchAllJobs = async () => {
+            try {
+                const res = await getAllJobsOfRecruiter();
+                if (res?.data.success) {
+                    setJobs(res.data.data);
+                } else toast.error(res?.data.message);
+            } catch (error) {
+                console.log(error as Error);
+            }
+        }
+        fetchAllJobs();
+    }, [])
+    console.log(jobs);
     return (
         <>
             <div className="w-full shadow-lg">
@@ -20,9 +40,11 @@ const AllJobsComponent: React.FC<IAllJobsComponentProps> = () => {
                         <svg aria-hidden="true" className="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>Search
                     </button>
                 </form>
-                <JobItem />
-                <JobItem />
-                <JobItem />
+                {
+                    jobs && jobs.length && jobs.map((item, index) => (
+                        <JobItem key={index} item={item} />
+                    ))
+                }
             </div>
         </>
     )

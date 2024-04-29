@@ -1,16 +1,19 @@
+
+
+import { JobInterface } from '@/components/recruiter/PostJobForm';
 import { Button } from '@nextui-org/react'
 import React from 'react'
 
 interface IJobItemProps {
-
+    item: JobInterface;
 }
-const JobItem: React.FC<IJobItemProps> = () => {
+const JobItem: React.FC<IJobItemProps> = ({ item }) => {
     return (
         <div className="flex shadow-lg rounded-sm p-3 my-3">
-            <img className='rounded-lg w-20 h-20' src="http://res.cloudinary.com/dnn1ree80/image/upload/v1713962983/ypkk1scqoxgubcfgpymk.jpg" alt="" />
+            <img className='rounded-lg w-20 h-20' src={item.job_img} alt="" />
             <div className='ms-4'>
-                <h1 className='font-semibold'>Frontend Developer</h1>
-                <small>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, dolor quaerat. Illum tempora blanditiis cupiditate quia exercitationem porro, explicabo, voluptates consectetur esse necessitatibus in architecto modi dolor eligendi quam dolorum?</small>
+                <h1 className='font-semibold'>{item.title}</h1>
+                <small>{item.description}</small>
             </div>
             <div className='h-full '>
                 <Button color="secondary" className='mt-3 rounded-full bg-blue-800 text-white ms-2'>
