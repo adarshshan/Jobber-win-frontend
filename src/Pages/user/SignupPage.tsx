@@ -62,6 +62,7 @@ const SignupPage: React.FC = () => {
             hanSub()
         },
     });
+    
     return (
         <>
             <div className="bg-white min-h-screen flex">

@@ -1,5 +1,7 @@
 
 import { initializeApp } from "firebase/app";
+import { getStorage } from 'firebase/storage';
+
 
 console.log(process.env.FIREBASE_API_KEY);
 console.log('this is your env data')
@@ -15,5 +17,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+export const storage = getStorage(app);
 
 export default app;

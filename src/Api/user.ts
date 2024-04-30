@@ -236,6 +236,13 @@ const getSingleJob = async (jobId: string) => {
         console.log(error as Error);
     }
 }
+const applyJob = async (jobId: string, resume: string, qualification: string, experience: number) => {
+    try {
+        return await Api.post(`${userRoutes.applyJob}${jobId}`, { resume, qualification, experience });
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -266,5 +273,6 @@ export {
     getSendRequests,
     cancelRequest,
     getAllJobs,
-    getSingleJob
+    getSingleJob,
+    applyJob
 }

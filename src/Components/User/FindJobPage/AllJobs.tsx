@@ -76,7 +76,7 @@ const AllJobs: React.FC<IAllJobsProps> = () => {
                                     </div>
                                 </DropdownItem>
                                 <DropdownItem className='my-1 hover:bg-white hover:text-black' key="copy">
-                                    <div className=' flex justify-center gap-1'>
+                                    <div className=' flex justify-center gap-1 text-red-500'>
                                         <MdOutlineReport className='text-xl mt-1' />
                                         <span>Report Job</span>
                                     </div>

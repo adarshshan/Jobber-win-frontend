@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { IoClose } from 'react-icons/io5';
+import JobApplyForm from 'Components/User/FindJobPage/JobApplyForm';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { FaRegSave } from 'react-icons/fa';
+import { MdOutlineReport } from 'react-icons/md';
 
 interface IJobDetailsProps {
 
@@ -46,14 +50,8 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
     console.log(job);
     return (
         <>
-            <div className="fixed bg-gray-800 p-5 text-white w-[900px] h-[500px] left-[250px] top-[80px] z-50">
-                <div className="flex justify-between text-2xl">
-                    <h1> Job Application</h1>
-                    <IoClose className='text-3xl' />
-                </div>
-                <hr className='mt-2'/>
-                
-            </div>
+            {showForm && <JobApplyForm setShowForm={setShowForm} />}
+
             <div className="container">
                 <div className="grid grid-cols-12 gap-2 min-h-screen shadow-lg px-14 mb-5">
                     <div className="col-spam-12 sm:col-span-6 min-h-50 border-r-4">
@@ -97,14 +95,34 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
                                     <img className='rounded-md w-16 h-16' src={job.job_img} alt="" />
                                     <h1 className='mt-3'>{job.title}</h1>
                                 </div>
-                                <BiDotsHorizontalRounded />
+                                <Dropdown>
+                                    <DropdownTrigger>
+                                        <Button variant="solid" >
+                                            <BiDotsHorizontalRounded />
+                                        </Button>
+                                    </DropdownTrigger>
+                                    <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
+                                        <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
+                                            <div className="flex justify-center gap-1">
+                                                <FaRegSave className='text-xl mt-1' />
+                                                <span>save job</span>
+                                            </div>
+                                        </DropdownItem>
+                                        <DropdownItem className='my-1 hover:bg-white hover:text-black' key="copy">
+                                            <div className=' flex justify-center gap-1 text-red-500'>
+                                                <MdOutlineReport className='text-xl mt-1' />
+                                                <span>Report Job</span>
+                                            </div>
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
                             </div>
                             <div className='p-5 text-sm'>
                                 <p className='mt-3'>{job.location},kerala,India  <span>1 month ago</span></p>
                                 <p className='mt-3'>5 of 10 skills match your profile- you may be good fit</p>
                             </div>
                             <div className="flex justify-start p-5 border-b-2 gap-5">
-                                <button className='rounded-full bg-blue-500 px-7 p-1 text-xl font-semibold text-white'>Apply</button>
+                                <button onClick={() => setShowForm(true)} className='rounded-full bg-blue-500 px-7 p-1 text-xl font-semibold text-white'>Apply</button>
                                 <button className='rounded-full border border-blue-600 px-7 p-1 text-xl font-semibold text-blue-500'>Save</button>
                             </div>
                             <div className="p-5">
