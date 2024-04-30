@@ -243,6 +243,13 @@ const applyJob = async (jobId: string, resume: string, qualification: string, ex
         console.log(error as Error);
     }
 }
+const getAllAppliedandSaved = async () => {
+    try {
+        return await Api.get(userRoutes.getAllAppliedandSaved);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -274,5 +281,6 @@ export {
     cancelRequest,
     getAllJobs,
     getSingleJob,
-    applyJob
+    applyJob,
+    getAllAppliedandSaved
 }

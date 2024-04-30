@@ -1,5 +1,7 @@
+import { getAllAppliedandSaved } from 'Api/user'
 import AllJobs from 'Components/User/FindJobPage/AllJobs'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
@@ -7,6 +9,22 @@ interface IFindJobPageProps {
 
 }
 const FindJobPage: React.FC<IFindJobPageProps> = () => {
+    const [appliedJobs, setAppliedJobs] = useState();
+    useEffect(() => {
+        const fetchAppliedandSaved = async () => {
+            try {
+                const res = await getAllAppliedandSaved();
+                if (res?.data.success) {
+                    setAppliedJobs(res.data.data);
+                } else toast.error('Something went wrong please try again!');
+            } catch (error) {
+                console.log(error as Error);
+            }
+        }
+        fetchAppliedandSaved()
+    }, [])
+    console.log('This is the Saved and applied jobs.');
+    console.log(appliedJobs);
     return (
         <>
             <div className="grid grid-cols-12 container py-3 gap-5 sm:px-16 sm:min-h-screen bg-slate-100">

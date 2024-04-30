@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { IoClose } from 'react-icons/io5';
 import JobApplyForm from 'Components/User/FindJobPage/JobApplyForm';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { FaRegSave } from 'react-icons/fa';

@@ -24,7 +24,6 @@ const JobApplyForm: React.FC<IJobApplyFormProps> = ({ setShowForm }) => {
         const imgRef = ref(storage, `myfiles/${fileUpload.name + v4()}`)
         uploadBytes(imgRef, fileUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                console.log(url);
                 setFileUrl(url);
             })
         })
@@ -35,13 +34,13 @@ const JobApplyForm: React.FC<IJobApplyFormProps> = ({ setShowForm }) => {
             uploadImage();
             if (jobId && fileUrl) {
                 const res = await applyJob(jobId, fileUrl, qualification, experience)
-                console.log(res);
                 if (res?.data.success) toast.success(res.data.message);
                 else toast.error(res?.data.message);
                 setShowForm(false);
             }
         } catch (error) {
             console.log(error as Error)
+            toast.error('Something went wrong while submitting the job application');
         }
     }
 
@@ -54,16 +53,7 @@ const JobApplyForm: React.FC<IJobApplyFormProps> = ({ setShowForm }) => {
                 </div>
                 <hr className='mt-2' />
                 <div>
-                    <input type="file" onChange={(event) => {
-                        const selectedFile = event.target.files
-                        if (selectedFile !== null && selectedFile.length > 0) {
-                            setFileUpload(selectedFile[0]);
-                        }
-                    }} />
-                    <button onClick={uploadImage}>upload image</button>
-
-                    <form
-                        onSubmit={handleSubmit}
+                    <form onSubmit={handleSubmit}
                         className="max-w-lg mx-auto py-10">
                         <input type="text"
                             value={qualification}

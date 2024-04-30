@@ -30,7 +30,8 @@ const userRoutes = {
 
     getAllJobs: "/user/get-all-jobs",
     getSingleJob: "/user/get-single-jobs/",
-    applyJob: "/user/apply-job/"
+    applyJob: "/user/apply-job/",
+    getAllAppliedandSaved: "/user/get-saved-applied-jobs"
 }
 
 
