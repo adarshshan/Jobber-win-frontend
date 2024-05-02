@@ -19,7 +19,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
             try {
                 if (userId) {
                     const result = await getAllSkills(userId);
-                    setSkill(result?.data.data);
+                    setSkill(result?.data.data) 
                 }
             } catch (error) {
                 console.log(error);
@@ -27,7 +27,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
             }
         }
         fetchData();
-    }, []);
+    });
     const handleDeleteSkill = async (skill: string) => {
         try {
             const result = await deleteSkill(userId, skill);
@@ -49,12 +49,12 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
                     </div>
                 </div>
                 <div className="text-lg font-semibold">
-                    {skill?.length && skill.slice(0, showSkill).map((item, index) => {
+                    {skill && skill?.length && skill.slice(0, showSkill).map((item, index) => {
                         return (
                             <div key={index}>
                                 <Divider className="my-4" />
                                 <div className="flex justify-between mx-5">
-                                    <h1 key={index}>{item}</h1>
+                                    <h1 >{item}</h1> 
                                     <MdOutlineDeleteForever onClick={() => handleDeleteSkill(item)} />
                                 </div>
                             </div>

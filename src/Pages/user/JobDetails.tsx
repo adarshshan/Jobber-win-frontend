@@ -3,13 +3,14 @@ import './css/JobDetails.css'
 import { JobResult } from 'Components/User/FindJobPage/AllJobs';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import JobApplyForm from 'Components/User/FindJobPage/JobApplyForm';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { FaRegSave } from 'react-icons/fa';
 import { MdOutlineReport } from 'react-icons/md';
+import { IoMdArrowBack } from 'react-icons/io';
 
 interface IJobDetailsProps {
 
@@ -19,13 +20,15 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
     const [jobs, setJobs] = useState<JobResult[]>();
     const [showForm, setShowForm] = useState(false);
 
+    const navigate = useNavigate();
+
     const { jobId } = useParams();
     useEffect(() => {
         const fetchAllJobs = async () => {
             try {
                 const res = await getAllJobs();
                 if (res?.data.success) {
-                    setJobs(res.data.data);
+                    setJobs(res.data.data.alljobs);
                 } else toast.error(res?.data.message);
             } catch (error) {
                 console.log(error as Error);
@@ -46,7 +49,6 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
         fetchSingleJobDetails();
         fetchAllJobs();
     }, [jobId])
-    console.log(job);
     return (
         <>
             {showForm && <JobApplyForm setShowForm={setShowForm} />}
@@ -56,7 +58,10 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
                     <div className="col-spam-12 sm:col-span-6 min-h-50 border-r-4">
                         <div className="job-listing w-full">
                             <div className="text-2xl font-semibold p-5 bg-gray-200 text-blue-500 w-full">
-                                <h1>All Jobs</h1>
+                                <div className="flex justify-start gap-5">
+                                    <IoMdArrowBack onClick={() => navigate(-1)} className='text-2xl font-semibold mt-2' />
+                                    <h1>All Jobs</h1>
+                                </div>
                             </div>
                             <form className="flex items-center w-full">
                                 <label htmlFor="voice-search" className="sr-only">Search</label>

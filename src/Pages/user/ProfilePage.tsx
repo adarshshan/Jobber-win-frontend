@@ -42,7 +42,6 @@ const ProfilePage: React.FC = () => {
 
     const dispatch = useDispatch()
 
-    // const { user } = useAppSelector((state) => state.auth)
 
     useEffect(() => {
         const fetchData = async () => {
