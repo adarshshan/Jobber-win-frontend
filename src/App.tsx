@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 
+
 import User from './Components/User/userCommon/User';
 import Admin from './Components/Admin/Admin';
 import Users from './Pages/admin/Users';
@@ -11,9 +12,12 @@ import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
 import Test from './Pages/user/Test';
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
+import MessagePage from './Pages/user/MessagePage';
+// import io from 'socket.io-client';
 
+// const socket = io('http://localhost:5000');
 
 const AdminLogin = lazy(() => import('./Pages/admin/AdminLogin'));
 const LandingPage = lazy(() => import('./Pages/user/LandingPage'))
@@ -31,11 +35,14 @@ const PostJobForm = lazy(() => import('./Pages/recruiter/PostJobForm'));
 const DashBoard = lazy(() => import('./Pages/recruiter/Dashboard'))
 const JobDetails = lazy(() => import('./Pages/user/JobDetails'))
 
+
 interface IAppProps {
 
 }
 
 const App: React.FunctionComponent<IAppProps> = () => {
+  
+
   return (
     <main>
       <Toaster position='top-right' reverseOrder={false} />
@@ -62,6 +69,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='find-jobs' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><FindJobPage /></Suspense>} />
             <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
             <Route path='job-details/:jobId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><JobDetails /></Suspense>} />
+            <Route path='message' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><MessagePage /></Suspense>} />
           </Route>
         </Route>
 

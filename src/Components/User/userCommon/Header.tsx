@@ -1,27 +1,21 @@
 import { initFlowbite } from 'flowbite';
-import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { logout } from '../../../Api/user';
 import { useDispatch } from 'react-redux';
 import { userLogout } from '../../../app/slice/AuthSlice';
 import toast from 'react-hot-toast';
-import { Avatar, Badge, Input } from '@nextui-org/react';
 import Swal from 'sweetalert2';
 import { useAppSelector } from '../../../app/store';
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTrigger } from '../../../@/components/ui/alert-dialog';
-import { AlertDialogTitle } from '../../../@/components/ui/alert-dialog';
-import { AlertDialogDescription } from '../../../@/components/ui/alert-dialog';
-import { AlertDialogFooter } from '../../../@/components/ui/alert-dialog';
-import { AlertDialogCancel } from '../../../@/components/ui/alert-dialog';
-import { AlertDialogAction } from '../../../@/components/ui/alert-dialog';
-import { IoIosPeople, IoMdHome } from 'react-icons/io';
-import { FaShoppingBag } from 'react-icons/fa';
 import { MdOutlineMessage } from 'react-icons/md';
-import { FaBell } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
+import { Avatar, Badge } from '@nextui-org/react';
+import { IoIosPeople, IoMdHome } from 'react-icons/io';
+import { FaBell, FaShoppingBag } from 'react-icons/fa';
 
 function Header() {
 
   const { user } = useAppSelector((state) => state.auth)
+  const [stateColor, setStateColor] = useState<string>();
 
   useEffect(() => {
     initFlowbite()
@@ -50,13 +44,25 @@ function Header() {
       console.log(error as Error);
     }
   }
-  const handl = async () => {
-    try {
-      await logout()
-      dispatch(userLogout());
-      toast.success("You are logged out!")
-    } catch (error) {
-      console.log(error as Error);
+  const changeColor = (key: string) => {
+    switch (key) {
+      case 'home':
+        setStateColor('home')
+        break;
+      case 'network':
+        setStateColor('network')
+        break;
+      case 'findjobs':
+        setStateColor('findjobs')
+        break;
+      case 'message':
+        setStateColor('message')
+        break;
+      case 'notification':
+        setStateColor('notification')
+        break;
+      default:
+        break;
     }
   }
   return (
@@ -125,7 +131,7 @@ function Header() {
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <Link to='/user/home' className="block py-2 px-3 text-white bg-gray-200 rounded md:bg-transparent">
-                  <div className=''>
+                  <div onClick={() => changeColor('home')} style={{ color: `${stateColor === 'home' ? 'black' : '#fff'}` }}>
                     <IoMdHome className='ms-3 text-2xl' />
                     <span className='mb-4'>Home</span>
                   </div>
@@ -133,7 +139,7 @@ function Header() {
               </li>
               <li>
                 <Link to='/user/my-network' className="py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <div>
+                  <div onClick={() => changeColor('network')} style={{ color: `${stateColor === 'network' ? 'black' : '#fff'}` }}>
                     <IoIosPeople className=' ms-7 text-2xl' />
                     <span className=''>My Network</span>
                   </div>
@@ -142,28 +148,32 @@ function Header() {
               </li>
               <li>
                 <Link to='/user/find-jobs' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <div>
+                  <div onClick={() => changeColor('findjobs')} style={{ color: `${stateColor === 'findjobs' ? 'black' : '#fff'}` }} >
                     <FaShoppingBag className='ms-6 text-2xl' />
                     <span>Find Jobs</span>
                   </div>
                 </Link>
               </li>
               <li>
-                <Link to='/user/messaging' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <MdOutlineMessage className='ms-6 text-2xl' />
-                  <span>Messaging</span>
+                <Link to='/user/message' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                  <div onClick={() => changeColor('message')} style={{ color: `${stateColor === 'message' ? 'black' : '#fff'}` }} >
+                    <MdOutlineMessage className='ms-6 text-2xl' />
+                    <span>Messaging</span>
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link to='/user/notifications' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <FaBell className='text-2xl ms-8' />
-                  <span>Notifications</span>
+                  <div onClick={() => changeColor('notification')} style={{ color: `${stateColor === 'notification' ? 'black' : '#fff'}` }}  >
+                    <FaBell className='text-2xl ms-8' />
+                    <span>Notifications</span>
+                  </div>
                 </Link>
               </li>
             </ul>
           </div>
         </div>
-      </nav>
+      </nav >
     </>
   );
 }

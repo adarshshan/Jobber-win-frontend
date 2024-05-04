@@ -86,7 +86,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
         }
         fetchSentRequest()
     }, [confirmFriend])
-    console.log(sendReq);
+    // console.log(sendReq);
     const handleAddFriend = async (id: string) => {
         try {
             const res = await addToFriend(id);
