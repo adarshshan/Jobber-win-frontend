@@ -7,8 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { UserData } from './ProfilePage';
 import { FaCheck } from 'react-icons/fa6';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
+import { useSearchHook } from '../../utils/costomHooks'
 import toast from 'react-hot-toast';
 import {
     AlertDialog,
@@ -21,6 +20,9 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "../../@/components/ui/alert-dialog"
+import { useAppSelector } from 'app/store';
+import { setSearchText } from 'app/slice/CommonSlice';
+import { useDispatch } from 'react-redux';
 
 
 interface IMyNetworkPageProps {
@@ -40,15 +42,20 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
     const [showFriendsScreen, setShowFriendScreen] = useState(false);
     const [sendReq, setSendReq] = useState<string[]>();
 
+    const { search } = useAppSelector((state) => state.common)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(setSearchText(''))
+    }, [])
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getAllUsers();
+            const res = await getAllUsers(search);
             if (res?.data.success) {
                 setUsers(res.data.data)
             }
         }
         fetchData();
-    }, [confirmFriend])
+    }, [confirmFriend, search])
     useEffect(() => {
         const fetchRequests = async () => {
             try {

@@ -142,9 +142,10 @@ const removeProfilePic = async (id: string | undefined) => {
 }
 
 //netWork
-const getAllUsers = async () => {
+const getAllUsers = async (search: any) => {
     try {
-        return await Api.get(userRoutes.getAllUsers);
+        console.log('this is the search query' + search);
+        return await Api.get(`${userRoutes.getAllUsers}?search=${search}`);
     } catch (error) {
         console.log(error as Error);
     }
@@ -222,9 +223,9 @@ const cancelRequest = async (id: string) => {
 }
 
 //jobs
-const getAllJobs = async () => {
+const getAllJobs = async (search:string) => {
     try {
-        return await Api.get(userRoutes.getAllJobs);
+        return await Api.get(`${userRoutes.getAllJobs}?search=${search}`);
     } catch (error) {
         console.log(error as Error);
     }

@@ -13,7 +13,7 @@ const FriendSuggession: React.FC<IFriendSuggessionProps> = () => {
     const [users, setUsers] = useState<UserData[] | undefined>();
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getAllUsers();
+            const res = await getAllUsers('');
             if (res?.data.success) {
                 setUsers(res.data.data)
             }

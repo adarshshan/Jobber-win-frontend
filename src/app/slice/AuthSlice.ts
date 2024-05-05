@@ -1,4 +1,3 @@
-import { Action } from '@radix-ui/react-alert-dialog';
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface CounterState {

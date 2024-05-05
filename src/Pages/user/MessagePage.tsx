@@ -1,11 +1,11 @@
 import UserListItem from 'Components/MessagePage/UserListItem'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './css/JobDetails.css'
 import ChatSectionHeader from 'Components/MessagePage/ChatSectionHeader'
 import ChatSectionFooter from 'Components/MessagePage/ChatSectionFooter'
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 
-const socket = io('http://localhost:5000');
+// const socket = io('http://localhost:5000');
 
 
 interface IMessagePage {
@@ -14,26 +14,30 @@ interface IMessagePage {
 const MessagePage: React.FC<IMessagePage> = () => {
     const [messages, setMessages] = useState<any[]>([]);
     const [messageText, setMessageText] = useState('');
+    const socket = useRef<Socket | undefined>();
+
+
 
     useEffect(() => {
-        socket.on('connect', () => {
+        socket.current = io('http://localhost:5000');
+        socket.current.on('connect', () => {
             console.log('Connected to server');
         });
 
-        socket.on('disconnect', () => {
+        socket.current.on('disconnect', () => {
             console.log('Disconnected from server');
         });
     }, []);
 
 
     useEffect(() => {
-        socket.on('message', (message) => {
+        socket.current?.on('message', (message) => {
             setMessages([...messages, message]);
         });
     }, [messages]);
 
     const sendMessage = () => {
-        socket.emit('sendMessage', { text: messageText });
+        socket.current?.emit('sendMessage', { text: messageText });
         setMessageText('');
     };
     return (

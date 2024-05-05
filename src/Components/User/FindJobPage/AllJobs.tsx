@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { MdOutlineReport } from 'react-icons/md';
 import { FaRegSave } from 'react-icons/fa';
+import { useAppSelector } from 'app/store';
+import { useDispatch } from 'react-redux';
+import { setSearchText } from 'app/slice/CommonSlice';
 
 
 export interface JobResult {
@@ -32,10 +35,16 @@ const AllJobs: React.FC<IAllJobsProps> = () => {
     const [jobs, setJobs] = useState<JobResult[]>();
     const [skillJob, setSkillJob] = useState<JobResult[]>();
 
+    const { search } = useAppSelector((state) => state.common);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setSearchText(''))
+    }, [])
     useEffect(() => {
         const fetchAllJobs = async () => {
             try {
-                const res = await getAllJobs();
+                const res = await getAllJobs(search);
                 if (res?.data.success) {
                     console.log(res);
                     setJobs(res.data.data.alljobs);
@@ -46,7 +55,7 @@ const AllJobs: React.FC<IAllJobsProps> = () => {
             }
         }
         fetchAllJobs();
-    }, [])
+    }, [search])
     return (
         <>
             <div className="w-full">

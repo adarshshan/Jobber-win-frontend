@@ -11,17 +11,28 @@ import { Link } from 'react-router-dom';
 import { Avatar, Badge } from '@nextui-org/react';
 import { IoIosPeople, IoMdHome } from 'react-icons/io';
 import { FaBell, FaShoppingBag } from 'react-icons/fa';
+import { useSearchHook } from 'utils/costomHooks';
+import { setSearchText } from 'app/slice/CommonSlice';
 
 function Header() {
 
   const { user } = useAppSelector((state) => state.auth)
   const [stateColor, setStateColor] = useState<string>();
+  const [search, setSearch] = useState<string>('')
 
   useEffect(() => {
     initFlowbite()
   }, [])
 
   const dispatch = useDispatch();
+
+  const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    try {
+        dispatch(setSearchText(search));
+    } catch (error) {
+      console.log(error as Error);
+    }
+  }
 
   const handleLogout = async () => {
     try {
@@ -75,7 +86,13 @@ function Header() {
             <Link to='/'>
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
             </Link>
-            <input type="search" className='bg-transparent border border-gray-950 shadow-black  ms-14 rounded-full p-2' placeholder='Search' />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyUp={handleSearch}
+              className='bg-transparent border border-gray-950 shadow-black  ms-14 rounded-full p-2'
+              placeholder='Search' />
           </div>
 
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">

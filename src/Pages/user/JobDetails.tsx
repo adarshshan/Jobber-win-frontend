@@ -11,6 +11,9 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@
 import { FaRegSave } from 'react-icons/fa';
 import { MdOutlineReport } from 'react-icons/md';
 import { IoMdArrowBack } from 'react-icons/io';
+import { useAppSelector } from 'app/store';
+import { useDispatch } from 'react-redux';
+import { setSearchText } from 'app/slice/CommonSlice';
 
 interface IJobDetailsProps {
 
@@ -22,11 +25,17 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
 
     const navigate = useNavigate();
 
+    const { search } = useAppSelector(state => state.common);
+    const dispatch = useDispatch()
+
     const { jobId } = useParams();
+    useEffect(() => {
+        dispatch(setSearchText(''))
+    }, [])
     useEffect(() => {
         const fetchAllJobs = async () => {
             try {
-                const res = await getAllJobs();
+                const res = await getAllJobs(search);
                 if (res?.data.success) {
                     setJobs(res.data.data.alljobs);
                 } else toast.error(res?.data.message);
@@ -48,7 +57,7 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
         }
         fetchSingleJobDetails();
         fetchAllJobs();
-    }, [jobId])
+    }, [jobId, search])
     return (
         <>
             {showForm && <JobApplyForm setShowForm={setShowForm} />}

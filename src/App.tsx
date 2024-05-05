@@ -15,9 +15,7 @@ import Test from './Pages/user/Test';
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
 import MessagePage from './Pages/user/MessagePage';
-// import io from 'socket.io-client';
 
-// const socket = io('http://localhost:5000');
 
 const AdminLogin = lazy(() => import('./Pages/admin/AdminLogin'));
 const LandingPage = lazy(() => import('./Pages/user/LandingPage'))
