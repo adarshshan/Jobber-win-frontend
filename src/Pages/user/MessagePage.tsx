@@ -6,6 +6,8 @@ import ChatSectionFooter from 'Components/MessagePage/ChatSectionFooter'
 import io, { Socket } from 'socket.io-client';
 import { Button, Input, useDisclosure } from '@chakra-ui/react'
 import SideDrawer from 'Components/MessagePage/SideDrawer'
+import { FaUsersViewfinder } from 'react-icons/fa6'
+import { MdPersonSearch } from 'react-icons/md'
 
 
 
@@ -32,7 +34,6 @@ const MessagePage: React.FC<IMessagePage> = () => {
         });
     }, []);
 
-
     useEffect(() => {
         socket.current?.on('message', (message) => {
             setMessages([...messages, message]);
@@ -45,8 +46,8 @@ const MessagePage: React.FC<IMessagePage> = () => {
     };
     return (
         <>
-           <SideDrawer isOpen={isOpen} onClose={onClose} />
-           
+            <SideDrawer isOpen={isOpen} onClose={onClose} />
+
             <h1>Real-Time Chat App</h1>
             <div className="messages">
                 {messages.map((message, index) => (
@@ -69,9 +70,10 @@ const MessagePage: React.FC<IMessagePage> = () => {
                 <div className="grid grid-cols-12 m-1 p-1 shadow-sm rounded-md gap-3">
                     <div className="col-span-4 max-h-screen bg-blue-200 p-2">
                         {/* searchbar */}
-                        <div className="flex justify-end">
-                            <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
-                                search
+                        <div className="flex justify-between">
+                            <h1 className='font-semibold ms-5 text-xl'>Chats</h1>
+                            <Button ref={btnRef} onClick={onOpen}>
+                                <MdPersonSearch className='text-2xl' />
                             </Button>
                         </div>
                         {/* end of search bar */}

@@ -1,6 +1,9 @@
 const userRoutes = {
     login: "/user/login",
     signup: "/user/registration",
+    forgotPassword: '/user/forgot-password',
+    forgotVerifyOtp: '/user/verify-forgot-otp',
+    updateNewPassword: '/user/update-newpassword',
     veryfyOtp: "/user/veryfy-otp",
     logout: "/user/logout",
     getProfile: "/user/profile",
@@ -31,7 +34,7 @@ const userRoutes = {
     getAllJobs: "/user/get-all-jobs",
     getSingleJob: "/user/get-single-jobs/",
     applyJob: "/user/apply-job/",
-    getAllAppliedandSaved: "/user/get-saved-applied-jobs"
+    getAllAppliedandSaved: "/user/get-saved-applied-jobs",
 }
 
 

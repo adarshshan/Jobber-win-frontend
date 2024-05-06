@@ -83,7 +83,6 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
         const fetchSentRequest = async () => {
             try {
                 const res = await getSendRequests();
-                // console.log(res);
                 if (res?.data.success) {
                     setSendReq(res.data.data);
                 }

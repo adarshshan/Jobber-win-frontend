@@ -82,6 +82,10 @@ const LoginPage: React.FC = () => {
                                 <span>Not a member? </span>
                                 <Link to='/user/signup' className="underline font-medium text-[#070eff]">Sign up now</Link>
                             </div>
+                            <div className="flex items-center space-x-2">
+                                <span>Forgot password ? </span>
+                                <Link to='/user/forgot-password' className="underline font-medium text-[#070eff]">click here</Link>
+                            </div>
                         </div>
                         <div className="flex flex-1 flex-col justify-center space-y-5 max-w-md">
                             <div className="flex flex-col space-y-2 text-center">
@@ -116,10 +120,14 @@ const LoginPage: React.FC = () => {
                                 <OAuth />
                             </div>
                         </div>
-                        <div className="hidden lg:flex justify-between items-center w-full py-4">
+                        <div className="hidden md:block items-center w-full py-4">
                             <div className="flex items-center space-x-2">
                                 <span>Not a member? </span>
                                 <Link to='/user/signup' className="underline font-medium text-[#070eff]">Sign up now</Link>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <span>Forgot password ? </span>
+                                <Link to='/user/forgot-password' className="underline font-medium text-[#070eff]">click here</Link>
                             </div>
                         </div>
                     </div>

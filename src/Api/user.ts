@@ -74,6 +74,27 @@ const updateAbout = async (id: string, about: string) => {
         console.log(error as Error)
     }
 }
+const forgotPassword = async (email: string) => {
+    try {
+        return await Api.post(userRoutes.forgotPassword, { email })
+    } catch (error) {
+        console.log()
+    }
+}
+const forgotVerifyOtp = async (otp: string) => {
+    try {
+        return await Api.post(userRoutes.forgotVerifyOtp, { otp });
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const updateNewPassword = async (password: string, userId: string) => {
+    try {
+        return await Api.put(userRoutes.updateNewPassword, { password, userId });
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 const setProfilePic = async (pic: string, id: string) => {
     try {
         const result = await Api.put(userRoutes.updateProfile, { pic, id });
@@ -223,9 +244,9 @@ const cancelRequest = async (id: string) => {
 }
 
 //jobs
-const getAllJobs = async (search:string) => {
+const getAllJobs = async (search: string) => {
     try {
-        return await Api.get(`${userRoutes.getAllJobs}?search=${search}`);
+        return await Api.get(`${userRoutes.getAllJobs}? search=${search}`);
     } catch (error) {
         console.log(error as Error);
     }
@@ -257,11 +278,15 @@ export {
     verifyOtp,
     login,
     logout,
+    forgotPassword,
+    forgotVerifyOtp,
+    updateNewPassword,
     getProfile,
     googleLogin,
     updateAbout,
     setProfilePic,
     createPost,
+
     getAllPosts,
     getAllHomePosts,
     addSkill,

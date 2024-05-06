@@ -32,3 +32,7 @@ export const JobPostValidation = Yup.object({
         return schema.moreThan(min_salary, "Maximum salary must be less than minimum salary.");
     }).required("Please fill the field.")
 })
+export const newPasswordValidation = Yup.object({
+    password: Yup.string().min(8).matches(strongRegex, "Enter a Strong password").required('Please Enter the password!'),
+    cpassword: Yup.string().min(8).oneOf([Yup.ref("password")], "Password not matching").required('Please confirm the password!')
+})

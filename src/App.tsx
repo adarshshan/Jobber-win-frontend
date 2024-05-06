@@ -15,6 +15,7 @@ import Test from './Pages/user/Test';
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
 import MessagePage from './Pages/user/MessagePage';
+import ForgotOtpPage from './Pages/user/ForgotOtpPage';
 
 
 const AdminLogin = lazy(() => import('./Pages/admin/AdminLogin'));
@@ -56,6 +57,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
           <Route path='/user/login' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><LoginPage /></Suspense>} />
           <Route path='/user/signup' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><SignupPage /></Suspense>} />
           <Route path='/user/otp-page' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><OtpPage /></Suspense>} />
+          <Route path='/user/forgot-password' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ForgotOtpPage /></Suspense>} />
         </Route>
 
         <Route path="/user" element={<User />}>
