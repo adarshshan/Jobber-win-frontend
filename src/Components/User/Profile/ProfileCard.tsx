@@ -36,6 +36,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen, p
                     <div className="flex justify-between me-5 w-full">
                         <div className="mt-5 pt-16 ms-5">
                             <h1 className="text-2xl">{data?.name}</h1>
+                            <p className="text-xl">{data?.role === 'recruiter' ? 'Recruiter':''}</p>
                             <p className="text-xl">{data?.headLine}</p>
                             <p className="text-xl">{data?.email}</p>
                             <p className="mt-2">{data?.location}, Kerala, India  <span className="text-blue-300 font-semibold">contact info</span></p>

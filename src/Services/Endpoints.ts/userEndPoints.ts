@@ -4,6 +4,7 @@ const userRoutes = {
     forgotPassword: '/user/forgot-password',
     forgotVerifyOtp: '/user/verify-forgot-otp',
     updateNewPassword: '/user/update-newpassword',
+    resendOtp: '/user/resend-otp',
     veryfyOtp: "/user/veryfy-otp",
     logout: "/user/logout",
     getProfile: "/user/profile",

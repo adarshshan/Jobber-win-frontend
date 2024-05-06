@@ -80,6 +80,7 @@ const ViewUserProfile: React.FC<IViewUserProfileProps> = () => {
                             <div className="flex justify-between me-5 w-full">
                                 <div className="mt-5 pt-16 ms-5">
                                     <h1 className="text-2xl">{userProfile?.name}</h1>
+                                    <p className="text-xl">{userProfile?.role === 'recruiter' ? 'Recruiter' : ''}</p>
                                     <p className="text-xl">{userProfile?.headLine}</p>
                                     <p className="text-xl">{userProfile?.email}</p>
                                     <p className="mt-2">{userProfile?.location}, Kerala, India  <span className="text-blue-300 font-semibold">contact info</span></p>

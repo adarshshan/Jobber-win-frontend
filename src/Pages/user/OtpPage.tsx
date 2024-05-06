@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { verifyOtp } from '../../Api/user';
+import { resendOtp, verifyOtp } from '../../Api/user';
 import { useNavigate } from 'react-router-dom';
 import { saveUser, setUserCredential } from '../../app/slice/AuthSlice';
 import { useDispatch } from 'react-redux';
@@ -45,6 +45,13 @@ const OTPComponent: React.FC = () => {
             navigate('/user')
         }
     }
+    const resendOTP = async () => {
+        try {
+            await resendOtp()
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <div className="bg-gray-100 flex flex-col items-center justify-center h-screen w-full dark:bg-gray-900">
             <div className="w-full max-w-md px-8 py-10 bg-white rounded-lg shadow-md dark:bg-gray-950 dark:text-gray-200">
@@ -60,7 +67,7 @@ const OTPComponent: React.FC = () => {
                     />
                 </div>
                 <div className="flex items-center flex-col justify-between mb-6">
-                    <p className="text-gray-600 text-sm">Didn't receive code?</p>
+                    <p className="text-gray-600 text-sm">Didn't receive code? <span onClick={resendOTP} className='text-blue-500'>click here</span></p>
                     <div className="ps-1">
                         {seconds <= 0 ? <div>Otp Expired <span className='text-blue-500'>Request another ?</span></div> :
                             <div>Otp expires in {minutes} min {remainingSeconds} sec</div>

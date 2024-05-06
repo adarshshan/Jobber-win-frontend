@@ -26,6 +26,7 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
     const navigate = useNavigate();
 
     const { search } = useAppSelector(state => state.common);
+
     const dispatch = useDispatch()
 
     const { jobId } = useParams();
@@ -37,6 +38,7 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
             try {
                 const res = await getAllJobs(search);
                 if (res?.data.success) {
+                    console.log(res); console.log('this is fetching all jobs its success')
                     setJobs(res.data.data.alljobs);
                 } else toast.error(res?.data.message);
             } catch (error) {

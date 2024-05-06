@@ -95,6 +95,13 @@ const updateNewPassword = async (password: string, userId: string) => {
         console.log(error as Error);
     }
 }
+const resendOtp = async () => {
+    try {
+        await Api.get(userRoutes.resendOtp);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 const setProfilePic = async (pic: string, id: string) => {
     try {
         const result = await Api.put(userRoutes.updateProfile, { pic, id });
@@ -246,7 +253,7 @@ const cancelRequest = async (id: string) => {
 //jobs
 const getAllJobs = async (search: string) => {
     try {
-        return await Api.get(`${userRoutes.getAllJobs}? search=${search}`);
+        return await Api.get(`${userRoutes.getAllJobs}?search=${search}`);
     } catch (error) {
         console.log(error as Error);
     }
@@ -281,6 +288,7 @@ export {
     forgotPassword,
     forgotVerifyOtp,
     updateNewPassword,
+    resendOtp,
     getProfile,
     googleLogin,
     updateAbout,

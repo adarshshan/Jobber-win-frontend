@@ -1,5 +1,5 @@
 import { Spinner } from '@chakra-ui/react';
-import { forgotPassword, forgotVerifyOtp, updateNewPassword } from 'Api/user';
+import { forgotPassword, forgotVerifyOtp, resendOtp, updateNewPassword } from 'Api/user';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom'
@@ -87,6 +87,13 @@ const ForgotOtpPage: React.FC = () => {
             hanSub()
         },
     });
+    const resendOTP = async () => {
+        try {
+            await resendOtp();
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
 
     return (
         <>
@@ -156,7 +163,7 @@ const ForgotOtpPage: React.FC = () => {
                                 />
                             </div>
                             <div className="flex items-center flex-col justify-between mb-6">
-                                <p className="text-gray-600 text-sm">Didn't receive code? <span className='text-blue-300'>click here</span></p>
+                                <p className="text-gray-600 text-sm">Didn't receive code? <span onClick={resendOTP} className='text-blue-300 cursor-pointer'>click here</span></p>
                                 <div className="ps-1">
                                     {seconds <= 0 ? <div>Otp Expired</div> :
                                         <div>Otp expires in {minutes} min {remainingSeconds} sec</div>

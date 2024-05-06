@@ -19,8 +19,16 @@ const getAllJobsOfRecruiter = async () => {
         console.log(error as Error);
     }
 }
+const getApplications = async () => {
+    try {
+        return await Api.get(recruiterRoutes.getApplications);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     postNewJob,
-    getAllJobsOfRecruiter
+    getAllJobsOfRecruiter,
+    getApplications
 }
