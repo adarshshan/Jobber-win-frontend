@@ -4,11 +4,21 @@ import { GoVerified } from 'react-icons/go';
 import { HiDotsVertical } from 'react-icons/hi';
 import { IoClose } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import { changeStatus } from 'Api/recruiter';
 
 interface IApplicationDetailsProps {
     singleDetails: any;
 }
 const ApplicationDetails: React.FC<IApplicationDetailsProps> = ({ singleDetails }) => {
+
+    const statusChange = async (status: string, applicationId: string) => {
+        try {
+            const res = await changeStatus(status, applicationId);
+            console.log(res);
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <>
             <div className="col-span-6  min-h-[100px]">
@@ -48,10 +58,10 @@ const ApplicationDetails: React.FC<IApplicationDetailsProps> = ({ singleDetails 
                         </div>
                         <div className="flex justify-around text-3xl font-bold p-5">
                             <Tooltip content="Reject the application">
-                                <Button><IoClose className='hover:text-red-600' /></Button>
+                                <Button onClick={() => statusChange('Rejected', singleDetails._id)}><IoClose className='hover:text-red-600' /></Button>
                             </Tooltip>
                             <Tooltip content="Approve the application">
-                                <Button><GoVerified className='hover:text-green-500' /></Button>
+                                <Button onClick={() => statusChange('Approved', singleDetails._id)}><GoVerified className='hover:text-green-500' /></Button>
                             </Tooltip>
                         </div>
                     </div>

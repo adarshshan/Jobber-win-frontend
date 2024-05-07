@@ -26,9 +26,17 @@ const getApplications = async () => {
         console.log(error as Error);
     }
 }
+const changeStatus = async (status: string, applicationId: string) => {
+    try {
+        return await Api.put(`${recruiterRoutes.changeStatus}${status}/${applicationId}`)
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     postNewJob,
     getAllJobsOfRecruiter,
-    getApplications
+    getApplications,
+    changeStatus
 }
