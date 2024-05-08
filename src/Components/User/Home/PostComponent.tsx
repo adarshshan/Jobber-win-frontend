@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { IoIosShareAlt } from 'react-icons/io';
 import { VscSave } from 'react-icons/vsc';
 import { IPostInterface } from './MiddleSide';
 import { UserData } from '@/components/user/ProfilePage';
-import { likePost } from 'Api/user';
+import { getLikes, likePost } from 'Api/user';
+import toast from 'react-hot-toast';
 
 interface IPostComponentProps {
     item: IPostInterface;
     userProfile: UserData | null;
 }
 const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => {
+    const [like, setLike] = useState<number>();
     const handleLike = async (postId: string) => {
         try {
             const res = await likePost(postId);
@@ -20,6 +22,17 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
             console.log(error as Error);
         }
     }
+    useEffect(() => {
+        const fetchLikeDetails = async () => {
+            try {
+                const res = await getLikes(item._id);
+                setLike(res?.data.data.likeCount);
+            } catch (error) {
+                console.log(error as Error);
+            }
+        }
+        fetchLikeDetails();
+    }, [])
     const handleUnlike = async (postId: string) => {
         try {
 
@@ -62,7 +75,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                 <div className="h-16 border-b flex items-center justify-around">
                     <div onClick={() => handleLike(item._id)} className="flex items-center gap-3 hover:bg-blue-50 p-3">
                         <AiOutlineLike />
-                        <div className="text-sm">5 Likes</div>
+                        <div className="text-sm">{like} Likes</div>
                     </div>
                     <div className="flex items-center gap-3 hover:bg-blue-50 p-3">
                         <FaRegCommentAlt />
