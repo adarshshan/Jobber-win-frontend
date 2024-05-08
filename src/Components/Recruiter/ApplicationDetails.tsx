@@ -5,6 +5,8 @@ import { HiDotsVertical } from 'react-icons/hi';
 import { IoClose } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { changeStatus } from 'Api/recruiter';
+import toast from 'react-hot-toast';
+import { MdDoNotDisturbAlt, MdOutlineVerified } from 'react-icons/md';
 
 interface IApplicationDetailsProps {
     singleDetails: any;
@@ -14,6 +16,10 @@ const ApplicationDetails: React.FC<IApplicationDetailsProps> = ({ singleDetails 
     const statusChange = async (status: string, applicationId: string) => {
         try {
             const res = await changeStatus(status, applicationId);
+            if (res?.data.success) {
+                toast.success('applicant ' + status);
+                console.log(res.data.data);
+            } else toast.error(res?.data.message);
             console.log(res);
         } catch (error) {
             console.log(error as Error);
@@ -35,7 +41,9 @@ const ApplicationDetails: React.FC<IApplicationDetailsProps> = ({ singleDetails 
                                     <h1 className='mt-3 text-lg'><span className="font-semibold">Place:</span> {singleDetails.userId.location}</h1>
                                 </div>
                             </div>
-                            <HiDotsVertical className='text-2xl m-4' />
+                            {singleDetails.status === 'Approved' && <MdOutlineVerified className='text-3xl text-green-600' />}
+                            {singleDetails.status === 'Rejected' && <MdDoNotDisturbAlt className='text-3xl text-red-500' />}
+                            {/* <HiDotsVertical className='text-2xl m-4' /> */}
                         </div>
 
                         <div className="flex justify-center">

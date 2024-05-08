@@ -110,29 +110,6 @@ const setProfilePic = async (pic: string, id: string) => {
         console.log(error as Error);
     }
 }
-const createPost = async (pic: string, id: string, caption: string) => {
-    try {
-        const result = await Api.post(userRoutes.createPost, { userId: id, imageUrl: pic, caption: caption })
-        return result;
-    } catch (error) {
-        console.log(error as Error);
-    }
-}
-const getAllPosts = async (userId: string) => {
-    try {
-        const result = await Api.get(`${userRoutes.getAllPosts}/${userId}`);
-        return result;
-    } catch (error) {
-        console.log(error as Error);
-    }
-}
-const getAllHomePosts = async () => {
-    try {
-        return await Api.get(userRoutes.getAllHomePosts);
-    } catch (error) {
-        console.log(error as Error);
-    }
-}
 const addSkill = async (id: string, skill: string) => {
     try {
         return await Api.patch(`${userRoutes.addSkill}${id}`, { skill });
@@ -279,6 +256,44 @@ const getAllAppliedandSaved = async () => {
         console.log(error as Error);
     }
 }
+const getAllApplications = async () => {
+    try {
+        return await Api.get(userRoutes.getAllApplications);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+//posts
+const createPost = async (pic: string, id: string, caption: string) => {
+    try {
+        const result = await Api.post(userRoutes.createPost, { userId: id, imageUrl: pic, caption: caption })
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getAllPosts = async (userId: string) => {
+    try {
+        const result = await Api.get(`${userRoutes.getAllPosts}/${userId}`);
+        return result;
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getAllHomePosts = async () => {
+    try {
+        return await Api.get(userRoutes.getAllHomePosts);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const likePost = async (postId: string) => {
+    try {
+        return await Api.put(`${userRoutes.likePost}${postId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -316,5 +331,7 @@ export {
     getAllJobs,
     getSingleJob,
     applyJob,
-    getAllAppliedandSaved
+    getAllAppliedandSaved,
+    getAllApplications,
+    likePost
 }

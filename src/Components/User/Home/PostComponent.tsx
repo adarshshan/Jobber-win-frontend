@@ -5,12 +5,28 @@ import { IoIosShareAlt } from 'react-icons/io';
 import { VscSave } from 'react-icons/vsc';
 import { IPostInterface } from './MiddleSide';
 import { UserData } from '@/components/user/ProfilePage';
+import { likePost } from 'Api/user';
 
 interface IPostComponentProps {
     item: IPostInterface;
     userProfile: UserData | null;
 }
 const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => {
+    const handleLike = async (postId: string) => {
+        try {
+            const res = await likePost(postId);
+            console.log(res);
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
+    const handleUnlike = async (postId: string) => {
+        try {
+
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <main className="h-full w-full bg-transparent flex items-center justify-center shadow-lg rounded-xl">
             <div className="border max-w-screen-md w-full bg-transparent mt-6 rounded-2xl p-4">
@@ -44,7 +60,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                     />
                 </div>
                 <div className="h-16 border-b flex items-center justify-around">
-                    <div className="flex items-center gap-3 hover:bg-blue-50 p-3">
+                    <div onClick={() => handleLike(item._id)} className="flex items-center gap-3 hover:bg-blue-50 p-3">
                         <AiOutlineLike />
                         <div className="text-sm">5 Likes</div>
                     </div>

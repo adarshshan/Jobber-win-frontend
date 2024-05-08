@@ -26,8 +26,9 @@ const MessagePage: React.FC<IMessagePage> = () => {
     useEffect(() => {
         socket.current = io('http://localhost:5000');
         socket.current.on('connect', () => {
-            console.log('Connected to server');
+            console.log('Connected to server' + socket.current?.id);
         });
+
 
         socket.current.on('disconnect', () => {
             console.log('Disconnected from server');
