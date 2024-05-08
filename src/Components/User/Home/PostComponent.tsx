@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { IoIosShareAlt } from 'react-icons/io';
 import { VscSave } from 'react-icons/vsc';
 import { IPostInterface } from './MiddleSide';
 import { UserData } from '@/components/user/ProfilePage';
-import { getLikes, likePost } from 'Api/user';
-import toast from 'react-hot-toast';
+import { getLikes, likePost, unLikePost } from 'Api/user';
+import { useAppSelector } from 'app/store';
 
 interface IPostComponentProps {
     item: IPostInterface;
@@ -14,28 +14,43 @@ interface IPostComponentProps {
 }
 const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => {
     const [like, setLike] = useState<number>();
-    const handleLike = async (postId: string) => {
-        try {
-            const res = await likePost(postId);
-            console.log(res);
-        } catch (error) {
-            console.log(error as Error);
-        }
-    }
-    useEffect(() => {
+    const [likedUser, setLikedUser] = useState<string[]>([])
+
+    const { user } = useAppSelector(state => state.auth);
+    const userId = user._id;
+
+    useLayoutEffect(() => {
         const fetchLikeDetails = async () => {
             try {
                 const res = await getLikes(item._id);
                 setLike(res?.data.data.likeCount);
+                let ar = res?.data.data.likedUsers.map((item: any) => item.userId);
+                if (ar) {
+                    setLikedUser(ar);
+                }
             } catch (error) {
                 console.log(error as Error);
             }
         }
         fetchLikeDetails();
-    }, [])
+    }, [like])
+    const handleLike = async (postId: string) => {
+        try {
+            const res = await likePost(postId);
+            if (res?.data.success) {
+                setLike(res?.data.data.likeCount);
+            } else console.log(res?.data.message);
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     const handleUnlike = async (postId: string) => {
         try {
-
+            const res = await unLikePost(postId);
+            if (res?.data.success) {
+                setLike(res.data.data.likeCount);
+            } else console.log(res?.data.message);
+            console.log(res);
         } catch (error) {
             console.log(error as Error);
         }
@@ -73,10 +88,18 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                     />
                 </div>
                 <div className="h-16 border-b flex items-center justify-around">
-                    <div onClick={() => handleLike(item._id)} className="flex items-center gap-3 hover:bg-blue-50 p-3">
-                        <AiOutlineLike />
-                        <div className="text-sm">{like} Likes</div>
-                    </div>
+                    {likedUser && likedUser.includes(userId) ? (
+                        <div onClick={() => handleUnlike(item._id)} className="flex items-center gap-3 hover:bg-blue-50 p-3 text-blue-500 cursor-pointer">
+                            <AiOutlineLike />
+                            <div className="text-sm">{like} Likes</div>
+                        </div>
+                    ) : (
+                        <div onClick={() => handleLike(item._id)} className="flex items-center gap-3 hover:bg-blue-50 p-3 cursor-pointer">
+                            <AiOutlineLike />
+                            <div className="text-sm">{like} Likes</div>
+                        </div>
+                    )}
+
                     <div className="flex items-center gap-3 hover:bg-blue-50 p-3">
                         <FaRegCommentAlt />
                         <div className="text-sm">10 Comments</div>
