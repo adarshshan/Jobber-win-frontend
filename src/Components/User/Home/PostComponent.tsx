@@ -8,6 +8,7 @@ import { UserData } from '@/components/user/ProfilePage';
 import { getLikes, likePost, unLikePost } from 'Api/user';
 import { useAppSelector } from 'app/store';
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 
 interface IPostComponentProps {
@@ -87,12 +88,33 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                     </div>
                 </div>
                 <div className="whitespace-pre-wrap mt-7">{item.caption}</div>
-                <div className="mt-5 flex gap-2 justify-center border-b pb-4 flex-wrap">
+                <div className="mt-5 flex gap-2 justify-center  pb-4 flex-wrap">
                     <img
                         src={item.imageUrl}
                         className="bg-red-500 rounded-2xl w-1/3 object-cover h-96 flex-auto"
                         alt="photo"
                     />
+                </div>
+                <div className="ms-1 text-black border-b-2">
+                    <p className='cursor-pointer' onClick={onOpen}>{like} likes</p>
+                    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>Liked users</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                                {userDetails && userDetails.length && userDetails.map((item, index) => (
+                                    <Link to={`/user/view-user-profile/${item._id}`} key={index} className="flex justify-start mt-2">
+                                        <img className='w-14 h-14 rounded-full' src={item.profile_picture} alt='///' />
+                                        <div className='mt-1 ms-2 font-normal'>
+                                            <h3 className=' text-lg'>{item.name}</h3>
+                                            <p>{item.headLine}</p>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </ModalBody>
+                        </ModalContent>
+                    </Modal>
                 </div>
                 <div className="h-16 border-b flex items-center justify-around">
                     {likedUser && likedUser.includes(userId) ? (
@@ -117,27 +139,6 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                         <VscSave />
                         <div className="text-sm">Saved</div>
                     </div>
-                </div>
-                <div className="ms-1 text-black">
-                    <p className='cursor-pointer' onClick={onOpen}>{like} likes</p>
-                    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
-                        <ModalOverlay />
-                        <ModalContent>
-                            <ModalHeader>Liked users</ModalHeader>
-                            <ModalCloseButton />
-                            <ModalBody>
-                                {userDetails && userDetails.length && userDetails.map((item, index) => (
-                                    <div key={index} className="flex justify-start mt-2">
-                                        <img className='w-14 h-14 rounded-full' src={item.profile_picture} alt='///' />
-                                        <div className='mt-1 ms-2 font-normal'>
-                                            <h3 className=' text-lg'>{item.name}</h3>
-                                            <p>{item.headLine}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </ModalBody>
-                        </ModalContent>
-                    </Modal>
                 </div>
                 <div className="flex items-center justify-between mt-4">
                     <img

@@ -35,6 +35,7 @@ const userRoutes = {
     getAllJobs: "/user/get-all-jobs",
     getSingleJob: "/user/get-single-jobs/",
     applyJob: "/user/apply-job/",
+    saveJobs: "/user/save-job/",
     getAllAppliedandSaved: "/user/get-saved-applied-jobs",
     getAllApplications: "/user/get-all-application",
 

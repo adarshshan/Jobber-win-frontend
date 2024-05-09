@@ -308,6 +308,13 @@ const getLikes = async (postId: string) => {
         console.log(error as Error);
     }
 }
+const saveJobs = async (jobId: string) => {
+    try {
+        return await Api.put(`${userRoutes.saveJobs}${jobId}`);
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
 
 export {
     signup,
@@ -349,5 +356,6 @@ export {
     getAllApplications,
     likePost,
     getLikes,
-    unLikePost
+    unLikePost,
+    saveJobs
 }

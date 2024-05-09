@@ -1,4 +1,4 @@
-import { getAllJobs, getSingleJob } from 'Api/user';
+import { getAllJobs, getSingleJob, saveJobs } from 'Api/user';
 import './css/JobDetails.css'
 import { JobResult } from 'Components/User/FindJobPage/AllJobs';
 import React, { useEffect, useState } from 'react'
@@ -38,7 +38,6 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
             try {
                 const res = await getAllJobs(search);
                 if (res?.data.success) {
-                    console.log(res); console.log('this is fetching all jobs its success')
                     setJobs(res.data.data.alljobs);
                 } else toast.error(res?.data.message);
             } catch (error) {
@@ -60,6 +59,16 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
         fetchSingleJobDetails();
         fetchAllJobs();
     }, [jobId, search])
+    const handleSaveJob = async (jobId: string) => {
+        try {
+            const res = await saveJobs(jobId);
+            if (res?.data.success) {
+                toast.success(res.data.message);
+            } else toast.error(res?.data.message);
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <>
             {showForm && <JobApplyForm setShowForm={setShowForm} />}
@@ -117,12 +126,6 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
                                         </Button>
                                     </DropdownTrigger>
                                     <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
-                                        <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
-                                            <div className="flex justify-center gap-1">
-                                                <FaRegSave className='text-xl mt-1' />
-                                                <span>save job</span>
-                                            </div>
-                                        </DropdownItem>
                                         <DropdownItem className='my-1 hover:bg-white hover:text-black' key="copy">
                                             <div className=' flex justify-center gap-1 text-red-500'>
                                                 <MdOutlineReport className='text-xl mt-1' />
@@ -138,7 +141,7 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
                             </div>
                             <div className="flex justify-start p-5 border-b-2 gap-5">
                                 <button onClick={() => setShowForm(true)} className='rounded-full bg-blue-500 px-7 p-1 text-xl font-semibold text-white'>Apply</button>
-                                <button className='rounded-full border border-blue-600 px-7 p-1 text-xl font-semibold text-blue-500'>Save</button>
+                                <button onClick={() => handleSaveJob(job._id)} className='rounded-full border border-blue-600 px-7 p-1 text-xl font-semibold text-blue-500'>Save</button>
                             </div>
                             <div className="p-5">
                                 <h1 className="text-xl text-gray-800 font-medium">About the Job</h1>
