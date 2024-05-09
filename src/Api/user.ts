@@ -315,6 +315,20 @@ const saveJobs = async (jobId: string) => {
         console.log(error as Error)
     }
 }
+const getAllSavedJobs = async () => {
+    try {
+        return await Api.get(userRoutes.getAllSavedJobs);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const removeSavedJobs = async (jobId: string) => {
+    try {
+        return Api.delete(`${userRoutes.removeSavedJobs}${jobId}`)
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -357,5 +371,7 @@ export {
     likePost,
     getLikes,
     unLikePost,
-    saveJobs
+    saveJobs,
+    getAllSavedJobs,
+    removeSavedJobs
 }
