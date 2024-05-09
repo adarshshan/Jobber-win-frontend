@@ -7,6 +7,8 @@ import { IPostInterface } from './MiddleSide';
 import { UserData } from '@/components/user/ProfilePage';
 import { getLikes, likePost, unLikePost } from 'Api/user';
 import { useAppSelector } from 'app/store';
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
+
 
 interface IPostComponentProps {
     item: IPostInterface;
@@ -15,6 +17,9 @@ interface IPostComponentProps {
 const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => {
     const [like, setLike] = useState<number>();
     const [likedUser, setLikedUser] = useState<string[]>([])
+    const [userDetails, setUserDetails] = useState<any[]>([]);
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const { user } = useAppSelector(state => state.auth);
     const userId = user._id;
@@ -23,8 +28,10 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
         const fetchLikeDetails = async () => {
             try {
                 const res = await getLikes(item._id);
+                let arr = res?.data.data.likedUsers.map((item: any) => item.userId);
+                setUserDetails(arr);
                 setLike(res?.data.data.likeCount);
-                let ar = res?.data.data.likedUsers.map((item: any) => item.userId);
+                let ar = res?.data.data.likedUsers.map((item: any) => item.userId._id);
                 if (ar) {
                     setLikedUser(ar);
                 }
@@ -90,13 +97,11 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                 <div className="h-16 border-b flex items-center justify-around">
                     {likedUser && likedUser.includes(userId) ? (
                         <div onClick={() => handleUnlike(item._id)} className="flex items-center gap-3 hover:bg-blue-50 p-3 text-blue-500 cursor-pointer">
-                            <AiOutlineLike />
-                            <div className="text-sm">{like} Likes</div>
+                            <AiOutlineLike className=' text-xl' />
                         </div>
                     ) : (
                         <div onClick={() => handleLike(item._id)} className="flex items-center gap-3 hover:bg-blue-50 p-3 cursor-pointer">
-                            <AiOutlineLike />
-                            <div className="text-sm">{like} Likes</div>
+                            <AiOutlineLike className=' text-xl' />
                         </div>
                     )}
 
@@ -112,6 +117,27 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                         <VscSave />
                         <div className="text-sm">Saved</div>
                     </div>
+                </div>
+                <div className="ms-1 text-black">
+                    <p className='cursor-pointer' onClick={onOpen}>{like} likes</p>
+                    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>Liked users</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                                {userDetails && userDetails.length && userDetails.map((item, index) => (
+                                    <div key={index} className="flex justify-start mt-2">
+                                        <img className='w-14 h-14 rounded-full' src={item.profile_picture} alt='///' />
+                                        <div className='mt-1 ms-2 font-normal'>
+                                            <h3 className=' text-lg'>{item.name}</h3>
+                                            <p>{item.headLine}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </ModalBody>
+                        </ModalContent>
+                    </Modal>
                 </div>
                 <div className="flex items-center justify-between mt-4">
                     <img
