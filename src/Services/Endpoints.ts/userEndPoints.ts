@@ -41,7 +41,8 @@ const userRoutes = {
     getAllAppliedandSaved: "/user/get-saved-applied-jobs",
     getAllApplications: "/user/get-all-application",
 
-    likePost: '/user/like-post/'
+    likePost: '/user/like-post/',
+    reportPost: '/user/report-user/'
 }
 
 

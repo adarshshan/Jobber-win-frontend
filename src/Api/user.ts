@@ -329,6 +329,13 @@ const removeSavedJobs = async (jobId: string) => {
         console.log(error as Error);
     }
 }
+const reportPost = async (reason: string, postId: string) => {
+    try {
+        return await Api.post(`${userRoutes.reportPost}${postId}`, { reason })
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -373,5 +380,6 @@ export {
     unLikePost,
     saveJobs,
     getAllSavedJobs,
-    removeSavedJobs
+    removeSavedJobs,
+    reportPost
 }

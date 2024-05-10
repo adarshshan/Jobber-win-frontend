@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 interface IAppliedJobScreen {
 
@@ -51,14 +52,16 @@ const AppliedJobScreen: React.FC<IAppliedJobScreen> = () => {
                         <TabPanel>
                             {applications && applications.length && applications.map((item, index) => (
                                 <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
-                                    <div className="flex justify-start gap-5">
-                                        <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
-                                        <div className=' ms-4'>
-                                            <h1 className='text-lg'>{item.jobId.title}</h1>
-                                            <p>{item.jobId.company_name}</p>
-                                            <p>{item.jobId.location}</p>
+                                    <Link to={`/user/job-details/${item.jobId._id}`}>
+                                        <div className="flex justify-start gap-5">
+                                            <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
+                                            <div className=' ms-4'>
+                                                <h1 className='text-lg'>{item.jobId.title}</h1>
+                                                <p>{item.jobId.company_name}</p>
+                                                <p>{item.jobId.location}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                     <Dropdown>
                                         <DropdownTrigger>
                                             <Button variant="solid" >
@@ -79,14 +82,16 @@ const AppliedJobScreen: React.FC<IAppliedJobScreen> = () => {
                         <TabPanel>
                             {approved && approved.length && approved.map((item, index) => (
                                 <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
-                                    <div className="flex justify-start">
-                                        <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
-                                        <div className=' ms-4'>
-                                            <h1 className='text-lg'>{item.jobId.title}</h1>
-                                            <p>{item.jobId.company_name}</p>
-                                            <p>{item.jobId.location}</p>
+                                    <Link to={`/user/job-details/${item.jobId._id}`}>
+                                        <div className="flex justify-start">
+                                            <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
+                                            <div className=' ms-4'>
+                                                <h1 className='text-lg'>{item.jobId.title}</h1>
+                                                <p>{item.jobId.company_name}</p>
+                                                <p>{item.jobId.location}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                     <Dropdown>
                                         <DropdownTrigger>
                                             <Button variant="solid" >
@@ -107,14 +112,16 @@ const AppliedJobScreen: React.FC<IAppliedJobScreen> = () => {
                         <TabPanel>
                             {rejected && rejected.length && rejected.map((item, index) => (
                                 <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
-                                    <div className="flex justify-start">
-                                        <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
-                                        <div className=' ms-4'>
-                                            <h1 className='text-lg'>{item.jobId.title}</h1>
-                                            <p>{item.jobId.company_name}</p>
-                                            <p>{item.jobId.location}</p>
+                                    <Link to={`/user/job-details/${item.jobId._id}`}>
+                                        <div className="flex justify-start">
+                                            <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
+                                            <div className=' ms-4'>
+                                                <h1 className='text-lg'>{item.jobId.title}</h1>
+                                                <p>{item.jobId.company_name}</p>
+                                                <p>{item.jobId.location}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                     <Dropdown>
                                         <DropdownTrigger>
                                             <Button variant="solid" >
