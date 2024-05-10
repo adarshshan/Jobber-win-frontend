@@ -2,7 +2,7 @@ export const EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*
 
 export const MOBILE_NUM_REGEX = /^[0-9]{10}$/;
 
-export const reason = {
+export const postReportReason = {
     A: 'Its spam',
     B: 'Nudity or sexual activity',
     C: 'Hate speech or symbols',
@@ -17,4 +17,9 @@ export const reason = {
     L: 'False information',
     M: 'I just don`t like it',
     N: 'other reason'
+}
+export const jobReportReasons = {
+    A: 'I think it`s spam or scam',
+    B: 'I think it`s discriminary or offensive',
+    C: 'I think something is brocken or incorrect.'
 }

@@ -7,7 +7,7 @@ import { IPostInterface } from './MiddleSide';
 import { UserData } from '@/components/user/ProfilePage';
 import { getLikes, likePost, unLikePost } from 'Api/user';
 import { useAppSelector } from 'app/store';
-import { Button,  Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, OrderedList, useDisclosure } from '@chakra-ui/react';
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, OrderedList, useDisclosure } from '@chakra-ui/react';
 import {
     Popover,
     PopoverTrigger,
@@ -20,6 +20,7 @@ import {
 import { Link } from 'react-router-dom';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { ReportList } from './ReportList';
+import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 
 
 interface IPostComponentProps {
@@ -101,14 +102,14 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                                 <PopoverContent>
                                     <PopoverArrow />
                                     <PopoverCloseButton />
-                                    <PopoverHeader> </PopoverHeader>
-                                    <PopoverBody>
-                                        <Button onClick={() => {
+                                    <PopoverHeader className='bg-gray-300'> </PopoverHeader>
+                                    <PopoverBody className='bg-gray-300 flex justify-center'>
+                                        <Button className='w-full' onClick={() => {
                                             onOpen();
                                             setUserScreen(false);
                                             setReportScreen(true);
                                         }} key='xs' m={4} >
-                                            <p className='text-red-500 cursor-default'>report post</p>
+                                            <p className='text-red-500 cursor-default flex gap-3'><MdOutlineReportGmailerrorred className='mt-1' />  report this post</p>
                                         </Button>
                                     </PopoverBody>
                                 </PopoverContent>

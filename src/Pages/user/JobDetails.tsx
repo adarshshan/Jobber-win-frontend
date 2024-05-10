@@ -7,13 +7,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import JobApplyForm from 'Components/User/FindJobPage/JobApplyForm';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { FaRegSave } from 'react-icons/fa';
-import { MdOutlineReport } from 'react-icons/md';
+import { MdOutlineReport, MdOutlineReportGmailerrorred } from 'react-icons/md';
 import { IoMdArrowBack } from 'react-icons/io';
 import { useAppSelector } from 'app/store';
 import { useDispatch } from 'react-redux';
 import { setSearchText } from 'app/slice/CommonSlice';
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverArrow,
+    PopoverCloseButton,
+} from '@chakra-ui/react'
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { ReportList } from 'Components/User/FindJobPage/ReportList';
 
 interface IJobDetailsProps {
 
@@ -24,6 +35,7 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
     const [showForm, setShowForm] = useState(false);
 
     const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const { search } = useAppSelector(state => state.common);
 
@@ -119,21 +131,23 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
                                     <img className='rounded-md w-16 h-16' src={job.job_img} alt="" />
                                     <h1 className='mt-3'>{job.title}</h1>
                                 </div>
-                                <Dropdown>
-                                    <DropdownTrigger>
-                                        <Button variant="solid" >
-                                            <BiDotsHorizontalRounded />
-                                        </Button>
-                                    </DropdownTrigger>
-                                    <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
-                                        <DropdownItem className='my-1 hover:bg-white hover:text-black' key="copy">
-                                            <div className=' flex justify-center gap-1 text-red-500'>
-                                                <MdOutlineReport className='text-xl mt-1' />
-                                                <span>Report Job</span>
-                                            </div>
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
+                                <Popover>
+                                    <PopoverTrigger>
+                                        <Button><BsThreeDotsVertical /></Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent>
+                                        <PopoverArrow />
+                                        <PopoverCloseButton />
+                                        <PopoverHeader className='bg-gray-300'> </PopoverHeader>
+                                        <PopoverBody className='bg-gray-300 flex justify-center'>
+                                            <Button className='w-full' onClick={() => {
+                                                onOpen();
+                                            }} key='xs' m={4} >
+                                                <p className='text-red-500 cursor-default flex gap-3'><MdOutlineReportGmailerrorred className='mt-1' />  report this job</p>
+                                            </Button>
+                                        </PopoverBody>
+                                    </PopoverContent>
+                                </Popover>
                             </div>
                             <div className='p-5 text-sm'>
                                 <p className='mt-3'>{job.location},kerala,India  <span>1 month ago</span></p>
@@ -157,9 +171,17 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
                                 <p className='mt-3'><span className="font-semibold">requirement</span> : Education: Bachelor’s degree in Computer Science, Web Development, or a related field.</p>
 
                             </div>
+                            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalHeader>Report</ModalHeader>
+                                    <ModalCloseButton />
+                                    <ModalBody>
+                                        <ReportList jobId={job._id} onClose={onClose} />
+                                    </ModalBody>
+                                </ModalContent>
+                            </Modal>
                         </div> : <h1>No Data Found!</h1>}
-
-
                     </div>
                 </div>
             </div>

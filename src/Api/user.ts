@@ -336,6 +336,13 @@ const reportPost = async (reason: string, postId: string) => {
         console.log(error as Error);
     }
 }
+const reportJob = async (reason: string, jobId: string) => {
+    try {
+        return await Api.post(`${userRoutes.reportJob}${jobId}`, { reason });
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -381,5 +388,6 @@ export {
     saveJobs,
     getAllSavedJobs,
     removeSavedJobs,
-    reportPost
+    reportPost,
+    reportJob
 }
