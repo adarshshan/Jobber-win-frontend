@@ -1,11 +1,11 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { KeyboardEvent, useLayoutEffect, useState } from 'react';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { IoIosShareAlt } from 'react-icons/io';
 import { VscSave } from 'react-icons/vsc';
 import { IPostInterface } from './MiddleSide';
 import { UserData } from '@/components/user/ProfilePage';
-import { getLikes, likePost, unLikePost } from 'Api/user';
+import { getLikes, likePost, sendMessage, unLikePost } from 'Api/user';
 import { useAppSelector } from 'app/store';
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, OrderedList, useDisclosure } from '@chakra-ui/react';
 import {
@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { ReportList } from './ReportList';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
+import MessageBox from './MessageBox';
 
 
 interface IPostComponentProps {
@@ -33,6 +34,9 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
     const [userDetails, setUserDetails] = useState<any[]>([]);
     const [userScreen, setUserScreen] = useState(false);
     const [reportScreen, setReportScreen] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
+    const [inputHighlight, setMessageHighlight] = useState(false);
+    const [comment, setComment] = useState('');
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -74,6 +78,13 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
             } else console.log(res?.data.message);
         } catch (error) {
             console.log(error as Error);
+        }
+    }
+    const handleSendMessage = async (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            let postId = item._id;
+            const res = await sendMessage(comment, postId)
+            console.log(res);
         }
     }
     return (
@@ -161,7 +172,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                             </div>
                         )}
 
-                        <div className="flex items-center gap-3 hover:bg-blue-50 p-3">
+                        <div onClick={() => setShowMessage(!showMessage)} className="flex items-center gap-3 hover:bg-blue-50 p-3 cursor-default">
                             <FaRegCommentAlt />
                             <div className="text-sm">10 Comments</div>
                         </div>
@@ -174,16 +185,25 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                             <div className="text-sm">Saved</div>
                         </div>
                     </div>
+                    {showMessage && <MessageBox postId={item._id} setMessageHighlight={setMessageHighlight} inputHighlight={inputHighlight} />}
                     <div className="flex items-center justify-between mt-4">
                         <img
                             src={userProfile?.profile_picture}
-                            className="bg-yellow-500 rounded-full w-10 h-10 object-cover border"
+                            className="bg-yellow-50 rounded-full w-10 h-10 object-cover border"
                             alt="User Avatar"
                         />
                         <div className="flex items-center bg-gray-50 h-11 w-11/12 border rounded-2xl overflow-hidden">
-                            <input type="text" className="h-full w-full bg-gray-50 outline-none px-4" placeholder="Write your comment..." name="comment" />
+                            <input
+                                onKeyDown={handleSendMessage}
+                                type="text"
+                                value={comment}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setComment(e.target.value)}
+                                className={`h-full w-full ${inputHighlight ? 'bg-gray-200' : 'bg-gray-50'}  outline-none px-4`}
+                                placeholder="Write your comment..."
+                                name="comment" />
                         </div>
                     </div>
+
                 </div>
             </main>
         </>

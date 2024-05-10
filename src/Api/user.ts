@@ -343,6 +343,13 @@ const reportJob = async (reason: string, jobId: string) => {
         console.log(error as Error);
     }
 }
+const sendMessage = async (comment: string, postId: string) => {
+    try {
+        return await Api.post(`${userRoutes.postCommentsend}${postId}`, { comment })
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -389,5 +396,6 @@ export {
     getAllSavedJobs,
     removeSavedJobs,
     reportPost,
-    reportJob
+    reportJob,
+    sendMessage
 }
