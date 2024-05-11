@@ -44,7 +44,9 @@ const userRoutes = {
 
     likePost: '/user/like-post/',
     reportPost: '/user/report-user/',
-    postCommentsend: '/user/comment/'
+    postCommentsend: '/user/comment/',
+    getComments: '/user/comment/',
+    replyComment: "/user/reply-comment/"
 }
 
 

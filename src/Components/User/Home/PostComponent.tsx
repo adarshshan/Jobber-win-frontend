@@ -37,6 +37,9 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
     const [showMessage, setShowMessage] = useState(false);
     const [inputHighlight, setMessageHighlight] = useState(false);
     const [comment, setComment] = useState('');
+    const [commentCount, setCommentCount] = useState(0);
+
+    const [loadAgain, setLoadAgain] = useState(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -84,6 +87,8 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
         if (e.key === 'Enter') {
             let postId = item._id;
             const res = await sendMessage(comment, postId)
+            setLoadAgain(!loadAgain);
+            setComment('');
             console.log(res);
         }
     }
@@ -174,7 +179,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
 
                         <div onClick={() => setShowMessage(!showMessage)} className="flex items-center gap-3 hover:bg-blue-50 p-3 cursor-default">
                             <FaRegCommentAlt />
-                            <div className="text-sm">10 Comments</div>
+                            <div className="text-sm">{commentCount === 0 ? '' : commentCount} Comments</div>
                         </div>
                         <div className="flex items-center gap-3 hover:bg-blue-50 p-3">
                             <IoIosShareAlt />
@@ -185,7 +190,17 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                             <div className="text-sm">Saved</div>
                         </div>
                     </div>
-                    {showMessage && <MessageBox postId={item._id} setMessageHighlight={setMessageHighlight} inputHighlight={inputHighlight} />}
+
+
+                    {showMessage && <MessageBox
+                        postId={item._id}
+                        setMessageHighlight={setMessageHighlight}
+                        inputHighlight={inputHighlight}
+                        loadAgain={loadAgain}
+                        setLoadAgain={setLoadAgain}
+                        setCommentCount={setCommentCount} />}
+
+
                     <div className="flex items-center justify-between mt-4">
                         <img
                             src={userProfile?.profile_picture}

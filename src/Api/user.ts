@@ -350,6 +350,20 @@ const sendMessage = async (comment: string, postId: string) => {
         console.log(error as Error);
     }
 }
+const getComments = async (postId: string) => {
+    try {
+        return await Api.get(`${userRoutes.getComments}${postId}`)
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const replyComment = async (commentId: string,reply:string) => {
+    try {
+        return await Api.put(`${userRoutes.replyComment}${commentId}`,{reply});
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
     signup,
@@ -397,5 +411,7 @@ export {
     removeSavedJobs,
     reportPost,
     reportJob,
-    sendMessage
+    sendMessage,
+    getComments,
+    replyComment
 }
