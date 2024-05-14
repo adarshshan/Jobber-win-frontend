@@ -2,12 +2,13 @@ import UserListItem from 'Components/MessagePage/UserListItem'
 import React, { useEffect, useRef, useState } from 'react'
 import './css/JobDetails.css'
 import ChatSectionHeader from 'Components/MessagePage/ChatSectionHeader'
-import ChatSectionFooter from 'Components/MessagePage/ChatSectionFooter'
 import io, { Socket } from 'socket.io-client';
 import { Button, Input, useDisclosure } from '@chakra-ui/react'
 import SideDrawer from 'Components/MessagePage/SideDrawer'
-import { FaUsersViewfinder } from 'react-icons/fa6'
 import { MdPersonSearch } from 'react-icons/md'
+import MessageBox from 'Components/MessagePage/MessageBox'
+import { ChatState } from 'Context/ChatProvider'
+import { fetchChat } from 'Api/chat'
 
 
 
@@ -23,6 +24,21 @@ const MessagePage: React.FC<IMessagePage> = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef<any>()
 
+    const { userr, chats, notification,
+        selectedChat, setChats, setNotification,
+        setSelectedChat, setUser } = ChatState() || {};
+
+
+    const fetchChats = async () => {
+        // console.log(user._id);
+        try {
+            const result = await fetchChat();
+            console.log(result);
+            // setChats(data);
+        } catch (error) {
+            console.log(error)
+        }
+    };
     useEffect(() => {
         socket.current = io('http://localhost:5000');
         socket.current.on('connect', () => {
@@ -73,18 +89,10 @@ const MessagePage: React.FC<IMessagePage> = () => {
                         {/* searchbar */}
                         <div className="flex justify-between">
                             <h1 className='font-semibold ms-5 text-xl'>Chats</h1>
-                            <Button ref={btnRef} onClick={onOpen}>
-                                <MdPersonSearch className='text-2xl' />
-                            </Button>
+                            <Button ref={btnRef} onClick={onOpen}> <MdPersonSearch className='text-2xl' /> </Button>
                         </div>
                         {/* end of search bar */}
                         <div className="m-1 p-2 rounded-md w-full message-list-container">
-                            <UserListItem />
-                            <UserListItem />
-                            <UserListItem />
-                            <UserListItem />
-                            <UserListItem />
-                            <UserListItem />
                             <UserListItem />
                             <UserListItem />
                             <UserListItem />
@@ -92,38 +100,7 @@ const MessagePage: React.FC<IMessagePage> = () => {
                     </div>
                     <div className="col-span-8 max-h-screen bg-blue-100">
                         <ChatSectionHeader />
-                        <div className="h-full relative">
-                            <div className="message-show-container ">
-                                <div className="flex justify-start p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>Hellow</p>
-                                </div>
-                                <div className="flex justify-end p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>Hellow how are you ?</p>
-                                </div>
-                                <div className="flex justify-start p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>Iam Fine</p>
-                                </div>
-                                <div className="flex justify-end p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>What about your job ?</p>
-                                </div>
-                                <div className="flex justify-start p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>going with the flow.</p>
-                                </div>
-                                <div className="flex justify-end p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>oww</p>
-                                </div>
-                                <div className="flex justify-end p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>What about your job ?</p>
-                                </div>
-                                <div className="flex justify-start p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>going with the flow.</p>
-                                </div>
-                                <div className="flex justify-end p-4">
-                                    <p className='bg-blue-300 rounded-md p-2'>oww</p>
-                                </div>
-                            </div>
-                            <ChatSectionFooter />
-                        </div>
+                        <MessageBox />
                     </div>
                 </div>
             </div>
