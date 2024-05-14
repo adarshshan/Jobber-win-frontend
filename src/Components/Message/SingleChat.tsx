@@ -6,7 +6,6 @@ import io from 'socket.io-client'
 import { ChatState } from 'Context/ChatProvider'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { getSender, getSenderFull } from 'config/chatLogics'
-import ProfileModal from './ProfileModal'
 import ScrollableChat from './ScrollableChat'
 import UpdateGroupChatModal from './UpdateGroupChatModal'
 import { getMessages, sendMessages } from 'Api/chat'
@@ -38,7 +37,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     const toast = useToast();
 
     const { userr,
-         selectedChat,
+        selectedChat,
         setSelectedChat,
         notification,
         setNotification, } = ChatState()
@@ -59,7 +58,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
             if (res?.data.success) {
                 console.log(res);
                 setMessages(res.data.data);
-                // socket.emit('join chat', selectedChat._id);
+                socket.emit('join chat', selectedChat._id);
             }
             setLoading(false);
         } catch (error) {
@@ -82,16 +81,16 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     }, [selectedChat])
 
     useEffect(() => {
-        // socket.on("message recieved", (newMessageReceived: any) => {
-        //     if (!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id) {
-        //         if (!notification.includes(newMessageReceived)) {
-        //             setNotification([newMessageReceived, ...notification]);
-        //             setFetchAgain(!fetchAgain);
-        //         }
-        //     } else {
-        //         setMessages([...messages, newMessageReceived]);
-        //     }
-        // })
+        socket.on("message recieved", (newMessageReceived: any) => {
+            if (!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id) {
+                if (!notification.includes(newMessageReceived)) {
+                    setNotification([newMessageReceived, ...notification]);
+                    setFetchAgain(!fetchAgain);
+                }
+            } else {
+                setMessages([...messages, newMessageReceived]);
+            }
+        })
     })
 
 
@@ -102,7 +101,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
                 const res = await sendMessages(newMessage, selectedChat._id)
 
                 if (res?.data.success) {
-                    // socket.emit("new message", data.message);
+                    socket.emit("new message", res.data.data);
 
                     setMessages([...messages, res.data.data]);
                 }
@@ -141,7 +140,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
             }
         }, timerLength)
     }
-    console.log(selectedChat);console.log('this is the seleced chat!');
+    console.log(selectedChat); console.log('this is the seleced chat!');
     return (
         <>
             {selectedChat ? (
