@@ -30,21 +30,10 @@ const SideDrawer = () => {
         chats,
         setChats,
     } = ChatState();
-    console.log(userr); console.log('this is the userrrrrrr');
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const handleSearch = async () => {
-        if (!search) {
-            toast({
-                title: "Please Enter something in search",
-                status: "warning",
-                duration: 5000,
-                isClosable: true,
-                position: "top-left",
-            });
-            return;
-        }
+    const handleSearch = async (e: any) => {
         try {
             setLoading(true);
             const res = await getAllUsers(search);
@@ -132,6 +121,7 @@ const SideDrawer = () => {
                                 mr={2}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
+                                onKeyUp={handleSearch}
                             />
                             <Button onClick={handleSearch}>Go</Button>
                         </Box>

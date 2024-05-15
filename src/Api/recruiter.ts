@@ -33,10 +33,18 @@ const changeStatus = async (status: string, applicationId: string) => {
         console.log(error as Error);
     }
 }
+const editJobDetails = async (data: JobInterface, item: any) => {
+    try {
+        return await Api.put(recruiterRoutes.editJobDetails, { data, jobId: item._id })
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
 
 export {
     postNewJob,
     getAllJobsOfRecruiter,
     getApplications,
-    changeStatus
+    changeStatus,
+    editJobDetails
 }

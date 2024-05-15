@@ -1,7 +1,6 @@
 
 import { postNewJob } from 'Api/recruiter';
 import { JobPostValidation } from 'Components/Common/Validations';
-import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';

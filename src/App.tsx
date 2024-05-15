@@ -1,24 +1,17 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
-
-
+import { Routes, Route } from 'react-router-dom';
 import User from './Components/User/userCommon/User';
 import Admin from './Components/Admin/Admin';
 import Users from './Pages/admin/Users';
 import Jobs from './Pages/admin/Jobs';
-import PageNotFound from './Components/Common/PageNotFound';
 import { Toaster } from 'react-hot-toast';
 import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
 import Test from './Pages/user/Test';
-import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
-import MessagePage from './Pages/user/MessagePage';
-import ForgotOtpPage from './Pages/user/ForgotOtpPage';
-import AllApplications from './Pages/recruiter/AllApplications';
 import ChatProvider from 'Context/ChatProvider';
-import ChatPage from './Pages/user/ChatPage';
 
 
 const AdminLogin = lazy(() => import('./Pages/admin/AdminLogin'));
@@ -36,6 +29,10 @@ const AllJobsComponent = lazy(() => import('./Pages/recruiter/AllJobsComponents'
 const PostJobForm = lazy(() => import('./Pages/recruiter/PostJobForm'));
 const DashBoard = lazy(() => import('./Pages/recruiter/Dashboard'))
 const JobDetails = lazy(() => import('./Pages/user/JobDetails'))
+const ChatPage = lazy(() => import('./Pages/user/ChatPage'))
+const ForgotOtpPage = lazy(() => import('./Pages/user/ForgotOtpPage'));
+const AllApplications = lazy(() => import('./Pages/recruiter/AllApplications'));
+const PageNotFound = lazy(() => import('./Components/Common/PageNotFound'));
 
 
 interface IAppProps {
@@ -73,11 +70,6 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
             <Route path='job-details/:jobId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><JobDetails /></Suspense>} />
             <Route path='message' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}> <ChatProvider><ChatPage /></ChatProvider></Suspense>} />
-            {/* <Route path='message' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}>
-              <ChatProvider>
-                <MessagePage />
-              </ChatProvider>
-            </Suspense>} /> */}
           </Route>
         </Route>
 

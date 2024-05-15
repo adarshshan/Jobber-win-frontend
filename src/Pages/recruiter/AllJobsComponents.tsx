@@ -10,7 +10,7 @@ interface IAllJobsComponentProps {
 const AllJobsComponent: React.FC<IAllJobsComponentProps> = () => {
 
     const [jobs, setJobs] = useState<JobInterface[]>();
-
+    const [fetchAgain, setFetchAgain] = useState(false);
     useEffect(() => {
         const fetchAllJobs = async () => {
             try {
@@ -23,7 +23,7 @@ const AllJobsComponent: React.FC<IAllJobsComponentProps> = () => {
             }
         }
         fetchAllJobs();
-    }, [])
+    }, [fetchAgain])
     console.log(jobs);
     return (
         <>
@@ -42,7 +42,10 @@ const AllJobsComponent: React.FC<IAllJobsComponentProps> = () => {
                 </form>
                 {
                     jobs && jobs.length && jobs.map((item, index) => (
-                        <JobItem key={index} item={item} />
+                        <JobItem key={index}
+                            item={item}
+                            fetchAgain={fetchAgain}
+                            setFetchAgain={setFetchAgain} />
                     ))
                 }
             </div>
