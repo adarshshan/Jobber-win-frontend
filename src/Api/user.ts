@@ -301,6 +301,20 @@ const unLikePost = async (postId: string) => {
         console.log(error as Error);
     }
 }
+const deletePost = async (postId: string) => {
+    try {
+        return await Api.delete(`${userRoutes.deletePost}${postId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const updatePostCaption = async (caption: string, postId: string) => {
+    try {
+        return await Api.put(`${userRoutes.editCaption}${postId}`, { caption });
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 const getLikes = async (postId: string) => {
     try {
         return await Api.get(`${userRoutes.likePost}${postId}`);
@@ -429,5 +443,7 @@ export {
     getComments,
     replyComment,
     getJobsByDate,
-    getJobsByExperience
+    getJobsByExperience,
+    deletePost,
+    updatePostCaption
 }

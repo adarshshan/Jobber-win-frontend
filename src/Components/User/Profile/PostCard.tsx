@@ -5,16 +5,17 @@ import { Divider } from '@nextui-org/react'
 import PostListItem from './PostListItem'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { getAllPosts } from 'Api/user'
-import toast from 'react-hot-toast'
 
 interface IPostCardProps {
     setCreatePostScreen: React.Dispatch<React.SetStateAction<boolean>>;
     userId: string | undefined;
 }
 export interface PostInterface extends Document {
+    _id: string;
     userId?: string;
     caption?: string;
     imageUrl?: string;
+    isDeleted: boolean;
     isPrivate: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -22,6 +23,7 @@ export interface PostInterface extends Document {
 const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => {
     console.log(userId); console.log('this is the id from the postCArd');
     const [posts, setPosts] = useState<PostInterface[]>();
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -29,7 +31,9 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
                 if (userId) {
                     const result = await getAllPosts(userId);
                     if (result?.data.success) {
-                        setPosts(result.data.data);
+                        let posts = result.data.data.filter((item: PostInterface) => !item.isDeleted);
+                        setPosts(posts);
+                        // setPosts(result.data.data);
                     }
                 }
 
@@ -38,7 +42,7 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
             }
         }
         fetchPosts();
-    }, [userId])
+    }, [userId, fetchAgain])
     console.log(posts);
     return (
         <>
@@ -50,24 +54,33 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
                     </div>
                     <div className="flex">
                         <button onClick={() => setCreatePostScreen(true)} className=" rounded-full px-2 py-1 shadow-lg border-4 text-blue-600">Create a post</button>
-                        <MdModeEdit className="text-2xl m-3" />
                     </div>
                 </div>
                 <MenuTabs />
-                {posts?.length && posts.map((postItem, index) => {
-                    return (
-                        <div key={Math.random()}>
-                            <Divider className="my-4" />
-                            <PostListItem postItem={postItem} like={100} />
-                        </div>
-                    )
-                })}
+                {posts?.length ? (
+                    posts.map((postItem) => {
+                        return (
+                            <div key={Math.random()}>
+                                <Divider className="my-4" />
+                                <PostListItem
+                                    postItem={postItem}
+                                    like={100}
+                                    fetchAgain={fetchAgain}
+                                    setFetchAgain={setFetchAgain} />
+                            </div>
+                        )
+                    })
+                ) : (
+                    <div className="m-2">
+                        <h1>You havn't posted anything yet</h1>
+                    </div >
+                )}
                 <Divider className="my-4" />
                 <div id="postListFooter" className=" flex justify-center w-full">
                     <p>Show all Posts </p>
                     <FaArrowRightLong className="text-xl m-1 ms-2" />
                 </div>
-            </div>
+            </div >
         </>
     )
 }

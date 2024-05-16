@@ -52,7 +52,7 @@ export const isSameUser = (messages: any[], m: any, i: number) => {
 
 export const getSender = (loggedUser: any, users: any[]) => {
     try {
-        return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+        return users[0]._id == loggedUser._id ? users[1].name : users[0].name;
     } catch (error) {
         console.log(error)
     }

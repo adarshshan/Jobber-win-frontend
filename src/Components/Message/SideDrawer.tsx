@@ -49,7 +49,7 @@ const SideDrawer = () => {
     const accessChats = async (userId: string) => {
         try {
             setLoading(true);
-            const res = await accessChat(userId);
+            const res = await accessChat(userId);console.log(res);
             if (res?.data.success) {
                 const data = res.data.data;
                 if (!chats.find((c: any) => c._id === data._id)) setChats([data, ...chats]);

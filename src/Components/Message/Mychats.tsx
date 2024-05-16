@@ -38,7 +38,7 @@ const Mychats: React.FC<IMyChats> = ({ fetchAgain }) => {
     };
 
     useEffect(() => {
-        setLoggedUser(JSON.parse(localStorage.getItem("userInfo") as string));
+        setLoggedUser(JSON.parse(localStorage.getItem("userAddress") as string));
         fetchChats();
     }, [fetchAgain]);
     return (

@@ -48,7 +48,9 @@ const userRoutes = {
     reportPost: '/user/report-user/',
     postCommentsend: '/user/comment/',
     getComments: '/user/comment/',
-    replyComment: "/user/reply-comment/"
+    replyComment: "/user/reply-comment/",
+    deletePost: "/user/delete-post/",
+    editCaption: "/user/postcaption-edit/"
 }
 
 
