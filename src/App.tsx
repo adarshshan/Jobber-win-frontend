@@ -101,7 +101,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
         </Route>
 
         {/* Page Not Found */}
-        <Route path='/*' element={<PageNotFound />} />
+        <Route path='/*' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><PageNotFound /></Suspense>} />
 
       </Routes>
 

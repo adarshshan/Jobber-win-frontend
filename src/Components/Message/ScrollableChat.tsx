@@ -9,8 +9,6 @@ interface IScrollableChatProps {
     messages: any[];
 }
 const ScrollableChat: React.FC<IScrollableChatProps> = ({ messages }) => {
-    console.log(messages); console.log('from scrollable chat');
-    console.log(Array.isArray(messages))
     const { userr } = ChatState()
     return (
         <ScrollableFeed>

@@ -5,6 +5,8 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
+    "@emoji-mart/data": "^1.2.1",
+    "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@nextui-org/react": "^2.3.1",
@@ -39,6 +41,7 @@
     "chart.js": "^4.4.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "emoji-mart": "^5.6.0",
     "firebase": "^10.11.0",
     "flowbite": "^2.3.0",
     "formik": "^2.4.6",

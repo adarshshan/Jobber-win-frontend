@@ -343,6 +343,20 @@ const reportJob = async (reason: string, jobId: string) => {
         console.log(error as Error);
     }
 }
+const getJobsByDate = async (num: number) => {
+    try {
+        return await Api.get(`${userRoutes.getJobsByDate}/${num}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getJobsByExperience = async (start: number, end: number) => {
+    try {
+        return await Api.get(`${userRoutes.getJobsByExperience}${start}/${end}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 const sendMessage = async (comment: string, postId: string) => {
     try {
         return await Api.post(`${userRoutes.postCommentsend}${postId}`, { comment })
@@ -357,9 +371,9 @@ const getComments = async (postId: string) => {
         console.log(error as Error);
     }
 }
-const replyComment = async (commentId: string,reply:string) => {
+const replyComment = async (commentId: string, reply: string) => {
     try {
-        return await Api.put(`${userRoutes.replyComment}${commentId}`,{reply});
+        return await Api.put(`${userRoutes.replyComment}${commentId}`, { reply });
     } catch (error) {
         console.log(error as Error);
     }
@@ -413,5 +427,7 @@ export {
     reportJob,
     sendMessage,
     getComments,
-    replyComment
+    replyComment,
+    getJobsByDate,
+    getJobsByExperience
 }

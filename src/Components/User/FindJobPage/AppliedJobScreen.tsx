@@ -5,6 +5,7 @@ import { HiDotsHorizontal } from 'react-icons/hi';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { FaCircleExclamation } from 'react-icons/fa6';
 
 interface IAppliedJobScreen {
 
@@ -50,94 +51,115 @@ const AppliedJobScreen: React.FC<IAppliedJobScreen> = () => {
                     <TabIndicator mt='-1.5px' height='2px' bg='blue.500' borderRadius='1px' />
                     <TabPanels>
                         <TabPanel>
-                            {applications && applications.length && applications.map((item, index) => (
-                                <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
-                                    <Link to={`/user/job-details/${item.jobId._id}`}>
-                                        <div className="flex justify-start gap-5">
-                                            <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
-                                            <div className=' ms-4'>
-                                                <h1 className='text-lg'>{item.jobId.title}</h1>
-                                                <p>{item.jobId.company_name}</p>
-                                                <p>{item.jobId.location}</p>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                    <Dropdown>
-                                        <DropdownTrigger>
-                                            <Button variant="solid" >
-                                                <HiDotsHorizontal className='m-4' />
-                                            </Button>
-                                        </DropdownTrigger>
-                                        <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
-                                            <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
-                                                <div className="flex justify-center gap-1">
-                                                    <span>Cancel Application</span>
+                            {applications && applications.length ? (
+                                applications.map((item, index) => (
+                                    <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
+                                        <Link to={`/user/job-details/${item.jobId._id}`}>
+                                            <div className="flex justify-start gap-5">
+                                                <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
+                                                <div className=' ms-4'>
+                                                    <h1 className='text-lg'>{item.jobId.title}</h1>
+                                                    <p>{item.jobId.company_name}</p>
+                                                    <p>{item.jobId.location}</p>
                                                 </div>
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
+                                            </div>
+                                        </Link>
+                                        <Dropdown>
+                                            <DropdownTrigger>
+                                                <Button variant="solid" >
+                                                    <HiDotsHorizontal className='m-4' />
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
+                                                <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
+                                                    <div className="flex justify-center gap-1">
+                                                        <span>Cancel Application</span>
+                                                    </div>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className='p-6 text-sm flex gap-3'>
+                                    <FaCircleExclamation className='text-red-500 mt-1 text-xl' />
+                                    <h1>No Jobs found</h1>
                                 </div>
-                            ))}
+                            )}
                         </TabPanel>
                         <TabPanel>
-                            {approved && approved.length && approved.map((item, index) => (
-                                <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
-                                    <Link to={`/user/job-details/${item.jobId._id}`}>
-                                        <div className="flex justify-start">
-                                            <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
-                                            <div className=' ms-4'>
-                                                <h1 className='text-lg'>{item.jobId.title}</h1>
-                                                <p>{item.jobId.company_name}</p>
-                                                <p>{item.jobId.location}</p>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                    <Dropdown>
-                                        <DropdownTrigger>
-                                            <Button variant="solid" >
-                                                <HiDotsHorizontal className='m-4' />
-                                            </Button>
-                                        </DropdownTrigger>
-                                        <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
-                                            <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
-                                                <div className="flex justify-center gap-1">
-                                                    <span>Cancel Application</span>
+                            {approved && approved.length ? (
+                                approved.map((item, index) => (
+                                    <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
+                                        <Link to={`/user/job-details/${item.jobId._id}`}>
+                                            <div className="flex justify-start">
+                                                <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
+                                                <div className=' ms-4'>
+                                                    <h1 className='text-lg'>{item.jobId.title}</h1>
+                                                    <p>{item.jobId.company_name}</p>
+                                                    <p>{item.jobId.location}</p>
                                                 </div>
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
+                                            </div>
+                                        </Link>
+                                        <Dropdown>
+                                            <DropdownTrigger>
+                                                <Button variant="solid" >
+                                                    <HiDotsHorizontal className='m-4' />
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
+                                                <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
+                                                    <div className="flex justify-center gap-1">
+                                                        <span>Cancel Application</span>
+                                                    </div>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className='p-6 text-sm flex gap-3'>
+                                    <FaCircleExclamation className='text-red-500 mt-1 text-xl' />
+                                    <h1>No Jobs found</h1>
                                 </div>
-                            ))}
+                            )}
                         </TabPanel>
                         <TabPanel>
-                            {rejected && rejected.length && rejected.map((item, index) => (
-                                <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
-                                    <Link to={`/user/job-details/${item.jobId._id}`}>
-                                        <div className="flex justify-start">
-                                            <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
-                                            <div className=' ms-4'>
-                                                <h1 className='text-lg'>{item.jobId.title}</h1>
-                                                <p>{item.jobId.company_name}</p>
-                                                <p>{item.jobId.location}</p>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                    <Dropdown>
-                                        <DropdownTrigger>
-                                            <Button variant="solid" >
-                                                <HiDotsHorizontal className='m-4' />
-                                            </Button>
-                                        </DropdownTrigger>
-                                        <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
-                                            <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
-                                                <div className="flex justify-center gap-1">
-                                                    <span>Cancel Application</span>
+                            {rejected && rejected.length ? (
+                                rejected.map((item, index) => (
+                                    <div key={index} className="flex justify-between p-2 m-1 shadow-md bg-slate-100">
+                                        <Link to={`/user/job-details/${item.jobId._id}`}>
+                                            <div className="flex justify-start">
+                                                <img className='w-20 h-20 rounded-md' src={item.jobId.job_img} alt={item.jobId.title} />
+                                                <div className=' ms-4'>
+                                                    <h1 className='text-lg'>{item.jobId.title}</h1>
+                                                    <p>{item.jobId.company_name}</p>
+                                                    <p>{item.jobId.location}</p>
                                                 </div>
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
+                                            </div>
+                                        </Link>
+                                        <Dropdown>
+                                            <DropdownTrigger>
+                                                <Button variant="solid" >
+                                                    <HiDotsHorizontal className='m-4' />
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu className='bg-gray-500 w-40 text-center text-white' aria-label="Static Actions">
+                                                <DropdownItem className='my-1 hover:bg-white hover:text-black' key="new">
+                                                    <div className="flex justify-center gap-1">
+                                                        <span>Cancel Application</span>
+                                                    </div>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className='p-6 text-sm flex gap-3'>
+                                    <FaCircleExclamation className='text-red-500 mt-1 text-xl' />
+                                    <h1>No Jobs found</h1>
                                 </div>
-                            ))}
+                            )}
                         </TabPanel>
                     </TabPanels>
                 </Tabs>

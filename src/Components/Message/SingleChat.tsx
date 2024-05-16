@@ -5,10 +5,14 @@ import Lottie from 'react-lottie'
 import io from 'socket.io-client'
 import { ChatState } from 'Context/ChatProvider'
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { getSender, getSenderFull } from 'config/chatLogics'
+import { getSender } from 'config/chatLogics'
 import ScrollableChat from './ScrollableChat'
 import UpdateGroupChatModal from './UpdateGroupChatModal'
 import { getMessages, sendMessages } from 'Api/chat'
+import { FaRegSmileWink } from 'react-icons/fa'
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
+import { IoSendSharp } from 'react-icons/io5'
 
 const ENDPOINT = 'http://localhost:5000'
 var socket: any, selectedChatCompare: any;
@@ -24,6 +28,8 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     const [socketConnected, setSocketConnected] = useState(false);
     const [typing, setTyping] = useState(false);
     const [isTyping, setIstyping] = useState(false);
+    const [visibleImogy, SetVisibleImogy] = useState(false);
+    const [currentImogi, setCurrentImogi] = useState(null);
 
     const defaultOptions = {
         loop: true,
@@ -94,30 +100,25 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     })
 
 
-    const sendMessage = async (event: any) => {
-        if (event.key === "Enter" && newMessage) {
-            try {
-                setNewMessage("");
-                const res = await sendMessages(newMessage, selectedChat._id)
-
-                if (res?.data.success) {
-                    socket.emit("new message", res.data.data);
-
-                    setMessages([...messages, res.data.data]);
-                }
-                console.log(res);
-
-            } catch (error) {
-                console.log(error)
-                toast({
-                    title: "Error occured!",
-                    description: "failed to send the message",
-                    status: "error",
-                    duration: 5000,
-                    isClosable: true,
-                    position: 'bottom',
-                })
+    const sendMessage = async () => {
+        try {
+            setNewMessage("");
+            const res = await sendMessages(newMessage, selectedChat._id)
+            if (res?.data.success) {
+                socket.emit("new message", res.data.data);
+                setMessages([...messages, res.data.data]);
             }
+            console.log(res);
+        } catch (error) {
+            console.log(error)
+            toast({
+                title: "Error occured!",
+                description: "failed to send the message",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom',
+            })
         }
     }
 
@@ -201,7 +202,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
 
                         )}
                         <FormControl
-                            onKeyDown={sendMessage}
+                            onKeyDown={(e: any) => { if (e.key === 'Enter') sendMessage() }}
                             id="first-name"
                             isRequired
                             mt={3}
@@ -218,13 +219,27 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
                             ) : (
                                 <></>
                             )}
-                            <Input
-                                variant="filled"
-                                bg="#E0E0E0"
-                                placeholder="Enter a message.."
-                                value={newMessage}
-                                onChange={typingHandler}
-                            />
+                            <div className={`${visibleImogy ? 'block' : 'hidden'}`}>
+                                <Picker data={data} previewPosition='none' onEmojiSelect={(e: any) => {
+                                    setCurrentImogi(e.native);
+                                    SetVisibleImogy(!visibleImogy);
+                                    setNewMessage(newMessage + currentImogi);
+                                }} />
+                            </div>
+                            <div className="flex">
+                                <button
+                                    onClick={() => SetVisibleImogy(!visibleImogy)}
+                                    className='text-3xl p-1'><FaRegSmileWink /></button>
+                                <Input
+                                    variant="filled"
+                                    bg="#E0E0E0"
+                                    placeholder="Enter a message.."
+                                    value={newMessage}
+                                    onChange={typingHandler}
+                                />
+                                <IoSendSharp onClick={sendMessage} className='text-4xl mb-2  ms-2' />
+                            </div>
+
                         </FormControl>
                     </Box>
                 </>

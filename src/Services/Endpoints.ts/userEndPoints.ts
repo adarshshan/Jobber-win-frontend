@@ -41,6 +41,8 @@ const userRoutes = {
     getAllAppliedandSaved: "/user/get-saved-applied-jobs",
     getAllApplications: "/user/get-all-application",
     reportJob: '/user/report-job/',
+    getJobsByDate: '/user/getjobs',
+    getJobsByExperience: '/user/getjobs-by-experience/',
 
     likePost: '/user/like-post/',
     reportPost: '/user/report-user/',
