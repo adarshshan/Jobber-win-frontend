@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom';
 
 interface IShareModalConitentProps {
     onClose: () => void;
+    postId:string;
 }
-const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose }) => {
+const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose,postId }) => {
     const [suggession, setSuggession] = useState([]);
     const [search, setSearch] = useState('');
 
@@ -20,6 +21,7 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose }) => {
         userr,
         chats,
         setChats,
+        setPostId
     } = ChatState();
 
     useEffect(() => {
@@ -47,14 +49,14 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose }) => {
             console.log(error as Error);
         }
     }
-    const handleAccessChat = async (id: string) => {
+    const handleAccessChat = async (id: string,postId:string) => {
         try {
             const res = await accessChat(id);
-            console.log(res); console.log('this is your result...');
             if (res?.data.success) {
                 const data = res.data.data;
                 if (!chats.find((c: any) => c._id === data._id)) setChats([data, ...chats]);
                 setSelectedChat(data);
+                setPostId(postId);
                 onClose()
                 navigate('/user/message');
             } else console.log('Something went wrong while invoking the accessChats function');
@@ -82,7 +84,7 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose }) => {
                 {suggession.length ? suggession.map((item: any) => (
                     <div key={item._id}
                         onClick={() => {
-                            handleAccessChat(item._id);
+                            handleAccessChat(item._id,postId);
                         }}
                         className="flex justify-start mt-2">
                         <img className='w-14 h-14 rounded-full' src={item.profile_picture} alt='///' />

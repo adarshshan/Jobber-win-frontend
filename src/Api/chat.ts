@@ -58,7 +58,15 @@ const groupAddUser = async (chatId: string, userId: string) => {
         console.log(error as Error);
     }
 }
+const sharePostMessage = async (postId: string, chatId: string) => {
+    try {
+        return await Api.post(messageRoutes.sharePostMessage, { postId, chatId });
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
 export {
+    sharePostMessage,
     fetchChat,
     accessChat,
     sendMessages,

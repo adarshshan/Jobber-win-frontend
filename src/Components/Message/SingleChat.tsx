@@ -29,7 +29,6 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     const [typing, setTyping] = useState(false);
     const [isTyping, setIstyping] = useState(false);
     const [visibleImogy, SetVisibleImogy] = useState(false);
-    const [currentImogi, setCurrentImogi] = useState('');
 
     const defaultOptions = {
         loop: true,
@@ -84,7 +83,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         fetchMessages();
         selectedChatCompare = selectedChat;
-    }, [selectedChat])
+    }, [selectedChat, fetchAgain])
 
     useEffect(() => {
         socket.on("message recieved", (newMessageReceived: any) => {
@@ -143,10 +142,12 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     }
 
     const handleEmojiSelect = (emoji: any) => {
-        setCurrentImogi(emoji.native);
         SetVisibleImogy(!visibleImogy);
         setNewMessage((prevMessage) => prevMessage + emoji.native);
     };
+    const newMsg = (data: any) => {
+        socket.emit("new message", data);
+    }
     return (
         <>
             {selectedChat ? (
@@ -202,7 +203,10 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
                             margin="auto" />) : (
 
                             <div className='messages'>
-                                <ScrollableChat messages={messages} />
+                                <ScrollableChat
+                                    newMsgFn={newMsg}
+                                    messages={messages}
+                                    setFetchAgain={setFetchAgain} />
                             </div>
 
                         )}

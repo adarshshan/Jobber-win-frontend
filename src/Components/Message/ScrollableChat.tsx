@@ -1,15 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ScrollableFeed from 'react-scrollable-feed';
 import { Avatar, Tooltip } from '@chakra-ui/react';
 import { ChatState } from 'Context/ChatProvider';
 import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from 'config/chatLogics';
+import { sharePostMessage } from 'Api/chat';
+import toast from 'react-hot-toast';
 
 
 interface IScrollableChatProps {
     messages: any[];
+    setFetchAgain: React.Dispatch<React.SetStateAction<boolean>>;
+    newMsgFn: (data: any) => void;
 }
-const ScrollableChat: React.FC<IScrollableChatProps> = ({ messages }) => {
-    const { userr } = ChatState()
+const ScrollableChat: React.FC<IScrollableChatProps> = ({ messages, setFetchAgain, newMsgFn }) => {
+    console.log(messages); console.log('thisis the initial messages.....');
+    const m = messages;
+    const { userr, postId, setPostId, selectedChat, setChats } = ChatState()
+
+    useEffect(() => {
+        const fetchContentAndSendMsg = async () => {
+            try {
+                setPostId('');
+                const result = await sharePostMessage(postId, selectedChat._id);
+                if (result?.data.success) {
+                    newMsgFn(result.data.data)
+                    console.log(messages);
+                } else toast.error(result?.data.message);
+                setFetchAgain(true);
+            } catch (error) {
+                console.log(error as Error);
+                setPostId('');
+            }
+        }
+        if (postId.length) fetchContentAndSendMsg();
+    }, [])
     return (
         <ScrollableFeed>
             {messages && messages.length ? (
@@ -37,6 +61,12 @@ const ScrollableChat: React.FC<IScrollableChatProps> = ({ messages }) => {
                             // marginTop: 3,
                         }}>
                             {m.content}
+                            {m.contentType === 'sharePost' &&
+                                <div className='w-[300px]'>
+                                    <img src={m.shared_post?.imageUrl} alt="" />
+                                    <p>{m.sender.name} has shared a Post</p>
+                                    <small className='text-blue-500'>click to watch</small>
+                                </div>}
                         </span>
                     </div>
                 ))

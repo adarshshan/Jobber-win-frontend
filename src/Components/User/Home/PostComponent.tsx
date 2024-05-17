@@ -215,17 +215,17 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                     <ModalHeader>{reportScreen ? 'Report' : (postShareScreen ? 'Share Post ' : 'Liked users')}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        {userScreen && userDetails && userDetails.length && userDetails.map((item, index) => (
-                            <Link to={`/user/view-user-profile/${item._id}`} key={index} className="flex justify-start mt-2">
-                                <img className='w-14 h-14 rounded-full' src={item.profile_picture} alt='///' />
+                        {userScreen && userDetails && userDetails.length && userDetails.map((userItem, index) => (
+                            <Link to={`/user/view-user-profile/${userItem._id}`} key={index} className="flex justify-start mt-2">
+                                <img className='w-14 h-14 rounded-full' src={userItem.profile_picture} alt='///' />
                                 <div className='mt-1 ms-2 font-normal'>
-                                    <h3 className=' text-lg'>{item.name}</h3>
-                                    <p>{item.headLine}</p>
+                                    <h3 className=' text-lg'>{userItem.name}</h3>
+                                    <p>{userItem.headLine}</p>
                                 </div>
                             </Link>
                         ))}
                         {reportScreen && <ReportList onClose={onClose} postId={item._id} />}
-                        {postShareScreen && <ShareModalContent onClose={onClose} />}
+                        {postShareScreen && <ShareModalContent postId={item._id} onClose={onClose} />}
                     </ModalBody>
                 </ModalContent>
             </Modal>

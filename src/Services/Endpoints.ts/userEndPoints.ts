@@ -51,7 +51,7 @@ const userRoutes = {
     replyComment: "/user/reply-comment/",
     deletePost: "/user/delete-post/",
     editCaption: "/user/postcaption-edit/",
-    postShareSuggession: "/user/share-post-suggession"
+    postShareSuggession: "/user/share-post-suggession",
 }
 
 
