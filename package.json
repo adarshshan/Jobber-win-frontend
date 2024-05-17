@@ -45,7 +45,7 @@
     "firebase": "^10.11.0",
     "flowbite": "^2.3.0",
     "formik": "^2.4.6",
-    "framer-motion": "^11.1.7",
+    "framer-motion": "^11.2.3",
     "install": "^0.13.0",
     "lucide-react": "^0.372.0",
     "mongoose": "^8.3.2",

@@ -30,6 +30,7 @@ const SideDrawer = () => {
         chats,
         setChats,
     } = ChatState();
+
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -49,7 +50,7 @@ const SideDrawer = () => {
     const accessChats = async (userId: string) => {
         try {
             setLoading(true);
-            const res = await accessChat(userId);console.log(res);
+            const res = await accessChat(userId);
             if (res?.data.success) {
                 const data = res.data.data;
                 if (!chats.find((c: any) => c._id === data._id)) setChats([data, ...chats]);

@@ -8,10 +8,11 @@ import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
 import AdminLoggedOut from './Components/Admin/AdminLoggedOut';
 import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
-import Test from './Pages/user/Test';
+import Test from './Components/User/userCommon/BottomNavbar';
 import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
 import ChatProvider from 'Context/ChatProvider';
+
 
 
 const AdminLogin = lazy(() => import('./Pages/admin/AdminLogin'));
@@ -69,7 +70,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='find-jobs' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><FindJobPage /></Suspense>} />
             <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
             <Route path='job-details/:jobId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><JobDetails /></Suspense>} />
-            <Route path='message' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}> <ChatProvider><ChatPage /></ChatProvider></Suspense>} />
+            <Route path='message' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ChatPage /></Suspense>} />
           </Route>
         </Route>
 

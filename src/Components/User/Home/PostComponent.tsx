@@ -22,6 +22,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { ReportList } from './ReportList';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 import MessageBox from './MessageBox';
+import ShareModalContent from './ShareModalContent';
 
 
 interface IPostComponentProps {
@@ -34,6 +35,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
     const [userDetails, setUserDetails] = useState<any[]>([]);
     const [userScreen, setUserScreen] = useState(false);
     const [reportScreen, setReportScreen] = useState(false);
+    const [postShareScreen, setPostShareScreen] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
     const [inputHighlight, setMessageHighlight] = useState(false);
     const [comment, setComment] = useState('');
@@ -146,25 +148,6 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                             setReportScreen(false);
                             setUserScreen(true);
                         }}>{like} likes</p>
-                        <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
-                            <ModalOverlay />
-                            <ModalContent>
-                                <ModalHeader>{reportScreen ? 'Report' : 'Liked users'}</ModalHeader>
-                                <ModalCloseButton />
-                                <ModalBody>
-                                    {userScreen && userDetails && userDetails.length && userDetails.map((item, index) => (
-                                        <Link to={`/user/view-user-profile/${item._id}`} key={index} className="flex justify-start mt-2">
-                                            <img className='w-14 h-14 rounded-full' src={item.profile_picture} alt='///' />
-                                            <div className='mt-1 ms-2 font-normal'>
-                                                <h3 className=' text-lg'>{item.name}</h3>
-                                                <p>{item.headLine}</p>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                    {reportScreen && <ReportList onClose={onClose} postId={item._id} />}
-                                </ModalBody>
-                            </ModalContent>
-                        </Modal>
                     </div>
                     <div className="h-16 border-b flex items-center justify-around">
                         {likedUser && likedUser.includes(userId) ? (
@@ -181,7 +164,12 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
                             <FaRegCommentAlt />
                             <div className="text-sm">{commentCount === 0 ? '' : commentCount} Comments</div>
                         </div>
-                        <div className="flex items-center gap-3 hover:bg-blue-50 p-3">
+                        <div onClick={() => {
+                            setPostShareScreen(true)
+                            setReportScreen(false);
+                            setUserScreen(false);
+                            onOpen()
+                        }} className="flex items-center gap-3 hover:bg-blue-50 p-3 cursor-default">
                             <IoIosShareAlt />
                             <div className="text-sm">Share</div>
                         </div>
@@ -221,6 +209,26 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
 
                 </div>
             </main>
+            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>{reportScreen ? 'Report' : (postShareScreen ? 'Share Post ' : 'Liked users')}</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        {userScreen && userDetails && userDetails.length && userDetails.map((item, index) => (
+                            <Link to={`/user/view-user-profile/${item._id}`} key={index} className="flex justify-start mt-2">
+                                <img className='w-14 h-14 rounded-full' src={item.profile_picture} alt='///' />
+                                <div className='mt-1 ms-2 font-normal'>
+                                    <h3 className=' text-lg'>{item.name}</h3>
+                                    <p>{item.headLine}</p>
+                                </div>
+                            </Link>
+                        ))}
+                        {reportScreen && <ReportList onClose={onClose} postId={item._id} />}
+                        {postShareScreen && <ShareModalContent onClose={onClose} />}
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </>
     );
 };

@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './Header';
 import Footer from './Footer';
 import { Outlet } from 'react-router-dom';
+import BottomNavbar from './BottomNavbar';
 
 const User = () => {
     return (
@@ -9,6 +10,7 @@ const User = () => {
             <Header />
             <Outlet />
             <Footer />
+            <BottomNavbar />
         </>
     )
 }

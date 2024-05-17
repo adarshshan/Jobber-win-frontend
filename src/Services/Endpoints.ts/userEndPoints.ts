@@ -50,7 +50,8 @@ const userRoutes = {
     getComments: '/user/comment/',
     replyComment: "/user/reply-comment/",
     deletePost: "/user/delete-post/",
-    editCaption: "/user/postcaption-edit/"
+    editCaption: "/user/postcaption-edit/",
+    postShareSuggession: "/user/share-post-suggession"
 }
 
 

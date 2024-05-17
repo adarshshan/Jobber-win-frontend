@@ -149,7 +149,6 @@ const removeProfilePic = async (id: string | undefined) => {
 //netWork
 const getAllUsers = async (search: any) => {
     try {
-        console.log('this is the search query' + search);
         return await Api.get(`${userRoutes.getAllUsers}?search=${search}`);
     } catch (error) {
         console.log(error as Error);
@@ -315,6 +314,13 @@ const updatePostCaption = async (caption: string, postId: string) => {
         console.log(error as Error);
     }
 }
+const postShareSuggession = async () => {
+    try {
+        return await Api.get(userRoutes.postShareSuggession);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 const getLikes = async (postId: string) => {
     try {
         return await Api.get(`${userRoutes.likePost}${postId}`);
@@ -445,5 +451,6 @@ export {
     getJobsByDate,
     getJobsByExperience,
     deletePost,
-    updatePostCaption
+    updatePostCaption,
+    postShareSuggession
 }

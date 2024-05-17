@@ -10,6 +10,8 @@ interface ChatState {
     setNotification: React.Dispatch<React.SetStateAction<any[]>>;
     chats: any[];
     setChats: React.Dispatch<React.SetStateAction<any[]>>;
+    postId: string;
+    setPostId: React.Dispatch<React.SetStateAction<string>>
 }
 
 const ChatContext = createContext<ChatState | null>(null);
@@ -23,18 +25,15 @@ const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     const [userr, setUser] = useState<any | null>(null);
     const [notification, setNotification] = useState<any[]>([]);
     const [chats, setChats] = useState<any[]>([]);
+    const [postId, setPostId] = useState<string>('');
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const userInfo = localStorage.getItem('userAddress');
-        if (userInfo) {
-            setUser(JSON.parse(userInfo));
-        } else {
-            navigate("/");
-        }
+        if (userInfo) setUser(JSON.parse(userInfo));
     }, [navigate]);
-    console.log(userr);
+    
     return (
         <ChatContext.Provider
             value={{
@@ -46,6 +45,8 @@ const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
                 setNotification,
                 chats,
                 setChats,
+                postId,
+                setPostId
             }}
         >
             {children}

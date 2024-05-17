@@ -1,7 +1,7 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Box, Text } from "@chakra-ui/layout";
 
-interface IUserListItemProps {
+interface IUserListItemProps {  
     user: any;
     handleFunction: (user1: any) => Promise<void>;
 }

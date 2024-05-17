@@ -29,7 +29,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     const [typing, setTyping] = useState(false);
     const [isTyping, setIstyping] = useState(false);
     const [visibleImogy, SetVisibleImogy] = useState(false);
-    const [currentImogi, setCurrentImogi] = useState(null);
+    const [currentImogi, setCurrentImogi] = useState('');
 
     const defaultOptions = {
         loop: true,
@@ -141,7 +141,12 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
             }
         }, timerLength)
     }
-    console.log(selectedChat); console.log('this is the seleced chat!');
+
+    const handleEmojiSelect = (emoji: any) => {
+        setCurrentImogi(emoji.native);
+        SetVisibleImogy(!visibleImogy);
+        setNewMessage((prevMessage) => prevMessage + emoji.native);
+    };
     return (
         <>
             {selectedChat ? (
@@ -220,11 +225,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
                                 <></>
                             )}
                             <div className={`${visibleImogy ? 'block' : 'hidden'}`}>
-                                <Picker data={data} previewPosition='none' onEmojiSelect={(e: any) => {
-                                    setCurrentImogi(e.native);
-                                    SetVisibleImogy(!visibleImogy);
-                                    setNewMessage(newMessage + currentImogi);
-                                }} />
+                                <Picker data={data} previewPosition='none' onEmojiSelect={handleEmojiSelect} />
                             </div>
                             <div className="flex">
                                 <button

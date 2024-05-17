@@ -12,7 +12,6 @@ import { Avatar, Badge } from '@nextui-org/react';
 import { IoIosPeople, IoMdHome } from 'react-icons/io';
 import { FaBell, FaShoppingBag } from 'react-icons/fa';
 import { setSearchText } from 'app/slice/CommonSlice';
-import { motion, useAnimation } from 'framer-motion';
 
 function Header() {
 
@@ -20,25 +19,6 @@ function Header() {
   const [stateColor, setStateColor] = useState<string>();
   const [search, setSearch] = useState<string>('')
 
-  const controls = useAnimation();
-
-  useEffect(() => {
-    let lastScrollTop = 0;
-
-    const handleScroll = () => {
-      const currentScroll = window.scrollY || document.documentElement.scrollTop;
-      if (currentScroll > lastScrollTop) {
-        controls.start({ y: -100 });
-      } else {
-        controls.start({ y: 0 });
-      }
-
-      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [controls]);
 
   useEffect(() => {
     initFlowbite()
@@ -98,13 +78,9 @@ function Header() {
   }
   return (
     <>
-      <motion.nav
-        animate={controls}
-        initial={{ y: 3 }}
-        transition={{ type: 'tween', duration: 0.1 }}
-        className="bg-gradient-to-b from-blue-800 
+      <nav className="bg-gradient-to-b from-blue-800 
                 to-blue-950 bg-white  z-50
-                shadow-lg text-white dark:bg-black dark:text-white  navbar  ">
+                shadow-lg text-white dark:bg-black dark:text-white sticky top-0">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <div className="flex">
             <Link to='/'>
@@ -214,7 +190,7 @@ function Header() {
             </ul>
           </div>
         </div>
-      </motion.nav >
+      </nav >
 
     </>
   );
