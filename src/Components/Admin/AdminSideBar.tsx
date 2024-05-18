@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GrPlan } from "react-icons/gr";
 import { RiSettings2Line } from "react-icons/ri";
 import { FaList } from "react-icons/fa6";
@@ -7,6 +7,12 @@ import { FaUsers } from "react-icons/fa";
 import { VscListFlat } from "react-icons/vsc";
 
 const AdminSideBar: React.FC = () => {
+
+    const location = useLocation();
+
+    const isActive = (path: any) => {
+        return location.pathname === path
+    };
 
     return (
         <>
@@ -18,7 +24,7 @@ const AdminSideBar: React.FC = () => {
                 className="inline-flex items-start p-2 mt-0 ms-0 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             >
                 <span className="text-xl"><VscListFlat /></span>
-                
+
             </button>
 
             <aside
@@ -47,19 +53,19 @@ const AdminSideBar: React.FC = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to='/admin/users' className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                            <Link to='/admin/users' className={`${isActive('/admin/users') && 'bg-gray-700 text-white'} flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <FaUsers />
                                 <span className="ms-3">All Users</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to='/admin/jobs' className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                            <Link to='/admin/jobs' className={`${isActive('/admin/jobs') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <FaList />
                                 <span className="ms-3">All Jobs</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to='/admin/recruiters' className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                            <Link to='/admin/recruiters' className={`${isActive('/admin/recruiters') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                     aria-hidden="true"
@@ -73,14 +79,42 @@ const AdminSideBar: React.FC = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to='/admin/subscriptions' className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                            <Link to='/admin/reported-jobs' className={`${isActive('/admin/reported-jobs') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
+                                <svg
+                                    className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="currentColor"
+                                    viewBox="0 0 22 21"
+                                >
+                                    <path d="M21.5 1H18V0h-4v1H8V0H4v1H.5A.5.5 0 0 0 0 1.5v19a.5.5 0 0 0 .5.5h21a.5.5 0 0 0 .5-.5v-19a.5.5 0 0 0-.5-.5zM20 19H2V2h3v1h4V2h4v1h4V2h3v17Z" />
+                                </svg>
+                                <span className="ms-3">Reported Jobs</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to='/admin/reported-posts' className={`${isActive('/admin/reported-posts') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
+                                <svg
+                                    className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="currentColor"
+                                    viewBox="0 0 22 21"
+                                >
+                                    <path d="M21.5 1H18V0h-4v1H8V0H4v1H.5A.5.5 0 0 0 0 1.5v19a.5.5 0 0 0 .5.5h21a.5.5 0 0 0 .5-.5v-19a.5.5 0 0 0-.5-.5zM20 19H2V2h3v1h4V2h4v1h4V2h3v17Z" />
+                                </svg>
+                                <span className="ms-3">Reported Posts</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to='/admin/subscriptions' className={`${isActive('/admin/subscriptions') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <GrPlan />
                                 <span className="ms-3">Subscriptions</span>
                             </Link>
                         </li>
                         <hr />
                         <li>
-                            <Link to='/admin/settings' className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                            <Link to='/admin/settings' className={`${isActive('/admin/settings') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <RiSettings2Line />
                                 <span className="ms-3">Settings</span>
                             </Link>

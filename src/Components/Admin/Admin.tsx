@@ -12,11 +12,9 @@ const Admin: React.FC = () => {
                 <div className="flex overflow-hidden bg-white pt-16">
                     <AdminSideBar />
                     <div id="main-content" className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-
-                        <Outlet />
-                        {/* contents */}
-
-
+                        <div className="min-h-[700px]">
+                            <Outlet /> {/* contents */}
+                        </div>
                         <AdminFooter />
                     </div>
                 </div>

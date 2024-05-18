@@ -12,6 +12,8 @@ import Test from './Components/User/userCommon/BottomNavbar';
 import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
 import ChatProvider from 'Context/ChatProvider';
+import ReportedJobs from './Pages/admin/ReportedJobs';
+import ReportedPosts from './Pages/admin/ReportedPosts';
 
 
 
@@ -98,6 +100,8 @@ const App: React.FunctionComponent<IAppProps> = () => {
           <Route path='' element={<AdminLoggedIn />}>
             <Route path='users' element={<Users />} />
             <Route path='jobs' element={<Jobs />} />
+            <Route path='reported-jobs' element={<ReportedJobs />} />
+            <Route path='reported-posts' element={<ReportedPosts />} />
           </Route>
         </Route>
 

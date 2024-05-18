@@ -38,11 +38,41 @@ const logout = async () => {
         errorHandler(error as Error);
     }
 }
-
-
+const getPostReports = async () => {
+    try {
+        return await Api.get(adminRoutes.getPostReports);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getJobReports = async () => {
+    try {
+        return await Api.get(adminRoutes.getJobReports);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const removeReportedJob = async (jobId: string) => {
+    try {
+        return await Api.put(`${adminRoutes.removeReportedJob}${jobId}`)
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const removeReportedPost = async (postId: string) => {
+    try {
+        return await Api.put(`${adminRoutes.removeReportedPost}${postId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 
 export {
+    removeReportedPost,
+    removeReportedJob,
+    getJobReports,
+    getPostReports,
     login,
     getAllUsers,
     blockUser,
