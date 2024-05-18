@@ -398,8 +398,16 @@ const replyComment = async (commentId: string, reply: string) => {
         console.log(error as Error);
     }
 }
+const getSinglePostDetails = async (postId: string) => {
+    try {
+        return await Api.get(`${userRoutes.getSinglePostDetails}${postId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
+    getSinglePostDetails,
     signup,
     verifyOtp,
     login,

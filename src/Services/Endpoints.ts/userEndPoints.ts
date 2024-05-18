@@ -52,6 +52,7 @@ const userRoutes = {
     deletePost: "/user/delete-post/",
     editCaption: "/user/postcaption-edit/",
     postShareSuggession: "/user/share-post-suggession",
+    getSinglePostDetails: '/user/get-post-details/'
 }
 
 

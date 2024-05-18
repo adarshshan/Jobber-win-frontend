@@ -50,7 +50,6 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({userProfile}) => {
         }
         fetchData();
     }, [])
-    console.log(dataSource);
     return (
         <>
             <div className="sm:col-span-6 shadow-lg min-h-[100px] rounded-lg bg-transparent">

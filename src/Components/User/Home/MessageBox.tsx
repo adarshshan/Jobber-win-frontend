@@ -4,11 +4,11 @@ import React, { KeyboardEvent, useEffect, useState } from 'react'
 
 interface IMessageBoxInterface {
     postId: string;
-    setMessageHighlight: React.Dispatch<React.SetStateAction<boolean>>;
-    inputHighlight: boolean;
-    loadAgain: boolean;
-    setLoadAgain: React.Dispatch<React.SetStateAction<boolean>>;
-    setCommentCount: React.Dispatch<React.SetStateAction<number>>;
+    setMessageHighlight?: React.Dispatch<React.SetStateAction<boolean>>;
+    inputHighlight?: boolean;
+    loadAgain?: boolean;
+    setLoadAgain?: React.Dispatch<React.SetStateAction<boolean>>;
+    setCommentCount?: React.Dispatch<React.SetStateAction<number>>;
 }
 interface Iuser {
     name: string;
@@ -44,25 +44,24 @@ const MessageBox: React.FC<IMessageBoxInterface> = ({ postId, setMessageHighligh
                         return 0;
                     });
                     setComments(data);
-                    setCommentCount(data.length);
+                    if (setCommentCount) setCommentCount(data.length);
                 }
             } catch (error) {
                 console.log(error as Error)
             }
         }
         fetchComments()
-    }, [loadAgain])
-    console.log(comments);
+    })
     return (
         <>
-            <div onClick={() => setMessageHighlight(!inputHighlight)} className=" w-full cursor-default">
+            <div onClick={() => { if (setMessageHighlight) setMessageHighlight(!inputHighlight) }} className=" w-full cursor-default">
                 {comments && comments.length ? (
                     comments.map((item, index) => (
                         <Messages key={index}
                             setMessageHighlight={setMessageHighlight}
                             item={item}
                             setLoadAgain={setLoadAgain}
-                            loadAgain={loadAgain} />
+                            loadAgain={(typeof loadAgain==='boolean')?loadAgain:undefined} />
                     ))
                 ) : (
                     <h1>No comments</h1>
@@ -76,10 +75,10 @@ const MessageBox: React.FC<IMessageBoxInterface> = ({ postId, setMessageHighligh
 export default MessageBox
 
 interface IMessageProps {
-    setMessageHighlight: React.Dispatch<React.SetStateAction<boolean>>;
+    setMessageHighlight?: React.Dispatch<React.SetStateAction<boolean>>;
     item: IComments;
-    setLoadAgain: React.Dispatch<React.SetStateAction<boolean>>;
-    loadAgain: boolean;
+    setLoadAgain?: React.Dispatch<React.SetStateAction<boolean>>;
+    loadAgain?: boolean|undefined;
 }
 
 const Messages: React.FC<IMessageProps> = ({ setMessageHighlight, item, setLoadAgain, loadAgain }) => {
@@ -95,7 +94,7 @@ const Messages: React.FC<IMessageProps> = ({ setMessageHighlight, item, setLoadA
                 const res = await replyComment(item._id, reply);
                 setReply('');
                 if (res?.data.success) {
-                    setLoadAgain(!loadAgain);
+                    if (setLoadAgain) setLoadAgain(!loadAgain);
                     setReplyInput(false)
                 }
             } catch (error) {
@@ -118,7 +117,7 @@ const Messages: React.FC<IMessageProps> = ({ setMessageHighlight, item, setLoadA
                                 <p>{_time}</p>
                                 <p onClick={() => {
                                     setReplyInput(!replyInput);
-                                    setMessageHighlight(true)
+                                    if (setMessageHighlight) setMessageHighlight(true)
                                 }}>reply</p>
                             </div>
                         </div>

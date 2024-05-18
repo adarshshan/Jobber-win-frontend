@@ -64,7 +64,6 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose,postId 
             console.log(error as Error);
         }
     }
-    console.log(selectedChat); console.log('This is your seleected chat.........')
     return (
         <div>
             <hr />

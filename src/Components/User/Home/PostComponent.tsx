@@ -65,6 +65,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
         }
         fetchLikeDetails();
     }, [like])
+
     const handleLike = async (postId: string) => {
         try {
             const res = await likePost(postId);
@@ -75,6 +76,7 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
             console.log(error as Error);
         }
     }
+
     const handleUnlike = async (postId: string) => {
         try {
             const res = await unLikePost(postId);
@@ -85,15 +87,16 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
             console.log(error as Error);
         }
     }
+
     const handleSendMessage = async (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             let postId = item._id;
             const res = await sendMessage(comment, postId)
             setLoadAgain(!loadAgain);
             setComment('');
-            console.log(res);
         }
     }
+
     return (
         <>
             <main className="h-full w-full bg-transparent flex items-center justify-center shadow-lg rounded-xl">
