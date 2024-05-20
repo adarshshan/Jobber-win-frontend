@@ -101,9 +101,33 @@ const editSubscription = async (subId: string, formData: any) => {
         console.log(error as Error)
     }
 }
+const deleteSubscription = async (subId: string) => {
+    try {
+        return await Api.delete(`${adminRoutes.subscription}/${subId}`);
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
+const ActivateSubscription = async (subId: string) => {
+    try {
+        return await Api.put(`${adminRoutes.ActivateSubscription}${subId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const DeactivateSubscription = async (subId: string) => {
+    try {
+        return await Api.put(`${adminRoutes.DeactivateSubscription}${subId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 
 export {
+    DeactivateSubscription,
+    ActivateSubscription,
+    deleteSubscription,
     editSubscription,
     getSubscriptions,
     createNewPlan,

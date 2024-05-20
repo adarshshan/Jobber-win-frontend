@@ -10,7 +10,9 @@ const adminRoutes = {
     closePostReport: '/admin/delete-post-report/',
     closeJobReport: '/admin/delete-job-report/',
 
-    subscription:'/admin/subscription',
+    subscription: '/admin/subscription',
+    ActivateSubscription: '/admin/subscription/activate/',
+    DeactivateSubscription: '/admin/subscription/deactivate/'
 }
 
 
