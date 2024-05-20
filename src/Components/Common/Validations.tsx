@@ -13,6 +13,13 @@ export const SignupValidation = Yup.object({
     role: Yup.string().required("please Select the role!"),
 })
 
+export const SubscriptionValidation = Yup.object({
+    planName: Yup.string().min(3).required("please Enter the plan name"),
+    duration: Yup.number().moreThan(-1).required('please Enter duration'),
+    amount: Yup.number().moreThan(-1).required("please Enter the amount"),
+    description: Yup.string().min(15).required('please fill the fields!')
+})
+
 export const LoginValidation = Yup.object({
     email: Yup.string().email("please Enter a valid Email Address!").required("please Enter Email!"),
     password: Yup.string().required("please Enter your password!")

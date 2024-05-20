@@ -66,9 +66,49 @@ const removeReportedPost = async (postId: string) => {
         console.log(error as Error);
     }
 }
+const closePostReport = async (reportId: string) => {
+    try {
+        return await Api.put(`${adminRoutes.closePostReport}${reportId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const closeJobReport = async (reportId: string) => {
+    try {
+        return await Api.put(`${adminRoutes.closeJobReport}${reportId}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const createNewPlan = async (planData: { planName: string, amount: number, duration: number }) => {
+    try {
+        return await Api.post(adminRoutes.subscription, planData);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const getSubscriptions = async () => {
+    try {
+        return await Api.get(adminRoutes.subscription);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const editSubscription = async (subId: string, formData: any) => {
+    try {
+        return await Api.put(`${adminRoutes.subscription}/${subId}`, formData);
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
 
 
 export {
+    editSubscription,
+    getSubscriptions,
+    createNewPlan,
+    closeJobReport,
+    closePostReport,
     removeReportedPost,
     removeReportedJob,
     getJobReports,

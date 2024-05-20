@@ -6,7 +6,11 @@ const adminRoutes = {
     getPostReports: '/admin/get-all-postreports',
     getJobReports: '/admin/get-all-jobreports',
     removeReportedJob: '/admin/change-report-status/',
-    removeReportedPost: '/admin/change-status-post/'
+    removeReportedPost: '/admin/change-status-post/',
+    closePostReport: '/admin/delete-post-report/',
+    closeJobReport: '/admin/delete-job-report/',
+
+    subscription:'/admin/subscription',
 }
 
 

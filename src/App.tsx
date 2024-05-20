@@ -11,9 +11,9 @@ import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
 import Test from './Components/User/userCommon/BottomNavbar';
 import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
-import ChatProvider from 'Context/ChatProvider';
 import ReportedJobs from './Pages/admin/ReportedJobs';
 import ReportedPosts from './Pages/admin/ReportedPosts';
+import Subscription from './Pages/admin/Subscription';
 
 
 
@@ -102,6 +102,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='jobs' element={<Jobs />} />
             <Route path='reported-jobs' element={<ReportedJobs />} />
             <Route path='reported-posts' element={<ReportedPosts />} />
+            <Route path='subscription' element={<Subscription />} />
           </Route>
         </Route>
 

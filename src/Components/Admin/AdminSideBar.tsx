@@ -107,7 +107,7 @@ const AdminSideBar: React.FC = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to='/admin/subscriptions' className={`${isActive('/admin/subscriptions') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
+                            <Link to='/admin/subscription' className={`${isActive('/admin/subscription') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <GrPlan />
                                 <span className="ms-3">Subscriptions</span>
                             </Link>
