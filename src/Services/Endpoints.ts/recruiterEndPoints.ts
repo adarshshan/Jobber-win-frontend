@@ -8,6 +8,7 @@ const recruiterRoutes = {
 
     getAllSubPlans: '/recruiter/get-subscriptions',
     paymentSubscription: "/recruiter/payment-subscription",
+    getCurrentSubDetails: "/recruiter/current-subscriptions",
 }
 
 export default recruiterRoutes;

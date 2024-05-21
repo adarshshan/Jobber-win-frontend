@@ -58,8 +58,16 @@ const paymentSubscription = async (item: SubInterface) => {
         console.log(error as Error);
     }
 }
+const getCurrentSubDetails = async () => {
+    try {
+        return await Api.get(recruiterRoutes.getCurrentSubDetails);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
+    getCurrentSubDetails,
     paymentSubscription,
     getAllSubPlans,
     postNewJob,
