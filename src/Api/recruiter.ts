@@ -1,4 +1,5 @@
 import { JobInterface } from "@/components/recruiter/PostJobForm";
+import { SubInterface } from "Components/Admin/SubItem";
 import recruiterRoutes from "Services/Endpoints.ts/recruiterEndPoints";
 import Api from "Services/axios";
 
@@ -41,7 +42,26 @@ const editJobDetails = async (data: JobInterface, item: any) => {
     }
 }
 
+//.....................subscriptions....................
+
+const getAllSubPlans = async () => {
+    try {
+        return await Api.get(recruiterRoutes.getAllSubPlans);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+const paymentSubscription = async (item: SubInterface) => {
+    try {
+        return await Api.post(recruiterRoutes.paymentSubscription, { item })
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
+
 export {
+    paymentSubscription,
+    getAllSubPlans,
     postNewJob,
     getAllJobsOfRecruiter,
     getApplications,
