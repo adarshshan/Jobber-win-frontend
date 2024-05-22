@@ -21,7 +21,6 @@ export interface PostInterface extends Document {
     updatedAt: Date;
 }
 const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => {
-    console.log(userId); console.log('this is the id from the postCArd');
     const [posts, setPosts] = useState<PostInterface[]>();
     const [fetchAgain, setFetchAgain] = useState(false);
 
@@ -43,7 +42,7 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
         }
         fetchPosts();
     }, [userId, fetchAgain])
-    console.log(posts);
+    
     return (
         <>
             <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">

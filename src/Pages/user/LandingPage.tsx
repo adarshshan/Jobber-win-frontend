@@ -3,10 +3,25 @@ import './css/LandingPage.css';
 import JobListingsPage from '../../Components/User/LandingPage/JobListingsPage'
 import LandingPageHeader from '../../Components/User/LandingPage/LandingPageHeader'
 import { motion } from 'framer-motion'
+import { useState } from 'react';
+import { getJobs } from 'Api/user';
+import toast from 'react-hot-toast';
 
-function LandingPage() {
+const LandingPage = () => {
+    const [search, setSearch] = useState('');
+    const [jobs, setJobs] = useState([]);
 
 
+    const handleSearch = async () => {
+        try {
+            const res = await getJobs(search);
+            if (res?.data.success) {
+                setJobs(res.data.data);
+            } else toast.error(res?.data.message);
+        } catch (error) {
+            console.log(error as Error);
+        }
+    }
     return (
         <>
             <LandingPageHeader />
@@ -21,14 +36,22 @@ function LandingPage() {
                                 <input type="text" id="jobTitle" name="jobTitle" placeholder="job title" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
                             </div>
                             <div className="flex-grow mb-4 sm:mb-0 sm:ml-2">
-                                <input type="text" id="location" name="location" placeholder="location" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
+                                <input
+                                    type="text"
+                                    name="location"
+                                    value={search}
+                                    onChange={(e: any) => setSearch(e.target.value)}
+                                    onKeyUp={handleSearch}
+                                    placeholder="location" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
                             </div>
-                            <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 ml-0 sm:ml-2">Search Jobs</button>
+                            <button type="button" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 ml-0 sm:ml-2">Search Jobs</button>
                         </form>
                     </div>
                 </div>
             </div>
-            <JobListingsPage />
+            <JobListingsPage
+                jobs={jobs}
+                setJobs={setJobs} />
             <Footer />
         </>
     )

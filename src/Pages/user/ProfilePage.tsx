@@ -12,7 +12,6 @@ import { changeAbout } from "app/slice/AuthSlice";
 import PhotoScreen from "Components/User/Profile/PhotoScreen";
 import CreatePostScreen from "Components/User/Profile/CreatePostScreen";
 import AddSkillScreen from "Components/User/Profile/AddSkillScreen";
-import { IoMdClose } from "react-icons/io";
 import UpdateScreen from "Components/User/Profile/UpdateScreen";
 
 export interface UserData {

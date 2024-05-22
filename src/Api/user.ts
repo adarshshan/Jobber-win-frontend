@@ -405,8 +405,16 @@ const getSinglePostDetails = async (postId: string) => {
         console.log(error as Error);
     }
 }
+const getJobs = async (search: string) => {
+    try {
+        return await Api.get(`${userRoutes.getJobs}?search=${search}`);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
+    getJobs,
     getSinglePostDetails,
     signup,
     verifyOtp,

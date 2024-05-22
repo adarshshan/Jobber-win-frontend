@@ -33,6 +33,7 @@ const userRoutes = {
     withdrawSendRequest: "/user/withdraw-request/",
 
     getAllJobs: "/user/get-all-jobs",
+    getJobs: "/user/get-jobs",
     getSingleJob: "/user/get-single-jobs/",
     applyJob: "/user/apply-job/",
     saveJobs: "/user/save-job/",
