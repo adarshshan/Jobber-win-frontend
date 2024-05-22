@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Box, FormControl, IconButton, Input, Spinner, Text, useToast } from '@chakra-ui/react'
 import animationData from '../../animations/typing.json'
 import Lottie from 'react-lottie'
@@ -8,14 +8,16 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 import { getSender } from 'config/chatLogics'
 import ScrollableChat from './ScrollableChat'
 import UpdateGroupChatModal from './UpdateGroupChatModal'
-import { getMessages, sendMessages } from 'Api/chat'
+import { getMessages, sendMessages, shareVideoLink } from 'Api/chat'
 import { FaRegSmileWink } from 'react-icons/fa'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { IoSendSharp } from 'react-icons/io5'
+import { MdOutlineVideoCameraFront } from 'react-icons/md'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 const ENDPOINT = 'http://localhost:5000'
-var socket: any, selectedChatCompare: any;
+export var socket: any, selectedChatCompare: any;
 
 interface ISingleChat {
     fetchAgain: boolean;
@@ -29,6 +31,8 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     const [typing, setTyping] = useState(false);
     const [isTyping, setIstyping] = useState(false);
     const [visibleImogy, SetVisibleImogy] = useState(false);
+
+    const navigate = useNavigate();
 
     const defaultOptions = {
         loop: true,
@@ -45,7 +49,9 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
         selectedChat,
         setSelectedChat,
         notification,
-        setNotification, } = ChatState()
+        setNotification,
+        videoLink,
+        again } = ChatState()
 
     useEffect(() => {
         socket = io(ENDPOINT)
@@ -54,6 +60,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
         socket.on("typing", () => setIstyping(true))
         socket.on("stop typing", () => setIstyping(false))
     }, [])
+
 
     const fetchMessages = async () => {
         if (!selectedChat) return;
@@ -83,7 +90,7 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         fetchMessages();
         selectedChatCompare = selectedChat;
-    }, [selectedChat, fetchAgain])
+    }, [selectedChat, fetchAgain, again])
 
     useEffect(() => {
         socket.on("message recieved", (newMessageReceived: any) => {
@@ -98,6 +105,12 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
         })
     })
 
+    useEffect(() => {
+        if (videoLink && videoLink !== undefined) {
+            setMessages([...messages, videoLink]);
+            socket.emit("new message", videoLink);
+        }
+    }, [again])
 
     const sendMessage = async () => {
         try {
@@ -107,7 +120,6 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
                 socket.emit("new message", res.data.data);
                 setMessages([...messages, res.data.data]);
             }
-            console.log(res);
         } catch (error) {
             console.log(error)
             toast({
@@ -148,6 +160,10 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
     const newMsg = (data: any) => {
         socket.emit("new message", data);
     }
+    const handleJoinRoom = useCallback((value: string) => {
+        navigate(`/user/room/${value}`)
+    }, []);
+
     return (
         <>
             {selectedChat ? (
@@ -181,6 +197,8 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
                         ) : (
                             <>
                                 {getSender(userr, selectedChat.users)}
+                                <MdOutlineVideoCameraFront
+                                    onClick={() => handleJoinRoom(userr.name)} />
                             </>
                         )}
                     </Text>
@@ -220,7 +238,6 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
                                 <div>
                                     <Lottie
                                         options={defaultOptions}
-                                        // height={50}
                                         width={70}
                                         style={{ marginBottom: 15, marginLeft: 0 }}
                                     />

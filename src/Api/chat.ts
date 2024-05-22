@@ -65,7 +65,15 @@ const sharePostMessage = async (postId: string, chatId: string) => {
         console.log(error as Error)
     }
 }
+const shareVideoLink = async (chatId: string, shared_link: string) => {
+    try {
+        return await Api.post(messageRoutes.shareVideoLink, { chatId, shared_link });
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 export {
+    shareVideoLink,
     sharePostMessage,
     fetchChat,
     accessChat,

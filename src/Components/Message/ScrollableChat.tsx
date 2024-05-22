@@ -22,7 +22,7 @@ const ScrollableChat: React.FC<IScrollableChatProps> = ({ messages, setFetchAgai
     const [like, setLike] = useState<any>();
 
 
-    const { userr, postId, setPostId, selectedChat, setChats } = ChatState()
+    const { userr, postId, setPostId, selectedChat } = ChatState()
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
@@ -86,9 +86,7 @@ const ScrollableChat: React.FC<IScrollableChatProps> = ({ messages, setFetchAgai
                                 padding: "5px 15px",
                                 maxWidth: "75%",
                                 marginLeft: isSameSenderMargin(messages, m, i, userr._id),
-                                // marginLeft: 33,
                                 marginTop: isSameUser(messages, m, i) ? 3 : 10,
-                                // marginTop: 3,
                             }}>
                                 {m.content}
                                 {m.contentType === 'sharePost' &&
@@ -96,6 +94,12 @@ const ScrollableChat: React.FC<IScrollableChatProps> = ({ messages, setFetchAgai
                                         <img src={m.shared_post?.imageUrl} alt="" />
                                         <p>{m.sender.name} has shared a Post</p>
                                     </div>}
+                                {m.contentType === 'videoCall' && (
+                                    <div className='w-2/3'>
+                                        <p>Click the link below to join the video call</p>
+                                        <a className='text-blue-400' href={m.shared_link} target="_blank" rel="noopener noreferrer">{m.shared_link}</a>
+                                    </div>
+                                )}
                             </span>
                         </div>
                     ))

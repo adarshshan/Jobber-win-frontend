@@ -24,7 +24,6 @@ const Home: React.FC<ITestProps> = () => {
         fetchData();
     }, [])
     useEffect(() => {
-        // Show the button when scrolling down
         const handleScroll = () => {
             if (window.scrollY > 100) {
                 setIsVisible(true);
@@ -35,7 +34,6 @@ const Home: React.FC<ITestProps> = () => {
 
         window.addEventListener('scroll', handleScroll);
 
-        // Cleanup
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -44,7 +42,7 @@ const Home: React.FC<ITestProps> = () => {
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Smooth scrolling
+            behavior: 'smooth'
         });
     };
 

@@ -14,6 +14,7 @@ import { Skeleton } from './@/components/ui/skeleton';
 import ReportedJobs from './Pages/admin/ReportedJobs';
 import ReportedPosts from './Pages/admin/ReportedPosts';
 import Subscription from './Pages/admin/Subscription';
+import RoomPage from './Pages/user/RoomPage';
 
 
 
@@ -74,6 +75,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='my-network' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><MyNetworkPage /></Suspense>} />
             <Route path='find-jobs' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><FindJobPage /></Suspense>} />
             <Route path='for-test' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><Test /></Suspense>} />
+            <Route path='room/:roomId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><RoomPage /></Suspense>} />
             <Route path='job-details/:jobId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><JobDetails /></Suspense>} />
             <Route path='message' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ChatPage /></Suspense>} />
           </Route>
