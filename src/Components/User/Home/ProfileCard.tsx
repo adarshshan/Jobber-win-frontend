@@ -1,5 +1,5 @@
 import { UserData } from '@/components/user/ProfilePage';
-import { Button, Divider, Image } from '@nextui-org/react'
+import { Divider, Image } from '@nextui-org/react'
 import React, { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -42,7 +42,6 @@ const ProfileCard: React.FC<IProfilCardProps> = ({ userProfile }) => {
                         alt="NextUI hero Image"
                         src='https://images.template.net/wp-content/uploads/2014/11/Natural-Facebook-Cover-Photo.jpg'
                     />
-                    {/* <img ref={childRef} className="absolute top-[10px] ms-2 left-[95px] b-10 w-32 h-32 sm:w-24 sm:h-24 rounded-full" src="https://avatars.githubusercontent.com/u/137256030?v=4" alt="" /> */}
                     <img ref={childRef} className="absolute top-[10px] ms-2 left-[95px] b-10 w-32 h-32 sm:w-24 sm:h-24 rounded-full" src={userProfile?.profile_picture} alt="\\profile image" />
 
                 </div>

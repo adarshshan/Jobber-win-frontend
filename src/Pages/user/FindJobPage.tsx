@@ -1,12 +1,8 @@
 
-import { getAllSavedJobs } from 'Api/user'
 import AllJobs from 'Components/User/FindJobPage/AllJobs'
 import AppliedJobScreen from 'Components/User/FindJobPage/AppliedJobScreen'
 import React, { useState } from 'react'
-import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-import { HiDotsHorizontal } from 'react-icons/hi'
 import SavedJobScreen from 'Components/User/FindJobPage/SavedJobScreen'
 
 interface IFindJobPageProps {
@@ -23,7 +19,7 @@ const FindJobPage: React.FC<IFindJobPageProps> = () => {
         setShowApplied(false);
         setShowAllJobs(false);
     }
-    console.log(savedJobs);
+    
     return (
         <>
             <div className="grid grid-cols-12 container py-3 gap-5 sm:px-16 sm:min-h-screen bg-slate-100">

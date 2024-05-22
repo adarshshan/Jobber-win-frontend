@@ -16,9 +16,7 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose,postId 
     const navigate = useNavigate()
 
     const {
-        selectedChat,
         setSelectedChat,
-        userr,
         chats,
         setChats,
         setPostId
@@ -37,6 +35,7 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose,postId 
         }
         fetchSuggession()
     }, [])
+
     const handleSearchUsers = async () => {
         try {
             if (search.length) {
@@ -49,6 +48,7 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose,postId 
             console.log(error as Error);
         }
     }
+
     const handleAccessChat = async (id: string,postId:string) => {
         try {
             const res = await accessChat(id);
@@ -64,6 +64,7 @@ const ShareModalContent: React.FC<IShareModalConitentProps> = ({ onClose,postId 
             console.log(error as Error);
         }
     }
+    
     return (
         <div>
             <hr />

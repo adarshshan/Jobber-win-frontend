@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux"
 import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../../../app/store";
 import { useEffect, useState } from "react";
@@ -18,7 +17,6 @@ const UserLoggedIn = () => {
         const fetchData = async () => {
             try {
                 const result = await getProfile();
-                console.log(result); console.log('data from userLoggedIn');
                 if (result?.data.isBlocked) setData(true);
             } catch (error) {
                 console.log(error);

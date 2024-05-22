@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { MdModeEdit } from 'react-icons/md'
 import MenuTabs from './MenuTabs'
 import { Divider } from '@nextui-org/react'
 import PostListItem from './PostListItem'
@@ -32,7 +31,6 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
                     if (result?.data.success) {
                         let posts = result.data.data.filter((item: PostInterface) => !item.isDeleted);
                         setPosts(posts);
-                        // setPosts(result.data.data);
                     }
                 }
 

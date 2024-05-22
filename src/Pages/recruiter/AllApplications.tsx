@@ -45,7 +45,7 @@ const AllApplications: React.FC<IAllApplicationsProps> = () => {
         const data = () => applications?.filter((item) => item.status === 'Rejected');
         setRejected(data);
     }
-    console.log(singleDetails); console.log('this is the single items');
+    
     return (
         <>
             <h1 className='text-xl uppercase ms-3'>All Applications</h1>

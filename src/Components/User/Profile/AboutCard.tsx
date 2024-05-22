@@ -10,7 +10,9 @@ interface IAboutCardProps {
 }
 const AboutCard: React.FC<IAboutCardProps> = ({ setAboutScreen, userProfile }) => {
     const [data, setData] = useState<string>();
+    
     const { about } = useAppSelector((state) => state.auth)
+
     useEffect(() => {
         const getP = async () => {
             const response = await getProfile();
@@ -18,6 +20,7 @@ const AboutCard: React.FC<IAboutCardProps> = ({ setAboutScreen, userProfile }) =
         }
         getP();
     }, [about, userProfile])
+
     return (
         <>
             <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">

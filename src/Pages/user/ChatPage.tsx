@@ -4,7 +4,7 @@ import Mychats from 'Components/Message/Mychats';
 import SideDrawer from 'Components/Message/SideDrawer';
 import { ChatState } from 'Context/ChatProvider';
 import userRoutes from 'Services/Endpoints.ts/userEndPoints';
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 
 const ChatPage = () => {
     const [fetchAgain, setFetchAgain] = useState(false);

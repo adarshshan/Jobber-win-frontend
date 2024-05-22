@@ -1,4 +1,4 @@
-import { Button, Divider, User } from '@nextui-org/react'
+import { Divider } from '@nextui-org/react'
 import React, { useEffect, useState } from 'react'
 import SingleUser from './SingleUser'
 import { UserData } from '@/components/user/ProfilePage';

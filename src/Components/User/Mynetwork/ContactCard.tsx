@@ -1,7 +1,7 @@
 import { UserData } from '@/components/user/ProfilePage';
-import { Button, Divider, Image } from '@nextui-org/react'
-import { cancelRequest, getSendRequests, sendRequest } from 'Api/user';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Divider, Image } from '@nextui-org/react'
+import { cancelRequest, sendRequest } from 'Api/user';
+import React, { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import {
     AlertDialog,
@@ -55,7 +55,6 @@ const ContactCard: React.FC<IContactCardProps> = ({ item, sendReq, setConfirmFri
         try {
             const result = await sendRequest(receiverId);
             if (result) setConfirmFriend(!confirmFriend);
-            console.log(result);
         } catch (error) {
             console.log(error as Error);
         }
@@ -64,7 +63,6 @@ const ContactCard: React.FC<IContactCardProps> = ({ item, sendReq, setConfirmFri
         try {
             const res = await cancelRequest(id);
             if (res) setConfirmFriend(!confirmFriend);
-            console.log(res);
         } catch (error) {
             console.log(error);
         }

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { saveUser, setUserCredential } from '../../app/slice/AuthSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../app/store';
-import { Link } from 'react-router-dom';
 
 const OTPComponent: React.FC = () => {
     const [otp, setOTP] = useState<string>('');

@@ -93,7 +93,6 @@ const PostJobForm: React.FC<IPostJobFormProps> = () => {
                         toast.success(result.data.message);
                         navigate('/recruiter/all-jobs');
                     } else toast.error(result?.data.message);
-                    console.log(result); console.log('these are the final result.');
                 } catch (error) {
                     console.log(error);
                 }

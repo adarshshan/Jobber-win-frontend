@@ -39,6 +39,7 @@ export interface IPostInterface {
 
 const MiddleSide: React.FC<IMiddleSideProps> = ({userProfile}) => {
     const [dataSource, setDataSource] = useState<IPostInterface[]>();
+    
     useEffect(() => {
         const fetchData = async () => {
             try {

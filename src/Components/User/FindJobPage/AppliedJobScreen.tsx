@@ -35,7 +35,7 @@ const AppliedJobScreen: React.FC<IAppliedJobScreen> = () => {
         const data = () => applications?.filter((item) => item.status === 'Rejected');
         setRejected(data);
     }
-    console.log(applications); console.log('this is the final results');
+    
     return (
         <>
             <div className="text-2xl font-semibold text-blue-400 pb-5">

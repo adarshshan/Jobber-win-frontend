@@ -24,7 +24,7 @@ const AllJobsComponent: React.FC<IAllJobsComponentProps> = () => {
         }
         fetchAllJobs();
     }, [fetchAgain])
-    console.log(jobs);
+    
     return (
         <>
             <div className="w-full shadow-lg">

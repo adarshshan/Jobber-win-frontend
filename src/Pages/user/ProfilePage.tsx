@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { getAllPosts, getProfile } from "../../Api/user";
+import { getProfile } from "../../Api/user";
 import ProfileCard from "Components/User/Profile/ProfileCard";
 import AboutCard from "Components/User/Profile/AboutCard";
 import PostCard from "Components/User/Profile/PostCard";

@@ -5,10 +5,8 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
-import { BiDotsHorizontalRounded } from "react-icons/bi";
 import JobApplyForm from 'Components/User/FindJobPage/JobApplyForm';
-import { FaRegSave } from 'react-icons/fa';
-import { MdOutlineReport, MdOutlineReportGmailerrorred } from 'react-icons/md';
+import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 import { IoMdArrowBack } from 'react-icons/io';
 import { useAppSelector } from 'app/store';
 import { useDispatch } from 'react-redux';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import JobListing from './JobListing';
 import JobSearchBar from './JobSearchBar';
 import { getJobs } from 'Api/user';

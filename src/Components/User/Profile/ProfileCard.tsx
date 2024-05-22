@@ -22,7 +22,6 @@ const ProfileCard: React.FC<IProfileCardProps> = ({ data, setAddProfilescreen, p
                         alt="NextUI hero Image"
                         src={data?.cover_image ? data.cover_image : 'https://images.template.net/wp-content/uploads/2014/11/Natural-Facebook-Cover-Photo.jpg'}
                     />
-                    {/* <img onClick={() => setAddProfilescreen(true)} className="absolute top-[100px] left-16 b-10 rounded-full w-[150px] h-[150px]" src={pic} alt="Pic will be loaded" /> */}
                     <Image
                         width={150}
                         height={150}

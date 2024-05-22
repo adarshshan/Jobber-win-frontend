@@ -25,7 +25,6 @@ const ReportedPosts: React.FC<IReportedPostsProps> = () => {
         }
         fetchReports();
     }, [fetchAgain])
-    console.log(report); console.log('this is the fetched data...')
     return (
         <div>
             <section className="container px-4 mx-auto">

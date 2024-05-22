@@ -10,11 +10,10 @@ const SubItem: React.FC<ISubItemProps> = ({ item }) => {
 
     const makePayment = async () => {
         const stripe = await loadStripe('pk_test_51PIV6BSA3RmngPpVthkmR3p45HTyw0UADGi1Qx4Q0GA9U4SdnLVOmx7tMXuWkkjWlXzm7IOJ3N02v3Gj5J3Tpacn00PV6m7lNU');
-        const res = await paymentSubscription(item); console.log(res); console.log('result form frontend');
+        const res = await paymentSubscription(item);
         const result = stripe?.redirectToCheckout({
             sessionId: res?.data.id
         })
-        console.log('this is the rseult'); console.log(result);
 
     };
     return (

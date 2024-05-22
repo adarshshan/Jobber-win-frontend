@@ -1,4 +1,4 @@
-import { getAllSubPlans, getCurrentSubDetails } from 'Api/recruiter'
+import { getAllSubPlans } from 'Api/recruiter'
 import { SubInterface } from 'Components/Admin/SubItem'
 import SubItem from 'Components/Recruiter/SubItem'
 import SubModal from 'Components/Recruiter/SubModal'

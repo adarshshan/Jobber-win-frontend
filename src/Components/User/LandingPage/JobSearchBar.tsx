@@ -7,7 +7,7 @@ interface IJobSearchBarProps {
 }
 const JobSearchBar: React.FC<IJobSearchBarProps> = ({ setJobs }) => {
     const [search, setSearch] = useState('');
-    const handleSearch = async () => {
+    const handleSearch = async (search: string) => {
         try {
             const res = await getJobs(search);
             if (res?.data.success) {
@@ -34,7 +34,7 @@ const JobSearchBar: React.FC<IJobSearchBarProps> = ({ setJobs }) => {
                             id="location-search"
                             value={search}
                             onChange={(e: any) => setSearch(e.target.value)}
-                            onKeyUp={handleSearch}
+                            onKeyUp={() => handleSearch(search)}
                             className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search for city or address" required />
                         <button type="submit" className="absolute top-0 end-0 h-full p-2.5 text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -47,13 +47,13 @@ const JobSearchBar: React.FC<IJobSearchBarProps> = ({ setJobs }) => {
                 <div className="flex mt-5 ms-7 mb-5">
                     <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                         <li>
-                            <a href="#" className="text-gray-900 dark:text-white hover:underline" aria-current="page">Full-time</a>
+                            <span onClick={() => handleSearch('full-time')} className="text-gray-900 dark:text-white hover:underline" aria-current="page">Full-time</span>
                         </li>
                         <li>
-                            <a href="#" className="text-gray-900 dark:text-white hover:underline">Part-time</a>
+                            <span onClick={() => handleSearch('half-time')} className="text-gray-900 dark:text-white hover:underline">Part-time</span>
                         </li>
                         <li>
-                            <a href="#" className="text-gray-900 dark:text-white hover:underline">Remote</a>
+                            <span onClick={() => handleSearch('remote')} className="text-gray-900 dark:text-white hover:underline">Remote</span>
                         </li>
                     </ul>
                 </div>

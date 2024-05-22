@@ -5,7 +5,6 @@ import FriendSuggession from 'Components/User/Profile/FriendSuggession';
 import { getProfile } from 'Api/user';
 import { UserData } from './ProfilePage';
 import { BiUpArrowCircle } from 'react-icons/bi';
-import BottomNavbar from '../../Components/User/userCommon/BottomNavbar';
 interface ITestProps {
 
 }

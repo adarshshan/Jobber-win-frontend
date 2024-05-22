@@ -1,13 +1,11 @@
 
 import { addToFriend, getAllFriends, getAllRequests, getAllUsers, getSendRequests, removeRequest, unFriend } from 'Api/user';
-import ProfileCard from 'Components/User/Home/ProfileCard';
 import ContactCard from 'Components/User/Mynetwork/ContactCard';
 import LeftSideBar from 'Components/User/Mynetwork/LeftSideBar';
 import React, { useEffect, useState } from 'react'
 import { UserData } from './ProfilePage';
 import { FaCheck } from 'react-icons/fa6';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { useSearchHook } from '../../utils/costomHooks'
 import toast from 'react-hot-toast';
 import {
     AlertDialog,
@@ -47,6 +45,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
     useEffect(() => {
         dispatch(setSearchText(''))
     }, [])
+
     useEffect(() => {
         const fetchData = async () => {
             const res = await getAllUsers(search);
@@ -56,6 +55,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
         }
         fetchData();
     }, [confirmFriend, search])
+
     useEffect(() => {
         const fetchRequests = async () => {
             try {
@@ -79,6 +79,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
         fetchRequests();
         fetchFriends();
     }, [confirmFriend]);
+
     useEffect(() => {
         const fetchSentRequest = async () => {
             try {
@@ -92,6 +93,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
         }
         fetchSentRequest()
     }, [confirmFriend])
+
     const handleAddFriend = async (id: string) => {
         try {
             const res = await addToFriend(id);
@@ -100,6 +102,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
             console.log(error as Error);
         }
     }
+
     const handleUnfriend = async (id: string) => {
         try {
             const res = await unFriend(id);
@@ -108,6 +111,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
             console.log(error as Error);
         }
     }
+    
     const handleRemoveRequest = async (id: string) => {
         try {
             const res = await removeRequest(id);

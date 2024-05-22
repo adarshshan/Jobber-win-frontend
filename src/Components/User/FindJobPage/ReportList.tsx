@@ -1,5 +1,5 @@
 import { ListItem, OrderedList } from '@chakra-ui/react'
-import { reportJob, reportPost } from 'Api/user';
+import { reportJob } from 'Api/user';
 import { jobReportReasons } from 'constants/commonConstants';
 import React from 'react'
 import toast from 'react-hot-toast';

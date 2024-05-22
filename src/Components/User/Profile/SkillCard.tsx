@@ -28,6 +28,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
         }
         fetchData();
     });
+
     const handleDeleteSkill = async (skill: string) => {
         try {
             const result = await deleteSkill(userId, skill);
@@ -38,6 +39,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
             toast.error('somthing went wrong while deleting the skill!');
         }
     }
+    
     return (
         <>
             <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">

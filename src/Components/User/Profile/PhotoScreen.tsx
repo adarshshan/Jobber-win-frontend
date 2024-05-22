@@ -30,8 +30,7 @@ const PhotoScreen: React.FC<IPhotoScreenProps> = ({ setAddProfilescreen, setPic,
                 body: data,
             })
                 .then((res) => res.json())
-                .then((data) => {
-                    // console.log(data.url.toString());                                        
+                .then((data) => {                                 
                     setPic(data.url.toString());
                     if (userProfile) setProfilePic(data.url.toString(), userProfile?._id).then((result) =>{
                         console.log(result);console.log('this is the image data');
@@ -46,14 +45,15 @@ const PhotoScreen: React.FC<IPhotoScreenProps> = ({ setAddProfilescreen, setPic,
             setPicMessage('please select a valid image.');
         }
     }
+
     const handleDeleteProfilePic = async () => {
         try {
             const result = await removeProfilePic(userProfile?._id);
-            console.log(result); console.log('final result from jsx');
         } catch (error) {
             console.log(error as Error);
         }
     }
+    
     return (
         <>
             <div className="w-[700px] h-[500px] bg-gray-900 shadow-2xl rounded-2xl absolute top-[100px] left-[300px] text-white">
