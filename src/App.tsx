@@ -15,6 +15,7 @@ import ReportedJobs from './Pages/admin/ReportedJobs';
 import ReportedPosts from './Pages/admin/ReportedPosts';
 import Subscription from './Pages/admin/Subscription';
 import RoomPage from './Pages/user/RoomPage';
+import Dashboard from './Pages/admin/Dashboard';
 
 
 
@@ -106,6 +107,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
 
         <Route path="/admin" element={<Admin />}>
           <Route path='' element={<AdminLoggedIn />}>
+            <Route path='dashboard' element={<Dashboard />} />
             <Route path='users' element={<Users />} />
             <Route path='jobs' element={<Jobs />} />
             <Route path='reported-jobs' element={<ReportedJobs />} />

@@ -64,7 +64,7 @@ const RoomPage: React.FC = () => {
     }
 
     return (
-        <div className='min-h-screen p-20'>
+        <div className=''>
             <div className='px-20' ref={myMeeting} />
         </div>
     )

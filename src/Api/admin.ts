@@ -122,9 +122,17 @@ const DeactivateSubscription = async (subId: string) => {
         console.log(error as Error);
     }
 }
+const getBarChart = async () => {
+    try {
+        return await Api.get(adminRoutes.getBarChart);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 
 export {
+    getBarChart,
     DeactivateSubscription,
     ActivateSubscription,
     deleteSubscription,

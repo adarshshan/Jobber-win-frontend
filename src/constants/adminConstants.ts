@@ -3,3 +3,8 @@ export const ADMIN_LOGIN_SUCCESS = "ADMIN_LOGIN_SUCCESS";
 export const ADMIN_LOGIN_FAIL = "ADMIN_LOGIN_FAIL";
 export const ADMIN_LOGOUT = "ADMIN_LOGOUT";
 
+export const APPLICATIONS = {
+    A: 'Daily job Applied by the job seekers',
+    B: 'Monthly job Applied by the job seekers',
+    C: 'Yearly job Applied by the job seekers',
+}

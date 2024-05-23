@@ -12,7 +12,8 @@ const adminRoutes = {
 
     subscription: '/admin/subscription',
     ActivateSubscription: '/admin/subscription/activate/',
-    DeactivateSubscription: '/admin/subscription/deactivate/'
+    DeactivateSubscription: '/admin/subscription/deactivate/',
+    getBarChart: '/admin/dashboard/bar'
 }
 
 

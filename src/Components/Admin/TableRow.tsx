@@ -4,6 +4,8 @@ import React from 'react'
 import toast from 'react-hot-toast';
 import { MdRemoveCircle } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import ViewJobModal from './ViewJobModal';
+import PostViewModal from './ViewPostModal';
 
 
 interface ITalbeRowProps {
@@ -144,9 +146,13 @@ const TableRow: React.FC<ITalbeRowProps> = ({ item, index, setFetchAgain, fetchA
             </td>
 
             {item.postId ? (
-                <td className="px-4 py-4 text-sm text-blue-500 dark:text-gray-300 whitespace-nowrap cursor-pointer">View post</td>
+                <PostViewModal postId={item.postId._id}>
+                    <td className="px-4 py-4 text-sm text-blue-500 dark:text-gray-300 whitespace-nowrap cursor-pointer">View post</td>
+                </PostViewModal>
             ) : (
-                <td className="px-4 py-4 text-sm text-blue-500 dark:text-gray-300 whitespace-nowrap cursor-pointer">View job</td>
+                <ViewJobModal job={[item?.jobId.title, item?.jobId.company_name, item?.jobId.job_img, item?.jobId.job_type, item?.jobId.description, item?.jobId.experience, item?.jobId.location, item?.skills, item?.jobId.industry, item?.jobId.recruiterId.name]}>
+                    <td className="px-4 py-4 text-sm text-blue-500 dark:text-gray-300 whitespace-nowrap cursor-pointer">View job</td>
+                </ViewJobModal>
             )}
 
             <td className="px-4 py-4 text-sm text-blue-500 dark:text-gray-300 whitespace-nowrap cursor-pointer">{item.reason}</td>
