@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { blockUser, getAllUsers } from '../../Api/admin';
 import Swal from 'sweetalert2';
 import { Button, Pagination, Tooltip } from '@nextui-org/react';
+import toast from 'react-hot-toast';
 
 interface UserData {
   _id: string;
@@ -40,15 +41,16 @@ const UsersTable: React.FC = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           blockUser(id).then((result) => {
-            console.log('this is REsult');
-            console.log(result?.data.success)
-            if (result?.data.success) setBlock(!block);
+            if (result?.data.success) {
+              setBlock(!block);
+              Swal.fire({
+                title: "success!",
+                text: "",
+                icon: "success"
+              });
+            } else toast.error(result?.data.message);
           });
-          Swal.fire({
-            title: "success!",
-            text: "",
-            icon: "success"
-          });
+
         }
       });
     } catch (error) {

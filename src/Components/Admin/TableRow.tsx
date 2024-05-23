@@ -171,9 +171,9 @@ const TableRow: React.FC<ITalbeRowProps> = ({ item, index, setFetchAgain, fetchA
                         )}
 
 
-                        <button className=" text-red-500">
+                        {/* <button className=" text-red-500">
                             block user
-                        </button>
+                        </button> */}
                     </div>
                 </td>
             ) : (
@@ -190,9 +190,9 @@ const TableRow: React.FC<ITalbeRowProps> = ({ item, index, setFetchAgain, fetchA
                         )}
 
 
-                        <button className=" text-red-500">
+                        {/* <button className=" text-red-500">
                             block recruiter
-                        </button>
+                        </button> */}
                     </div>
                 </td>
             )}

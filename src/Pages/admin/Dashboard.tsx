@@ -73,7 +73,7 @@ const Dashboard = () => {
 
     return (
         <div>
-            <div className="flex justify-center p-5 text-xl">
+            <div className="flex justify-center p-5 text-2xl text-yellow-600 ">
                 {active}
             </div>
             <BarCharts data={data} />
@@ -84,9 +84,9 @@ const Dashboard = () => {
                     <h1 className={`${active === APPLICATIONS.C ? 'text-white' : 'text-black'}`} onClick={() => chartSelector(yearData, APPLICATIONS.C)}>Year</h1>
                 </div>
             </div>
-            <div className="w-full flex justify-between gap-2 bg-gray-100">
+            <div className="w-full flex justify-center gap-2 bg-gray-100 mt-8">
                 <div>
-                    <div className="flex justify-center text-xl">
+                    <div className="flex justify-center text-2xl text-yellow-600">
                         {acitveOne}
                     </div>
                     <LinChart data={jobData} />
@@ -99,7 +99,7 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <MyPieChart />
+                {/* <MyPieChart /> */}
             </div>
         </div>
     )

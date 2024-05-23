@@ -58,7 +58,7 @@ const AdminSideBar: React.FC = () => {
                                 <span className="ms-3">All Users</span>
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to='/admin/jobs' className={`${isActive('/admin/jobs') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <FaList />
                                 <span className="ms-3">All Jobs</span>
@@ -77,7 +77,7 @@ const AdminSideBar: React.FC = () => {
                                 </svg>
                                 <span className="ms-3">Recruiters</span>
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link to='/admin/reported-jobs' className={`${isActive('/admin/reported-jobs') && 'bg-gray-700 text-white'} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group`}>
                                 <svg

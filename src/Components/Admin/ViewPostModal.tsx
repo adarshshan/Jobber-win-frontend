@@ -35,7 +35,7 @@ const PostViewModal: React.FC<IBasicUsageProps> = ({ children, postId }) => {
             console.log(error as Error);
         }
     }
-    console.log(postId);console.log('thisi sthe props');
+    
     return (
         <>
             <Button onClick={()=>{

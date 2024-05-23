@@ -1,5 +1,6 @@
 import { getPostReports } from 'Api/admin';
 import TableRow from 'Components/Admin/TableRow';
+import TableRow2 from 'Components/Admin/TableRowTwo';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 
@@ -17,6 +18,7 @@ const ReportedPosts: React.FC<IReportedPostsProps> = () => {
             try {
                 const res = await getPostReports();
                 if (res?.data.success) {
+                    console.log(res.data.data); console.log('this is the esultldkfdf');
                     setReport(res.data.data);
                 } else toast.error(res?.data.message);
             } catch (error) {
@@ -25,6 +27,7 @@ const ReportedPosts: React.FC<IReportedPostsProps> = () => {
         }
         fetchReports();
     }, [fetchAgain])
+    console.log(report); console.log('this is the resultttttt');
     return (
         <div>
             <section className="container px-4 mx-auto">
@@ -66,7 +69,7 @@ const ReportedPosts: React.FC<IReportedPostsProps> = () => {
                                     <tbody className="bg-white">
                                         {report && report.length ? (
                                             report.map((item, index) => (
-                                                <TableRow
+                                                <TableRow2
                                                     key={item._id}
                                                     index={index}
                                                     fetchAgain={fetchAgain}
