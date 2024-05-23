@@ -65,8 +65,17 @@ const getCurrentSubDetails = async () => {
         console.log(error as Error);
     }
 }
+//graph
+const getGraphData = async () => {
+    try {
+        return await Api.get(recruiterRoutes.getGraphData);
+    } catch (error) {
+        console.log(error as Error);
+    }
+}
 
 export {
+    getGraphData,
     getCurrentSubDetails,
     paymentSubscription,
     getAllSubPlans,
