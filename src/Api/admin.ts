@@ -129,9 +129,17 @@ const getBarChart = async () => {
         console.log(error as Error);
     }
 }
+const getLineChart = async () => {
+    try {
+        return await Api.get(adminRoutes.getLineChart);
+    } catch (error) {
+        console.log(error as Error)
+    }
+}
 
 
 export {
+    getLineChart,
     getBarChart,
     DeactivateSubscription,
     ActivateSubscription,

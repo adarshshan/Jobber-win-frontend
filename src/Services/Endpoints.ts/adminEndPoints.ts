@@ -13,7 +13,8 @@ const adminRoutes = {
     subscription: '/admin/subscription',
     ActivateSubscription: '/admin/subscription/activate/',
     DeactivateSubscription: '/admin/subscription/deactivate/',
-    getBarChart: '/admin/dashboard/bar'
+    getBarChart: '/admin/dashboard/bar',
+    getLineChart: '/admin/dashboard/line',
 }
 
 

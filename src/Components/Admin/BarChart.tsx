@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 interface DataItem {
     name: string;
-    pv: number;
+    count: number;
 }
 
 interface IBarChartsProps{
@@ -33,7 +33,7 @@ const BarCharts: React.FC<IBarChartsProps> = ({data}) => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="pv" fill="#8884d8" background={{ fill: '#eee' }} />
+                <Bar dataKey="count" fill="#8884d8" background={{ fill: '#eee' }} />
             </BarChart>
         </ResponsiveContainer>
     );

@@ -8,3 +8,8 @@ export const APPLICATIONS = {
     B: 'Monthly job Applied by the job seekers',
     C: 'Yearly job Applied by the job seekers',
 }
+export const POSTEDJOBS = {
+    A: 'Daily Posted Jobs',
+    B: 'Monthly Posted Jobs',
+    C: 'Yearly Posted Jobs',
+}
