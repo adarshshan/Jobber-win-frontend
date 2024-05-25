@@ -1,7 +1,7 @@
 import { ListItem, OrderedList } from '@chakra-ui/react'
 import { reportPost } from 'Api/user';
 import { postReportReason } from 'constants/commonConstants';
-import React from 'react'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
@@ -10,6 +10,8 @@ interface IReportListProps {
     onClose: () => void;
 }
 const ReportList: React.FC<IReportListProps> = ({ postId, onClose }) => {
+    const [reason, setReason] = useState('');
+    
     const triggerReport = async (reason: string) => {
         try {
             const res = await reportPost(reason, postId);
@@ -45,6 +47,15 @@ const ReportList: React.FC<IReportListProps> = ({ postId, onClose }) => {
                     <ListItem onClick={() => triggerReport(postReportReason.M)} className='hover:bg-black hover:text-white'>{postReportReason.M}</ListItem>
                     <ListItem onClick={() => triggerReport(postReportReason.N)} className='hover:bg-black hover:text-white'>{postReportReason.N}</ListItem>
                 </OrderedList>
+                <input
+                    value={reason}
+                    onChange={(e: any) => setReason(e.target.value)}
+                    onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+                        if (event.key === 'Enter') triggerReport(reason);
+                    }}
+                    type="text"
+                    placeholder='Other reason'
+                    className='p-2 w-full bg-gray-50 mt-3 mb-3' />
             </div>
         </>
     )

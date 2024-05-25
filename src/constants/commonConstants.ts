@@ -23,3 +23,5 @@ export const jobReportReasons = {
     B: 'I think it`s discriminary or offensive',
     C: 'I think something is brocken or incorrect.'
 }
+
+export const COLORS = { A: 'A', B: 'B', C: 'C', D: 'D', E: 'E' };
