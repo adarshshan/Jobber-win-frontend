@@ -41,6 +41,7 @@ const PageNotFound = lazy(() => import('./Components/Common/PageNotFound'));
 const SubscriptionPage = lazy(() => import('./Pages/recruiter/SubscriptionPage'));
 const Success = lazy(() => import('./Pages/recruiter/Success'));
 const Cancel = lazy(() => import('./Pages/recruiter/Cancel'));
+const NotificationPage = lazy(() => import('./Pages/user/NotificationPage'))
 
 
 interface IAppProps {
@@ -79,6 +80,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
             <Route path='room/:roomId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><RoomPage /></Suspense>} />
             <Route path='job-details/:jobId' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><JobDetails /></Suspense>} />
             <Route path='message' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><ChatPage /></Suspense>} />
+            <Route path='notifications' element={<Suspense fallback={<Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />}><NotificationPage /></Suspense>} />
           </Route>
         </Route>
 

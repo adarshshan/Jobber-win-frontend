@@ -8,7 +8,7 @@ interface IMiddleCreatePostProps {
 const MiddleCreatePost: React.FC<IMiddleCreatePostProps> = ({ userProfile }) => {
     return (
         <>
-            <div className="w-full rounded-lg border shadow-lg mb-3 min-h-[50px]">
+            <div className="w-full rounded-lg border shadow-lg mb-3 min-h-[50px] bg-white">
                 <div className="flex">
                     <div className='w-2/12 p-2'>
                         <Link to='/user/profile'>

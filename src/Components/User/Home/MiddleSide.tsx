@@ -53,7 +53,7 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({userProfile}) => {
     }, [])
     return (
         <>
-            <div className="sm:col-span-6 shadow-lg min-h-[100px] rounded-lg bg-transparent">
+            <div className="md:col-span-6 shadow-lg min-h-[100px] rounded-lg bg-transparent">
                 <MiddleCreatePost userProfile={userProfile} />
                 <InfiniteScroll
                     dataLength={dataSource?.length ?? 0}

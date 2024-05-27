@@ -7,24 +7,64 @@ import { Link } from 'react-router-dom';
 import { changeStatus } from 'Api/recruiter';
 import toast from 'react-hot-toast';
 import { MdDoNotDisturbAlt, MdOutlineVerified } from 'react-icons/md';
+import axios from 'axios';
+import { useAppSelector } from 'app/store';
 
 interface IApplicationDetailsProps {
     singleDetails: any;
 }
 const ApplicationDetails: React.FC<IApplicationDetailsProps> = ({ singleDetails }) => {
 
+    const { userData } = useAppSelector((state) => state.auth);
+    
+
     const statusChange = async (status: string, applicationId: string) => {
+        console.log('this is invokking...............')
         try {
             const res = await changeStatus(status, applicationId);
             if (res?.data.success) {
                 toast.success('applicant ' + status);
                 console.log(res.data.data);
+
+                const projectId = 'jobberwin-92f50';
+                const url = `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`;
+
+                console.log(url); console.log('this is reached here...');
+
+                const data = {
+                    message: {
+                        token: 'db16TKUHptp3ZrfYXWpJ1m:APA91bEzjwVZ64v2teuhEtt9N-MaBcllZR05OemlRZOU4u-yh79PIKK-K3Br2o06bKvrn9AViAJo6mspJg89QwFyOLHXDLiK1_sJ4jJDvHN1Z-pkmfaMeE5SLbRzgoTNZEflFD6YyAyo',
+                        notification: {
+                            title: 'Background Message Title',
+                            body: 'Background message body'
+                        },
+                        webpush: {
+                            fcm_options: {
+                                link: 'https://dummypage.com'
+                            }
+                        }
+                    }
+                };
+
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer jobberwin-92f50.firebaseapp.com`
+                };
+
+                axios.post(url, data, { headers })
+                    .then(response => {
+                        console.log('Message sent successfully:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error sending message:', error.response ? error.response.data : error.message);
+                    });
             } else toast.error(res?.data.message);
             console.log(res);
         } catch (error) {
             console.log(error as Error);
         }
     }
+
     return (
         <>
             <div className="col-span-6  min-h-[100px]">

@@ -9,7 +9,7 @@ const LeftSide: React.FC<ILeftSideProps> = ({ userProfile }) => {
 
     return (
         <>
-            <div className="sm:col-span-3 shadow-lg text-lg min-h-[100px] bg-transparent rounded-lg">
+            <div className="md:col-span-3 text-lg min-h-[100px] bg-transparent rounded-lg">
                 <ProfileCard userProfile={userProfile} />
             </div>
         </>

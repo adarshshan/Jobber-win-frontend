@@ -100,7 +100,7 @@ function Header() {
               <span className="sr-only">Open user menu</span>
               <Avatar
                 radius="full"
-                src={user ? user.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
+                src={user ? user?.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
               />
             </button>
             {/* Dropdown menu */}
@@ -109,18 +109,18 @@ function Header() {
                 <Badge content="" color="success" shape="circle" placement="bottom-right">
                   <Avatar
                     radius="full"
-                    src={user ? user.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
+                    src={user ? user?.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
                   />
                 </Badge>
                 <div className='ms-3'>
-                  <span className="block text-sm text-gray-900 dark:text-white">{user ? user.name : 'user'}</span>
-                  <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user ? user.email : ''}</span>
+                  <span className="block text-sm text-gray-900 dark:text-white">{user ? user?.name : 'user'}</span>
+                  <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user ? user?.email : ''}</span>
                 </div>
 
               </Link>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  {user.role === 'recruiter' && <Link to='/recruiter' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                  {user?.role === 'recruiter' && <Link to='/recruiter' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                     Go to Recruiter Dashboard
                   </Link>}
 

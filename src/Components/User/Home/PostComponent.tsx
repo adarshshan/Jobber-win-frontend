@@ -99,8 +99,8 @@ const PostComponent: React.FC<IPostComponentProps> = ({ item, userProfile }) => 
 
     return (
         <>
-            <main className="h-full w-full bg-transparent flex items-center justify-center shadow-lg rounded-xl">
-                <div className="border max-w-screen-md w-full bg-transparent mt-6 rounded-2xl p-4">
+            <main className="h-full w-full flex items-center justify-center shadow-lg rounded-xl bg-white mt-4">
+                <div className="border max-w-screen-md w-full mt-6 rounded-2xl p-4">
                     <div className="flex items-center justify-between">
                         <div className="gap-3.5 flex items-center">
                             <img

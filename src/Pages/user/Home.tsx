@@ -49,12 +49,12 @@ const Home: React.FC<ITestProps> = () => {
     return (
         <>
             <BiUpArrowCircle onClick={scrollToTop} className="fixed bottom-10 right-14 text-5xl" />
-            <div className="container">
-                <section className='grid sm:grid-cols-12 gap-5 min-h-[150px] py-5 bg-transparent'>
+            <div className="container bg-blue-50">
+                <section className='grid md:grid-cols-12 gap-5 min-h-[150px] py-5'>
                     <LeftSide userProfile={userProfile} />
                     <MiddleSide userProfile={userProfile} />
 
-                    <div className="sm:col-span-3 shadow-lg bg-transparent min-h-[100px] rounded-lg">
+                    <div className="md:col-span-3 shadow-lg bg-transparent min-h-[100px] rounded-lg">
                         <FriendSuggession />
                     </div>
                 </section>
