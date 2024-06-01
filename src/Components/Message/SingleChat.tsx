@@ -16,7 +16,7 @@ import { IoSendSharp } from 'react-icons/io5'
 import { MdOutlineVideoCameraFront } from 'react-icons/md'
 import { Navigate, useNavigate } from 'react-router-dom'
 
-const ENDPOINT = 'http://localhost:5000'
+const ENDPOINT = 'https://jobberwin.top';
 export var socket: any, selectedChatCompare: any;
 
 interface ISingleChat {
