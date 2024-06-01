@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 const Api: AxiosInstance = axios.create({
-    baseURL: "http://52.140.0.220/api",
+    baseURL: "https://www.jobberwin.top/api",
     // baseURL: "http://localhost:5000/api",
     withCredentials: true
 })
