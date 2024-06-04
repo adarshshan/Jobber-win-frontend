@@ -9,8 +9,8 @@ import io from 'socket.io-client'
 import { ChatState } from 'Context/ChatProvider'
 import toast from 'react-hot-toast'
 
-// const ENDPOINT = 'https://jobberwin.top';
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = 'https://jobberwin.top';
+// const ENDPOINT = 'http://localhost:5000';
 export var socket: any, selectedChatCompare: any;
 
 
