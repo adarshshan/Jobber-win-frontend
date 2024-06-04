@@ -49,8 +49,8 @@ const Home: React.FC<ITestProps> = () => {
     return (
         <>
             <BiUpArrowCircle onClick={scrollToTop} className="fixed bottom-10 right-14 text-5xl" />
-            <div className="container bg-blue-50">
-                <section className='grid md:grid-cols-12 gap-5 min-h-[150px] py-5'>
+            <div className="px-4 bg-blue-50">
+                <section className='grid md:grid-cols-12 gap-3 sm:gap-5 sm:container min-h-[150px] py-5'>
                     <LeftSide userProfile={userProfile} />
                     <MiddleSide userProfile={userProfile} />
 

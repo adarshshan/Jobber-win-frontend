@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import MiddleCreatePost from './MiddleCreatePost'
-import { Link, Spinner, User } from '@nextui-org/react'
-import { BsThreeDotsVertical } from 'react-icons/bs'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import PostComponent from './PostComponent'
-import { Skeleton } from '../../../@/components/ui/skeleton'
 import { getAllHomePosts } from 'Api/user'
 import { UserData } from '@/components/user/ProfilePage'
 
+import io from 'socket.io-client'
+import { ChatState } from 'Context/ChatProvider'
+import toast from 'react-hot-toast'
+
+// const ENDPOINT = 'https://jobberwin.top';
+const ENDPOINT = 'http://localhost:5000';
+export var socket: any, selectedChatCompare: any;
+
+
 interface IMiddleSideProps {
-    userProfile:UserData | null;
+    userProfile: UserData | null;
 }
 interface UserInterfaces {
     _id: string;
@@ -37,9 +43,12 @@ export interface IPostInterface {
     result: UserInterfaces[];
 }
 
-const MiddleSide: React.FC<IMiddleSideProps> = ({userProfile}) => {
+const MiddleSide: React.FC<IMiddleSideProps> = ({ userProfile }) => {
     const [dataSource, setDataSource] = useState<IPostInterface[]>();
-    
+    const [socketConnected, setSocketConnected] = useState(false);
+
+    const { userr} = ChatState()
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,6 +60,18 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({userProfile}) => {
         }
         fetchData();
     }, [])
+    useEffect(() => {
+        socket = io(ENDPOINT)
+        socket.emit("setup", userr);
+        socket.on("connected", () => setSocketConnected(true));
+    }, [])
+    useEffect(() => {
+        socket.on("receivedNotifications", (notification: any) => {
+            toast.success('notification received...');
+            console.log(notification);
+        })
+    })
+
     return (
         <>
             <div className="md:col-span-6 shadow-lg min-h-[100px] rounded-lg bg-transparent">

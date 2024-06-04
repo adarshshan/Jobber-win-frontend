@@ -1,8 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import User from './Components/User/userCommon/User';
 import Admin from './Components/Admin/Admin';
-import Users from './Pages/admin/Users';
-import Jobs from './Pages/admin/Jobs';
 import { Toaster } from 'react-hot-toast';
 import UserLoggedOut from './Components/User/userCommon/UserLoggedOut';
 import UserLoggedIn from './Components/User/userCommon/UserLoggedIn';
@@ -11,11 +9,6 @@ import AdminLoggedIn from './Components/Admin/AdminLoggedIn';
 import Test from './Components/User/userCommon/BottomNavbar';
 import React, { Suspense, lazy } from 'react';
 import { Skeleton } from './@/components/ui/skeleton';
-import ReportedJobs from './Pages/admin/ReportedJobs';
-import ReportedPosts from './Pages/admin/ReportedPosts';
-import Subscription from './Pages/admin/Subscription';
-import RoomPage from './Pages/user/RoomPage';
-import Dashboard from './Pages/admin/Dashboard';
 
 
 
@@ -29,6 +22,7 @@ const ProfilePage = lazy(() => import('./Pages/user/ProfilePage'))
 const ViewUserProfile = lazy(() => import('./Pages/user/ViewUserProfile'));
 const FindJobPage = lazy(() => import('./Pages/user/FindJobPage'));
 const MyNetworkPage = lazy(() => import('./Pages/user/MyNetworkPage'));
+
 const Recruiter = lazy(() => import('./Pages/recruiter/Recruiter'))
 const AllJobsComponent = lazy(() => import('./Pages/recruiter/AllJobsComponents'))
 const PostJobForm = lazy(() => import('./Pages/recruiter/PostJobForm'));
@@ -43,14 +37,21 @@ const Success = lazy(() => import('./Pages/recruiter/Success'));
 const Cancel = lazy(() => import('./Pages/recruiter/Cancel'));
 const NotificationPage = lazy(() => import('./Pages/user/NotificationPage'))
 
+const Dashboard = lazy(() => import('./Pages/admin/Dashboard'));
+const Users = lazy(() => import('./Pages/admin/Users'));
+const Jobs = lazy(() => import('./Pages/admin/Jobs'));
+const RoomPage = lazy(() => import('./Pages/user/RoomPage'));
+const Subscription = lazy(() => import('./Pages/admin/Subscription'));
+const ReportedPosts = lazy(() => import('./Pages/admin/ReportedPosts'));
+const ReportedJobs = lazy(() => import('./Pages/admin/ReportedJobs'));
+
+
 
 interface IAppProps {
 
 }
 
 const App: React.FunctionComponent<IAppProps> = () => {
-
-
   return (
     <main>
       <Toaster position='top-right' reverseOrder={false} />
@@ -109,12 +110,12 @@ const App: React.FunctionComponent<IAppProps> = () => {
 
         <Route path="/admin" element={<Admin />}>
           <Route path='' element={<AdminLoggedIn />}>
-            <Route path='dashboard' element={<Dashboard />} />
-            <Route path='users' element={<Users />} />
-            <Route path='jobs' element={<Jobs />} />
-            <Route path='reported-jobs' element={<ReportedJobs />} />
-            <Route path='reported-posts' element={<ReportedPosts />} />
-            <Route path='subscription' element={<Subscription />} />
+            <Route path='dashboard' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><Dashboard /></Suspense>} />
+            <Route path='users' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><Users /></Suspense>} />
+            <Route path='jobs' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><Jobs /></Suspense>} />
+            <Route path='reported-jobs' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><ReportedJobs /></Suspense>} />
+            <Route path='reported-posts' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><ReportedPosts /></Suspense>} />
+            <Route path='subscription' element={<Suspense fallback={<Skeleton className='w-full h-[50px] mt-3 gap-5 rounded-full' />}><Subscription /></Suspense>} />
           </Route>
         </Route>
 

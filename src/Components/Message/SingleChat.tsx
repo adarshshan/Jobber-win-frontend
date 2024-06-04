@@ -17,6 +17,7 @@ import { MdOutlineVideoCameraFront } from 'react-icons/md'
 import { Navigate, useNavigate } from 'react-router-dom'
 
 const ENDPOINT = 'https://jobberwin.top';
+// const ENDPOINT = 'http://localhost:5000';
 export var socket: any, selectedChatCompare: any;
 
 interface ISingleChat {
@@ -102,6 +103,10 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
             } else {
                 setMessages([...messages, newMessageReceived]);
             }
+        })
+        socket.on("receivedNotifications", (notification: any) => {
+            alert('notification received...');
+            console.log(notification);
         })
     })
 
