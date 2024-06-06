@@ -10,7 +10,7 @@ const MiddleCreatePost: React.FC<IMiddleCreatePostProps> = ({ userProfile }) => 
         <>
             <div className="w-full rounded-lg border shadow-lg mb-3 min-h-[50px] bg-white">
                 <div className="flex">
-                    <div className='w-2/12 p-2'>
+                    <div className='w-[15%] h-[15%] p-2 mt-3'>
                         <Link to='/user/profile'>
                             <img src={userProfile?.profile_picture} alt="\\profile picture" className=" rounded-full  md:w-full md:h-full ms-3" />
                         </Link>

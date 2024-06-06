@@ -80,11 +80,11 @@ function Header() {
     <>
       <nav className="bg-gradient-to-b from-blue-800 
                 to-blue-950 bg-white  z-50
-                shadow-lg text-white dark:bg-black dark:text-white sticky top-0">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                shadow-lg text-white dark:bg-black dark:text-white sticky top-0  p-4">
+        <div className="flex flex-wrap items-center justify-between">
           <div className="flex">
             <Link to='/'>
-              <span className="self-center text-sm sm:text-2xl text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
+              <span className="self-center text-sm sm:text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
             </Link>
             <input
               type="text"

@@ -4,6 +4,8 @@ import AppliedJobScreen from 'Components/User/FindJobPage/AppliedJobScreen'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import SavedJobScreen from 'Components/User/FindJobPage/SavedJobScreen'
+import SideOpen from 'Components/User/FindJobPage/SideOpen'
+import { GiHamburgerMenu } from 'react-icons/gi'
 
 interface IFindJobPageProps {
 
@@ -19,12 +21,12 @@ const FindJobPage: React.FC<IFindJobPageProps> = () => {
         setShowApplied(false);
         setShowAllJobs(false);
     }
-    
+
     return (
         <>
             <div className="grid grid-cols-12 container py-3 gap-5 sm:px-16 sm:min-h-screen bg-slate-100">
                 <div className="col-span-12 sm:col-span-3 sm:min-h-screen">
-                    <div className="w-full rounded-md bg-white p-3">
+                    <div className="w-full rounded-md bg-white p-3 sm:block hidden">
                         <div onClick={() => { setShowAllJobs(true); setShowApplied(false); }} className="w-full p-4 hover:bg-gray-500 hover:text-white shadow-md m-2">
                             All Jobs
                         </div>
@@ -38,8 +40,14 @@ const FindJobPage: React.FC<IFindJobPageProps> = () => {
                             Applied Jobs
                         </div>
                     </div>
+                    <SideOpen
+                        openSavedJobPage={openSavedJobPage}
+                        setShowAllJobs={setShowAllJobs}
+                        setShowApplied={setShowApplied}>
+                        <GiHamburgerMenu className='text-black sm:hidden ' />
+                    </SideOpen>
                 </div>
-                <div className="col-span-12 sm:col-span-6 bg-white min-h-screen shadow-xl">
+                <div className="col-span-12 sm:col-span-6 bg-white min-h-screen shadow-xl mb-16">
                     {!showApplied && showAllJobs && <AllJobs />}
                     {showApplied && <AppliedJobScreen />}
                     {!showAllJobs && !showApplied && showSave && <SavedJobScreen savedJobs={savedJobs} setSavedJobs={setSavedJobs} />}

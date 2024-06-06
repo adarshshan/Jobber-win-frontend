@@ -26,11 +26,11 @@ const LandingPage = () => {
         <>
             <LandingPageHeader />
             <div className="outerdiv bg-gray-100 pt- flex flex-col justify-center items-start  md:min-h-screen sm:h-screen">
-                <div className="w-lg ms-5 px-2">
+                <div className="w-lg ms-5 p-5 mt-5 sm:p-0 sm:mt-0 sm:px-2">
                     <motion.h1 className='text-4xl title' animate={{ fontSize: 50, color: 'yellow', y: -10 }}>DISCOVER YOUR</motion.h1>
                     <motion.h1 className='text-4xl title' animate={{ fontSize: 50, color: 'yellow', y: -10 }}> DREAM <span className='text-blue-500'>JOB</span></motion.h1>
                     <p className='text-amber-200'>Great platform for the job seeker that searching for new career heights and <br /> passionate about startups.</p>
-                    <div className="bg-white rounded-lg shadow-lg py-0 sm:p-6 mt-5 mb-8">
+                    <div className="bg-white rounded-lg shadow-lg py-5 sm:p-6 mt-5 mb-8">
                         <form className="flex flex-col sm:flex-row items-center">
                             <div className="flex-grow mb-4 sm:mb-0 sm:mr-2">
                                 <input type="text" id="jobTitle" name="jobTitle" placeholder="job title" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />

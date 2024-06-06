@@ -18,6 +18,7 @@ const ChatBox: React.FC<IChatBox> = ({ fetchAgain, setFetchAgain }) => {
             bg="white"
             w={{ base: "100%", md: "68%" }}
             borderRadius="lg"
+            className='mb-16'
             borderWidth="1px">
             <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
 

@@ -12,6 +12,8 @@ import { useAppSelector } from 'app/store';
 import { useDispatch } from 'react-redux';
 import { setSearchText } from 'app/slice/CommonSlice';
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import SideOpen from '../../Components/User/FindJobPage/SideOpen';
+import { GiHamburgerMenu } from "react-icons/gi";
 import {
     Popover,
     PopoverTrigger,
@@ -28,12 +30,13 @@ interface IJobDetailsProps {
 
 }
 const JobDetails: React.FC<IJobDetailsProps> = () => {
-    const [job, setJob] = useState<JobResult>();
+    const [job, setJob] = useState<JobResult | null>(null);
     const [jobs, setJobs] = useState<JobResult[]>();
     const [showForm, setShowForm] = useState(false);
 
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const btnRef = React.useRef<any>();
 
     const { search } = useAppSelector(state => state.common);
 
@@ -83,9 +86,9 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
         <>
             {showForm && <JobApplyForm setShowForm={setShowForm} />}
 
-            <div className="container">
-                <div className="grid grid-cols-12 gap-2 min-h-screen shadow-lg px-14 mb-5">
-                    <div className="col-spam-12 sm:col-span-6 min-h-50 border-r-4">
+            <div className="container mb-24">
+                <div className="grid grid-cols-12 gap-2 min-h-screen shadow-lg px-4 sm:px-14 mb-5">
+                    <div className={`col-spam-12 ${jobs ? 'hidden' : 'block'} sm:block sm:col-span-6 min-h-50 border-r-4`}>
                         <div className="job-listing w-full">
                             <div className="text-2xl font-semibold p-5 bg-gray-200 text-blue-500 w-full">
                                 <div className="flex justify-start gap-5">
@@ -122,13 +125,16 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
 
                         </div>
                     </div>
+
                     <div className="col-span-12 sm:col-span-6 min-h-50">
                         {job ? <div className="job-details w-full">
-                            <div className="flex justify-between p-4 text-2xl font-semibold border-b-2 min-h-[80px]">
-                                <div className="flex justify-start gap-5">
-                                    <img className='rounded-md w-16 h-16' src={job.job_img} alt="" />
-                                    <h1 className='mt-3'>{job.title}</h1>
+                            <div className="flex justify-between">
+                                <div className="flex gap-3 text-2xl mt-2 hover:text-blue-200">
+                                    <Link to='/user/find-jobs'>
+                                        <IoMdArrowBack className='sm:hidden block' />
+                                    </Link>
                                 </div>
+
                                 <Popover>
                                     <PopoverTrigger>
                                         <Button><BsThreeDotsVertical /></Button>
@@ -147,15 +153,23 @@ const JobDetails: React.FC<IJobDetailsProps> = () => {
                                     </PopoverContent>
                                 </Popover>
                             </div>
-                            <div className='p-5 text-sm'>
+
+                            <div className="flex justify-between p-4 text-2xl font-semibold border-b-2 min-h-[80px]">
+                                <div className="flex justify-start gap-5">
+                                    <img className='rounded-md w-16 h-16' src={job.job_img} alt="" />
+                                    <h1 className='mt-3'>{job.title}</h1>
+                                </div>
+
+                            </div>
+                            <div className='p-0 sm:p-5 text-sm'>
                                 <p className='mt-3'>{job.location},kerala,India  <span>1 month ago</span></p>
                                 <p className='mt-3'>5 of 10 skills match your profile- you may be good fit</p>
                             </div>
-                            <div className="flex justify-start p-5 border-b-2 gap-5">
+                            <div className="flex justify-start py-5 sm:p-5 border-b-2 gap-5">
                                 <button onClick={() => setShowForm(true)} className='rounded-full bg-blue-500 px-7 p-1 text-xl font-semibold text-white'>Apply</button>
                                 <button onClick={() => handleSaveJob(job._id)} className='rounded-full border border-blue-600 px-7 p-1 text-xl font-semibold text-blue-500'>Save</button>
                             </div>
-                            <div className="p-5">
+                            <div className="p-0 sm:p-5">
                                 <h1 className="text-xl text-gray-800 font-medium">About the Job</h1>
                                 <hr className='mt-2' />
                                 <p>{job.description}</p>
