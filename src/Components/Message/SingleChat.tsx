@@ -14,10 +14,9 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { IoSendSharp } from 'react-icons/io5'
 import { MdOutlineVideoCameraFront } from 'react-icons/md'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const ENDPOINT = 'https://jobberwin.top';
-// const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = process.env.REACT_APP_B_URI;
 export var socket: any, selectedChatCompare: any;
 
 interface ISingleChat {
@@ -55,11 +54,13 @@ const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
         again } = ChatState()
 
     useEffect(() => {
-        socket = io(ENDPOINT)
-        socket.emit("setup", userr);
-        socket.on("connected", () => setSocketConnected(true));
-        socket.on("typing", () => setIstyping(true))
-        socket.on("stop typing", () => setIstyping(false))
+        if (ENDPOINT) {
+            socket = io(ENDPOINT)
+            socket.emit("setup", userr);
+            socket.on("connected", () => setSocketConnected(true));
+            socket.on("typing", () => setIstyping(true))
+            socket.on("stop typing", () => setIstyping(false))
+        }
     }, [])
 
 

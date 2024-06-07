@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from "axios";
 
+console.log(process.env); console.log('this is the secret uri...');
+
 const Api: AxiosInstance = axios.create({
-    baseURL: "https://jobberwin.top/api",
-    // baseURL: "http://localhost:5000/api",
+    baseURL: `${process.env.REACT_APP_B_URI}/api`,
     withCredentials: true
 })
 

@@ -7,11 +7,8 @@ import { ChatState } from 'Context/ChatProvider';
 const RoomPage: React.FC = () => {
     const { roomId } = useParams();
 
-    const { userr,
+    const {
         selectedChat,
-        setSelectedChat,
-        notification,
-        setNotification,
         again,
         setAgain,
         setVideoLink } = ChatState()
@@ -43,8 +40,8 @@ const RoomPage: React.FC = () => {
     const myMeeting = async (element: any) => {
         if (roomId) {
             const appID = 1526459523
-            const serverSecret = "4783dffe98e7628a419598a72c5bbaa4";
-            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomId, Date.now().toString(), 'Adarsh C');
+            const serverSecret = process.env.REACT_APP_CIGO_SECRET || ''
+            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomId, Date.now().toString(), 'user');
             const zc = ZegoUIKitPrebuilt.create(kitToken);
             zc.joinRoom({
                 container: element,

@@ -9,8 +9,7 @@ import io from 'socket.io-client'
 import { ChatState } from 'Context/ChatProvider'
 import toast from 'react-hot-toast'
 
-const ENDPOINT = 'https://jobberwin.top';
-// const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = process.env.REACT_APP_B_URI;
 export var socket: any, selectedChatCompare: any;
 
 
@@ -47,7 +46,7 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({ userProfile }) => {
     const [dataSource, setDataSource] = useState<IPostInterface[]>();
     const [socketConnected, setSocketConnected] = useState(false);
 
-    const { userr} = ChatState()
+    const { userr } = ChatState()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -61,9 +60,11 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({ userProfile }) => {
         fetchData();
     }, [])
     useEffect(() => {
-        socket = io(ENDPOINT)
-        socket.emit("setup", userr);
-        socket.on("connected", () => setSocketConnected(true));
+        if (ENDPOINT) {
+            socket = io(ENDPOINT)
+            socket.emit("setup", userr);
+            socket.on("connected", () => setSocketConnected(true));
+        }
     }, [])
     useEffect(() => {
         socket.on("receivedNotifications", (notification: any) => {
