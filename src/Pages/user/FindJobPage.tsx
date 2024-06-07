@@ -24,7 +24,7 @@ const FindJobPage: React.FC<IFindJobPageProps> = () => {
 
     return (
         <>
-            <div className="grid grid-cols-12 container py-3 gap-5 sm:px-16 sm:min-h-screen bg-slate-100">
+            <div className="grid grid-cols-12  sm:w-full w-[440px] sm:ms-0 ms-4 py-3 gap-5 sm:px-16 sm:min-h-screen bg-slate-100">
                 <div className="col-span-12 sm:col-span-3 sm:min-h-screen">
                     <div className="w-full rounded-md bg-white p-3 sm:block hidden">
                         <div onClick={() => { setShowAllJobs(true); setShowApplied(false); }} className="w-full p-4 hover:bg-gray-500 hover:text-white shadow-md m-2">

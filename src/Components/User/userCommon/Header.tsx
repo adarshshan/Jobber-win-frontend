@@ -78,9 +78,12 @@ function Header() {
   }
   return (
     <>
-      <nav className="bg-gradient-to-b from-blue-800 
+      {/* <nav className="bg-gradient-to-b from-blue-800 
                 to-blue-950 bg-white  z-50
-                shadow-lg text-white dark:bg-black dark:text-white sticky top-0  p-4">
+                shadow-lg text-white dark:bg-black dark:text-white sticky top-0  p-4"> */}
+      <nav className="bg-gradient-to-b from-blue-800 
+                to-blue-950  z-50 sticky top-0
+                shadow-lg text-white dark:bg-black dark:text-white w-[480px] sm:w-full p-4">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex">
             <Link to='/'>

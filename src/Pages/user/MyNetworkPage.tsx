@@ -126,7 +126,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
 
     return (
         <>
-            <div className="container  p-3 bg-slate-200">
+            <div className="p-3 bg-blue-50 sm:w-full w-[440px] ms-4 sm:ms-0">
                 <div className="grid sm:grid-cols-12 gap-4">
                     <LeftSideBar setShowFriendScreen={setShowFriendScreen} toatalFriends={friendList?.length ? friendList.length : 0} />
                     <div className="sm:col-span-9 min-h-[100px]  shadow-xl rounded-lg">
