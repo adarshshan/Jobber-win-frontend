@@ -11,8 +11,7 @@ import { useAppSelector } from 'app/store';
 
 import io from 'socket.io-client'
 import { ChatState } from 'Context/ChatProvider'
-// const ENDPOINT = 'https://jobberwin.top';
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = process.env.REACT_APP_B_URI || ''
 export var socket: any, selectedChatCompare: any;
 
 
@@ -37,7 +36,7 @@ const ApplicationDetails: React.FC<IApplicationDetailsProps> = ({ singleDetails 
             const res = await changeStatus(status, applicationId);
             if (res?.data.success) {
                 toast.success('applicant ' + status);
-                socket.emit('new notifications', 'this is the message',applicationId);
+                socket.emit('new notifications', 'this is the message', applicationId);
             } else toast.error(res?.data.message);
             console.log(res);
         } catch (error) {
