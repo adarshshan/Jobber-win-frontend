@@ -22,7 +22,7 @@ const FriendSuggession: React.FC<IFriendSuggessionProps> = () => {
     }, [])
     return (
         <>
-            <div id="friendsuggession" className="bg-white w-full pt-8 px-8 pb-3 rounded-lg shadow-xl text-lg">
+            <div id="friendsuggession" className="bg-white w-full pt-8 px-8 pb-16 rounded-lg shadow-xl text-lg">
                 <h1 className="text-lg font-semibold">People you may know</h1>
                 {users?.slice(0, 4).map((item, index) => {
                     return (

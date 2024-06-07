@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaArrowRightLong, FaPlus } from 'react-icons/fa6'
 import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
+import ProfileModal from './ProfileModal';
 
 interface ISillCardProps {
     setSkillAdd: React.Dispatch<React.SetStateAction<boolean>>;
     userId: string | undefined;
+    skillAdd: boolean;
 }
-const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
+const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId, skillAdd }) => {
 
     const [skill, setSkill] = useState<string[]>();
     const [showSkill, setShowSkill] = useState(2);
@@ -19,7 +21,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
             try {
                 if (userId) {
                     const result = await getAllSkills(userId);
-                    setSkill(result?.data.data) 
+                    setSkill(result?.data.data)
                 }
             } catch (error) {
                 console.log(error);
@@ -39,15 +41,16 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
             toast.error('somthing went wrong while deleting the skill!');
         }
     }
-    
+
     return (
         <>
             <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
                 <div className="flex justify-between text-2xl mx-2">
                     <h1 className="font-semibold">Skills</h1>
-                    <div className="flex">
-                        <FaPlus onClick={() => setSkillAdd(true)} className="me-3" />
-                        <MdEdit />
+                    <div onClick={() => setSkillAdd(true)}>
+                        <ProfileModal skillAdd={skillAdd} setSkillAdd={setSkillAdd} userId={userId}>
+                            <FaPlus className="me-3" />
+                        </ProfileModal>
                     </div>
                 </div>
                 <div className="text-lg font-semibold">
@@ -56,7 +59,7 @@ const SkillCard: React.FC<ISillCardProps> = ({ setSkillAdd, userId }) => {
                             <div key={index}>
                                 <Divider className="my-4" />
                                 <div className="flex justify-between mx-5">
-                                    <h1 >{item}</h1> 
+                                    <h1 >{item}</h1>
                                     <MdOutlineDeleteForever onClick={() => handleDeleteSkill(item)} />
                                 </div>
                             </div>

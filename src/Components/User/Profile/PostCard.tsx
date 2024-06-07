@@ -4,10 +4,12 @@ import { Divider } from '@nextui-org/react'
 import PostListItem from './PostListItem'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { getAllPosts } from 'Api/user'
+import ProfileModal from './ProfileModal'
 
 interface IPostCardProps {
     setCreatePostScreen: React.Dispatch<React.SetStateAction<boolean>>;
     userId: string | undefined;
+    createPostScreen:boolean;
 }
 export interface PostInterface extends Document {
     _id: string;
@@ -19,7 +21,7 @@ export interface PostInterface extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
-const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => {
+const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId,createPostScreen }) => {
     const [posts, setPosts] = useState<PostInterface[]>();
     const [fetchAgain, setFetchAgain] = useState(false);
 
@@ -40,7 +42,7 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
         }
         fetchPosts();
     }, [userId, fetchAgain])
-    
+
     return (
         <>
             <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
@@ -49,8 +51,10 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId }) => 
                         <h1 className="text-2xl font-semibold">Activity</h1>
                         <p className="text-blue-500">959 Followers</p>
                     </div>
-                    <div className="flex">
-                        <button onClick={() => setCreatePostScreen(true)} className=" rounded-full px-2 py-1 shadow-lg border-4 text-blue-600">Create a post</button>
+                    <div className="flex" onClick={()=>setCreatePostScreen(!createPostScreen)}>
+                        <ProfileModal createPostScreen={createPostScreen} setCreatePostScreen={setCreatePostScreen}>
+                            <button className=" rounded-full px-2 py-1 shadow-lg border-4 text-blue-600">Create a post</button>
+                        </ProfileModal>
                     </div>
                 </div>
                 <MenuTabs />
