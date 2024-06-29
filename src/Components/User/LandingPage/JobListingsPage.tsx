@@ -26,7 +26,7 @@ const JobListingsPage: React.FC<IJobListingInterface> = ({ jobs, setJobs }) => {
     }, [])
 
     return (
-        <div className="container  mx-auto  px-4 py-8">
+        <div id='jobsection' className="container  mx-auto  px-4 py-8">
             <h1 className="text-3xl font-semibold mb-4">All Jobs</h1>
             <JobSearchBar setJobs={setJobs} />
             <div className="flex flex-wrap -mx-2">

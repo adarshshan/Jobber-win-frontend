@@ -37,7 +37,6 @@ const OTPComponent: React.FC = () => {
         const result = await verifyOtp(otp);
         console.log(result);
         if (result?.data.data.success) {
-            console.log(`everything is fine your token is `)
             console.log(result.data.data.token);
             dispatch(setUserCredential(result.data.data.token))
             dispatch(saveUser(result.data.data.data));
