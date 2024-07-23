@@ -5,7 +5,6 @@ import errorHandler from "./errorHandler";
 
 
 const login = async (email: string, password: string) => {
-    console.log('ehlldfksl')
     try {
         let result = await Api.post(adminRoutes.login, { email, password });
         return result;
