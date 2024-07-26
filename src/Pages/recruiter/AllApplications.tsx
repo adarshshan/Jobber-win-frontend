@@ -4,6 +4,7 @@ import ApplicationDetails from 'Components/Recruiter/ApplicationDetails';
 import ApplicationItem from 'Components/Recruiter/ApplicationItem';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
+import ApplicationsData from 'utils/renderProps';
 
 
 interface IAllApplicationsProps {
@@ -16,22 +17,7 @@ const AllApplications: React.FC<IAllApplicationsProps> = () => {
     const [approved, setApproved] = useState<any[]>();
     const [rejected, setRejected] = useState<any[]>();
 
-    useEffect(() => {
-        const fetchApplications = async () => {
-            try {
-                setLoading(true);
-                const res = await getApplications();
-                if (res?.data.success) {
-                    setApplications(res?.data.data);
-                    setLoading(false);
-                } else toast.error(res?.data.message);
-            } catch (error) {
-                console.log(error as Error)
-                toast.error('somthing went wrong while fetching the application details');
-            }
-        }
-        fetchApplications()
-    }, [approved, rejected])
+
 
     const separate = (id: string) => {
         const singleItem = applications?.find((item) => item._id === id);
@@ -45,7 +31,7 @@ const AllApplications: React.FC<IAllApplicationsProps> = () => {
         const data = () => applications?.filter((item) => item.status === 'Rejected');
         setRejected(data);
     }
-    
+
     return (
         <>
             <h1 className='text-xl uppercase ms-3'>All Applications</h1>
@@ -71,15 +57,25 @@ const AllApplications: React.FC<IAllApplicationsProps> = () => {
                                         />
                                     </div>
                                 }
-                                {applications && applications.length && applications.filter((x) => x.status === 'Applied').length ? (
-                                    applications.filter((x) => x.status === 'Applied').map((item, index) => (
-                                        <div key={index} onClick={() => separate(item._id)}>
-                                            <ApplicationItem item={item} />
-                                        </div>
-                                    ))
-                                ) : (
-                                    <h1>Not any new Application</h1>
-                                )}
+                                <ApplicationsData
+                                    setLoading={setLoading}
+                                    applications={applications}
+                                    setApplications={setApplications}
+                                    approved={approved}
+                                    rejected={rejected}
+                                    render={(data: any) => (
+                                        <>
+                                            {data && data.length && data.filter((x: any) => x.status === 'Applied').length ? (
+                                                data.filter((x: any) => x.status === 'Applied').map((item: any, index: number) => (
+                                                    <div key={index} onClick={() => separate(item._id)}>
+                                                        <ApplicationItem item={item} />
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <h1>Not any new Application</h1>
+                                            )}
+                                        </>
+                                    )} />
                             </TabPanel>
                             <TabPanel>
                                 {approved && approved.length ? (
