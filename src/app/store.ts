@@ -3,6 +3,7 @@ import authReducer from './slice/AuthSlice';
 import { TypedUseSelectorHook } from 'react-redux';
 import { useSelector } from 'react-redux';
 import commonReducer from './slice/CommonSlice';
+import logger from 'redux-logger'
 
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
         auth: authReducer,
         common: commonReducer
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 })
 
 export type RootState = ReturnType<typeof store.getState>
