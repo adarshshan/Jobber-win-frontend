@@ -8,7 +8,8 @@ const initialState = {
     adminData: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo') as string) : null,
     userData: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo') as string) : null,
     user: localStorage.getItem('userAddress') ? JSON.parse(localStorage.getItem('userAddress') as any) : null,
-    about: null
+    about: null,
+    isUpdate: false,
 }
 
 export const authSlice = createSlice({
@@ -16,6 +17,9 @@ export const authSlice = createSlice({
     initialState,
 
     reducers: {
+        isUpdateProfile: (state, action) => {
+            state.isUpdate = action.payload;
+        },
         setAdminCredential: (state, action) => {
             state.adminData = action.payload;
             localStorage.setItem('adminInfo', JSON.stringify(action.payload));
@@ -50,6 +54,6 @@ export const {
     adminLogout,
     userLogout,
     saveUser,
-    changeAbout } = authSlice.actions
+    changeAbout, isUpdateProfile } = authSlice.actions
 
 export default authSlice.reducer;

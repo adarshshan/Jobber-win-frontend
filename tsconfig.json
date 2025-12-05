@@ -1,24 +1,13 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "types": [
-      "recharts"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "types": ["recharts"],
     "baseUrl": "./src",
     "paths": {
-      "@/components/*": [
-        "components/*",
-        "Pages/*"
-      ]
+      "@/components/*": ["components/*", "Pages/*"]
     },
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -33,7 +22,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

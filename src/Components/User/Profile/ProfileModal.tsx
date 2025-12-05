@@ -15,11 +15,10 @@ import {
   addSkill,
   createPost,
   getAllSkills,
-  removeProfilePic,
   updateAbout,
   updateUser,
 } from "Api/user";
-import { changeAbout, saveUser } from "app/slice/AuthSlice";
+import { changeAbout, isUpdateProfile, saveUser } from "app/slice/AuthSlice";
 import { useAppSelector } from "app/store";
 import { ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -59,9 +58,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
   const [caption, setCaption] = useState("");
   const [pic, setPic] = useState("");
   const [picMessages, setPicMessage] = useState("");
-
   const [about, setAbout] = useState(userProfile?.aboutInfo || "");
-
   const [skill, setSkill] = useState("");
   const [skills, setSkills] = useState("");
 
@@ -74,7 +71,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
 
   const dispatch = useDispatch();
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, isUpdate } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     setAbout(userProfile?.aboutInfo || "");
@@ -86,7 +83,6 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
   };
 
   const postDetails = (pics: File | null) => {
-    console.log("its hitting hrere...................................");
     if (!pics) return setPicMessage("Please Select an image!");
     setPicMessage("");
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
@@ -102,8 +98,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
         .then((data) => {
           console.log(data.url.toString());
           setPic(data.url.toString());
-          console.log(pic + "heeee");
-          console.log("This is from the create post screen.....");
+          dispatch(isUpdateProfile(!isUpdate));
         })
         .catch((err) => {
           console.log(err);
@@ -125,6 +120,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
         if (result) {
           toast.success("post uploaded successfully.");
           onClose();
+          dispatch(isUpdateProfile(!isUpdate));
           if (setCreatePostScreen) setCreatePostScreen(false);
         } else {
           toast.error("somthing went wrong while posting.");
@@ -140,6 +136,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
       if (!userProfile) return;
       await updateAbout(userProfile?._id, about);
       dispatch(changeAbout(about));
+      dispatch(isUpdateProfile(!isUpdate));
       onClose();
       if (setAboutScreen) setAboutScreen(false);
     } catch (error) {
@@ -152,7 +149,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
       try {
         if (userId) {
           const result = await getAllSkills(userId);
-          setSkill(result?.data.data);
+          setSkill(result?.data?.data);
         }
       } catch (error) {
         console.log(error);
@@ -160,7 +157,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
       }
     };
     fetchData();
-  });
+  }, [userId]);
 
   const handleUpdateSkill = async () => {
     try {
@@ -188,9 +185,10 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
           location,
           phoneNumber
         );
-        if (result?.data.success)
+        if (result?.data.success) {
           toast.success("user details updated successfully");
-        else toast.error(result?.data.message);
+          dispatch(isUpdateProfile(!isUpdate));
+        } else toast.error(result?.data.message);
         dispatch(saveUser(result?.data.data));
         if (setUpdateScreen) setUpdateScreen(false);
         onClose();

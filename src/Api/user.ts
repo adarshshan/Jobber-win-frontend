@@ -119,7 +119,7 @@ const addSkill = async (id: string, skill: string) => {
 }
 const getAllSkills = async (id: string) => {
     try {
-        return await Api.get(`${userRoutes.getAllSkills}${id}`);
+        return await Api.get(`${userRoutes?.getAllSkills}${id}`);
     } catch (error) {
         console.log(error as Error);
     }
