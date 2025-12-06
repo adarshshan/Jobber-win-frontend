@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import User from "./Components/User/userCommon/User";
 import Admin from "./Components/Admin/Admin";
 import { Toaster } from "react-hot-toast";
@@ -7,8 +7,8 @@ import UserLoggedIn from "./Components/User/userCommon/UserLoggedIn";
 import AdminLoggedOut from "./Components/Admin/AdminLoggedOut";
 import AdminLoggedIn from "./Components/Admin/AdminLoggedIn";
 import Test from "./Components/User/userCommon/BottomNavbar";
-import React, { Suspense, lazy } from "react";
-import { Skeleton } from "./@/components/ui/skeleton";
+import React, { lazy } from "react";
+import SuspenseLayout from "./Components/Common/SuspenseLayout";
 
 const AdminLogin = lazy(() => import("./Pages/admin/AdminLogin"));
 const LandingPage = lazy(() => import("./Pages/user/LandingPage"));
@@ -49,403 +49,182 @@ const ReportedJobs = lazy(() => import("./Pages/admin/ReportedJobs"));
 
 interface IAppProps {}
 
+const router = createBrowserRouter([
+  {
+    element: <SuspenseLayout />,
+    children: [
+      {
+        element: <UserLoggedOut />,
+        children: [
+          {
+            path: "/",
+            element: <LandingPage />,
+          },
+          {
+            path: "/user/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/user/signup",
+            element: <SignupPage />,
+          },
+          {
+            path: "/user/otp-page",
+            element: <OtpPage />,
+          },
+          {
+            path: "/user/forgot-password",
+            element: <ForgotOtpPage />,
+          },
+        ],
+      },
+      {
+        path: "/user",
+        element: <User />,
+        children: [
+          {
+            element: <UserLoggedIn />,
+            children: [
+              {
+                path: "home",
+                element: <Home />,
+              },
+              {
+                path: "profile",
+                element: <ProfilePage />,
+              },
+              {
+                path: "view-user-profile/:userId",
+                element: <ViewUserProfile />,
+              },
+              {
+                path: "my-network",
+                element: <MyNetworkPage />,
+              },
+              {
+                path: "find-jobs",
+                element: <FindJobPage />,
+              },
+              {
+                path: "for-test",
+                element: <Test />,
+              },
+              {
+                path: "room/:roomId",
+                element: <RoomPage />,
+              },
+              {
+                path: "job-details/:jobId",
+                element: <JobDetails />,
+              },
+              {
+                path: "message",
+                element: <ChatPage />,
+              },
+              {
+                path: "notifications",
+                element: <NotificationPage />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "/recruiter",
+        element: <Recruiter />,
+        children: [
+          {
+            element: <UserLoggedIn />,
+            children: [
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "all-jobs",
+                element: <AllJobsComponent />,
+              },
+              {
+                path: "post-jobform",
+                element: <PostJobForm />,
+              },
+              {
+                path: "applications",
+                element: <AllApplications />,
+              },
+              {
+                path: "subscription",
+                element: <SubscriptionPage />,
+              },
+              {
+                path: "success",
+                element: <Success />,
+              },
+              {
+                path: "cancel",
+                element: <Cancel />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        element: <AdminLoggedOut />,
+        children: [
+          {
+            path: "/admin-login",
+            element: <AdminLogin />,
+          },
+        ],
+      },
+      {
+        path: "/admin",
+        element: <Admin />,
+        children: [
+          {
+            element: <AdminLoggedIn />,
+            children: [
+              {
+                path: "dashboard",
+                element: <Dashboard />,
+              },
+              {
+                path: "users",
+                element: <Users />,
+              },
+              {
+                path: "jobs",
+                element: <Jobs />,
+              },
+              {
+                path: "reported-jobs",
+                element: <ReportedJobs />,
+              },
+              {
+                path: "reported-posts",
+                element: <ReportedPosts />,
+              },
+              {
+                path: "subscription",
+                element: <Subscription />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <PageNotFound />,
+      },
+    ],
+  },
+]);
+
 const App: React.FunctionComponent<IAppProps> = () => {
   return (
     <main>
       <Toaster position="top-right" reverseOrder={false} />
-      <Routes>
-        {/* User Side */}
-
-        <Route path="" element={<UserLoggedOut />}>
-          <Route
-            path="/"
-            element={
-              <Suspense
-                fallback={
-                  <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                }
-              >
-                <LandingPage />
-              </Suspense>
-            }
-          />
-        </Route>
-
-        <Route path="" element={<UserLoggedOut />}>
-          <Route
-            path="/user/login"
-            element={
-              <Suspense
-                fallback={
-                  <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                }
-              >
-                <LoginPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/user/signup"
-            element={
-              <Suspense
-                fallback={
-                  <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                }
-              >
-                <SignupPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/user/otp-page"
-            element={
-              <Suspense
-                fallback={
-                  <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                }
-              >
-                <OtpPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/user/forgot-password"
-            element={
-              <Suspense
-                fallback={
-                  <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                }
-              >
-                <ForgotOtpPage />
-              </Suspense>
-            }
-          />
-        </Route>
-
-        <Route path="/user" element={<User />}>
-          <Route path="" element={<UserLoggedIn />}>
-            <Route
-              path="home"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Home />
-                </Suspense>
-              }
-            />
-            <Route
-              path="profile"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <ProfilePage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="view-user-profile/:userId"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <ViewUserProfile />
-                </Suspense>
-              }
-            />
-            <Route
-              path="my-network"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <MyNetworkPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="find-jobs"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <FindJobPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="for-test"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Test />
-                </Suspense>
-              }
-            />
-            <Route
-              path="room/:roomId"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <RoomPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="job-details/:jobId"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <JobDetails />
-                </Suspense>
-              }
-            />
-            <Route
-              path="message"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <ChatPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="notifications"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <NotificationPage />
-                </Suspense>
-              }
-            />
-          </Route>
-        </Route>
-
-        {/* Recruiter Side */}
-
-        <Route
-          path="/recruiter"
-          element={
-            <Suspense
-              fallback={
-                <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-              }
-            >
-              <Recruiter />
-            </Suspense>
-          }
-        >
-          <Route path="" element={<UserLoggedIn />}>
-            <Route
-              path=""
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <DashBoard />
-                </Suspense>
-              }
-            />
-            <Route
-              path="all-jobs"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <AllJobsComponent />
-                </Suspense>
-              }
-            />
-            <Route
-              path="post-jobform"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <PostJobForm />
-                </Suspense>
-              }
-            />
-            <Route
-              path="applications"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <AllApplications />
-                </Suspense>
-              }
-            />
-            <Route
-              path="subscription"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <SubscriptionPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="success"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Success />
-                </Suspense>
-              }
-            />
-            <Route
-              path="cancel"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Cancel />
-                </Suspense>
-              }
-            />
-          </Route>
-        </Route>
-
-        {/* Admin Side */}
-
-        <Route path="" element={<AdminLoggedOut />}>
-          <Route path="/admin-login" element={<AdminLogin />} />
-        </Route>
-
-        <Route path="/admin" element={<Admin />}>
-          <Route path="" element={<AdminLoggedIn />}>
-            <Route
-              path="dashboard"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Dashboard />
-                </Suspense>
-              }
-            />
-            <Route
-              path="users"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Users />
-                </Suspense>
-              }
-            />
-            <Route
-              path="jobs"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Jobs />
-                </Suspense>
-              }
-            />
-            <Route
-              path="reported-jobs"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <ReportedJobs />
-                </Suspense>
-              }
-            />
-            <Route
-              path="reported-posts"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <ReportedPosts />
-                </Suspense>
-              }
-            />
-            <Route
-              path="subscription"
-              element={
-                <Suspense
-                  fallback={
-                    <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-                  }
-                >
-                  <Subscription />
-                </Suspense>
-              }
-            />
-          </Route>
-        </Route>
-
-        {/* Page Not Found */}
-        <Route
-          path="/*"
-          element={
-            <Suspense
-              fallback={
-                <Skeleton className="w-full h-[50px] mt-3 gap-5 rounded-full" />
-              }
-            >
-              <PageNotFound />
-            </Suspense>
-          }
-        />
-      </Routes>
+      <RouterProvider router={router} />
     </main>
   );
 };
