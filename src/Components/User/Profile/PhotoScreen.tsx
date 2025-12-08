@@ -55,31 +55,31 @@ const PhotoScreen: React.FC<IPhotoScreenProps> = ({ setAddProfilescreen, setPic,
     }
     
     return (
-        <>
-            <div className="w-[700px] h-[500px] bg-gray-900 shadow-2xl rounded-2xl absolute top-[100px] left-[300px] text-white">
-                <div className="flex justify-between m-5 text-2xl">
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-900 shadow-2xl rounded-2xl text-white w-full max-w-lg mx-auto p-4 sm:p-6">
+                <div className="flex justify-between items-center text-xl sm:text-2xl">
                     <h1>Profile Photo</h1>
-                    <IoMdClose onClick={() => setAddProfilescreen(false)} />
+                    <IoMdClose onClick={() => setAddProfilescreen(false)} className="cursor-pointer" />
                 </div>
-                <p className="text-red-400 font-semibold m-5">{picMessages}</p>
+                <p className="text-red-400 font-semibold my-4">{picMessages}</p>
                 <div className="flex justify-center">
-                    <img className="rounded-full w-[280px] h-[280px]" src={pic.length ? pic : "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"} alt="" />
+                    <img className="rounded-full w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 object-cover" src={pic.length ? pic : "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"} alt="Profile" />
                 </div>
                 <input type="file" id="openGallery" className="hidden"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => postDetails(e.target.files?.[0] ?? null)} />
-                <hr className="mt-9" />
-                <div className="flex justify-around text-xl mt-3">
-                    <div className="text-center" onClick={openGallery}>
-                        <IoCameraSharp className="text-4xl ms-4" />
-                        <h1 id="openGallery">Add Photo</h1>
+                <hr className="my-4" />
+                <div className="flex justify-around text-lg sm:text-xl">
+                    <div className="text-center cursor-pointer" onClick={openGallery}>
+                        <IoCameraSharp className="text-3xl sm:text-4xl mx-auto" />
+                        <p>Add Photo</p>
                     </div>
-                    <div className="text-center">
-                        <MdDelete onClick={handleDeleteProfilePic} className="text-4xl ms-2" />
-                        <h1>Delete</h1>
+                    <div className="text-center cursor-pointer" onClick={handleDeleteProfilePic}>
+                        <MdDelete className="text-3xl sm:text-4xl mx-auto" />
+                        <p>Delete</p>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

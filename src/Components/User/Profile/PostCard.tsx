@@ -45,15 +45,15 @@ const PostCard: React.FC<IPostCardProps> = ({ setCreatePostScreen, userId,create
 
     return (
         <>
-            <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
+            <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg p-4 sm:p-6 sm:pt-8 shadow-lg">
                 <div className="flex justify-between">
                     <div>
-                        <h1 className="text-2xl font-semibold">Activity</h1>
+                        <h1 className="text-xl sm:text-2xl font-semibold">Activity</h1>
                         <p className="text-blue-500">959 Followers</p>
                     </div>
                     <div className="flex" onClick={()=>setCreatePostScreen(!createPostScreen)}>
                         <ProfileModal createPostScreen={createPostScreen} setCreatePostScreen={setCreatePostScreen}>
-                            <button className=" rounded-full px-2 py-1 shadow-lg border-4 text-blue-600">Create a post</button>
+                            <button className="rounded-full px-3 py-2 text-sm sm:text-base shadow-lg border-2 text-blue-600">Create a post</button>
                         </ProfileModal>
                     </div>
                 </div>
