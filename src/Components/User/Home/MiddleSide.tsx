@@ -8,6 +8,7 @@ import { UserData } from "@/components/user/ProfilePage";
 import io from "socket.io-client";
 import { ChatState } from "Context/ChatProvider";
 import toast from "react-hot-toast";
+import ActivitySkeleton from "Components/Common/ActivitySkeleton";
 
 const ENDPOINT = process.env.REACT_APP_B_URI;
 export var socket: any, selectedChatCompare: any;
@@ -74,27 +75,21 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({ userProfile }) => {
   });
 
   return (
-    <>
-      <div className="md:col-span-6 shadow-lg min-h-[100px] rounded-lg bg-transparent px-3">
-        <MiddleCreatePost userProfile={userProfile} />
-        <InfiniteScroll
-          dataLength={dataSource?.length ?? 0}
-          next={() => console.log("fetching data...")}
-          hasMore={true}
-          loader={<h1>Loading...</h1>}
-        >
-          {dataSource?.map((item, index) => {
-            return (
-              <PostComponent
-                key={index}
-                item={item}
-                userProfile={userProfile}
-              />
-            );
-          })}
-        </InfiniteScroll>
-      </div>
-    </>
+    <div className="md:col-span-6 shadow-lg min-h-[100px] rounded-lg bg-transparent">
+      <MiddleCreatePost userProfile={userProfile} />
+      <InfiniteScroll
+        dataLength={dataSource?.length ?? 0}
+        next={() => console.log("fetching data...")}
+        hasMore={true}
+        loader={<ActivitySkeleton />}
+      >
+        {dataSource?.map((item, index) => {
+          return (
+            <PostComponent key={index} item={item} userProfile={userProfile} />
+          );
+        })}
+      </InfiniteScroll>
+    </div>
   );
 };
 
