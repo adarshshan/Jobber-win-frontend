@@ -6,33 +6,34 @@ import { useDispatch } from "react-redux";
 import { userLogout } from "app/slice/AuthSlice";
 import toast from "react-hot-toast";
 
-
 const UserLoggedIn = () => {
-    const [data, setData] = useState(false)
-    const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await getProfile();
-                if (result?.data.isBlocked) setData(true);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchData();
-    }, [])
-    const { userData } = useAppSelector((state) => state.auth);
-    if (!loading && data) {
-        dispatch(userLogout());
-        toast.error('User Blocked by the admin!');
-        return <Navigate to='/' />
-    }
-    return userData ? <Outlet /> : <Navigate to='/' />;
-}
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getProfile();
+        if (result?.data.isBlocked) setData(true);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const { userData } = useAppSelector((state) => state.auth);
+
+  if (!loading && data) {
+    dispatch(userLogout());
+    toast.error("User Blocked by the admin!");
+    return <Navigate to="/" />;
+  }
+  return userData ? <Outlet /> : <Navigate to="/" />;
+};
 
 export default UserLoggedIn;
