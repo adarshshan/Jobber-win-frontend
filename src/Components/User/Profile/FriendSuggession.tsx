@@ -22,8 +22,8 @@ const FriendSuggession: React.FC<IFriendSuggessionProps> = () => {
     }, [])
     return (
         <>
-            <div id="friendsuggession" className="bg-white w-full pt-8 px-8 pb-16 rounded-lg shadow-xl text-lg">
-                <h1 className="text-lg font-semibold">People you may know</h1>
+            <div id="friendsuggession" className="bg-white w-full p-4 sm:p-6 lg:p-8 lg:pb-16 rounded-lg shadow-xl text-base sm:text-lg">
+                <h1 className="text-base sm:text-lg font-semibold">People you may know</h1>
                 {users?.slice(0, 4).map((item, index) => {
                     return (
                         <div key={index + Math.random()}>
@@ -32,7 +32,7 @@ const FriendSuggession: React.FC<IFriendSuggessionProps> = () => {
                         </div>
                     )
                 })}
-                <div className="flex justify-center text-xl font-bold text-gray-400">
+                <div className="flex justify-center text-base sm:text-lg font-bold text-gray-400">
                     <Link to='/user/my-network'><p>Show More</p></Link>
                 </div>
             </div>

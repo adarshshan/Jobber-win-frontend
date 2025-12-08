@@ -30,9 +30,9 @@ const AboutCard: React.FC<IAboutCardProps> = ({
 
   return (
     <>
-      <div className="w-full bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
+      <div className="w-full bg-white mt-4 rounded-lg p-4 sm:p-6 sm:pt-8 shadow-lg">
         <div className="flex justify-between">
-          <h1 className="text-xl font-semibold ms-5">About</h1>
+          <h1 className="text-xl font-semibold ms-3 sm:ms-5">About</h1>
           <ProfileModal
             userProfile={userProfile}
             setAboutScreen={setAboutScreen}

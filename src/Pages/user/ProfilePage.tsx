@@ -55,7 +55,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <>
-      <div className="grid gap-5 sm:grid-cols-12 py-5 sm:container">
+      <div className="grid gap-5 sm:grid-cols-12 py-5 px-3 sm:container">
         <div className="sm:col-span-9 rounded-lg">
           <ProfileCard
             data={userProfile}

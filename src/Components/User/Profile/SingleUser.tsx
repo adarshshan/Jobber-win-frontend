@@ -22,7 +22,7 @@ const SingleUser: React.FC<ISingleUserProps> = ({ id, name, description, imageUr
                     />
                 </Link>
                 <div className="flex justify-center">
-                    <button className='outline rounded-xl border-blue-100 px-5 mt-2'>Follow</button>
+                    <button className='border border-blue-500 text-blue-500 rounded-full px-3 py-1 text-sm mt-2'>Follow</button>
                 </div>
             </div>
         </>

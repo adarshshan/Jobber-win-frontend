@@ -47,8 +47,8 @@ const SkillCard: React.FC<ISillCardProps> = ({
 
   return (
     <>
-      <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg pt-8 p-4 shadow-lg">
-        <div className="flex justify-between text-2xl mx-2">
+      <div className="w-full min-h-[50px] bg-white mt-4 rounded-lg p-4 sm:p-6 sm:pt-8 shadow-lg">
+        <div className="flex justify-between text-xl sm:text-2xl mx-2 sm:mx-4">
           <h1 className="font-semibold">Skills</h1>
           <div onClick={() => setSkillAdd(true)}>
             <ProfileModal
@@ -60,15 +60,15 @@ const SkillCard: React.FC<ISillCardProps> = ({
             </ProfileModal>
           </div>
         </div>
-        <div className="text-lg font-semibold">
+        <div className="text-base sm:text-lg font-semibold">
           {skill &&
             skill?.length &&
             skill.slice(0, showSkill).map((item, index) => {
               return (
                 <div key={index}>
                   <Divider className="my-4" />
-                  <div className="flex justify-between mx-5">
-                    <h1>{item}</h1>
+                  <div className="flex justify-between mx-3 sm:mx-5">
+                    <p>{item}</p>
                     <MdOutlineDeleteForever
                       onClick={() => handleDeleteSkill(item)}
                     />
@@ -83,7 +83,7 @@ const SkillCard: React.FC<ISillCardProps> = ({
             onClick={() => setShowSkill(skill?.length ?? 1000)}
             className="flex justify-center cursor-pointer"
           >
-            <h1>Show all {skill ? skill.length - 2 : 0} Skills</h1>
+            <p>Show all {skill ? skill.length - 2 : 0} Skills</p>
             <FaArrowRightLong className="text-xl m-1 ms-2" />
           </div>
         )}
@@ -92,7 +92,7 @@ const SkillCard: React.FC<ISillCardProps> = ({
             onClick={() => setShowSkill(2)}
             className="flex justify-center cursor-pointer"
           >
-            <h1>Less</h1>
+            <p>Less</p>
           </div>
         )}
       </div>

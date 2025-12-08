@@ -21,9 +21,10 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
   return (
     <>
       <div id="profileCard" className="shadow-lg bg-white rounded-lg">
-        <div className="w-full  relative">
+        <div className="w-full relative">
           <Image
-            className="w-[7000px] h-[120px] sm:h-[180px] rounded-lg z-0"
+            width="100%"
+            className="h-[120px] sm:h-[180px] rounded-lg z-0 object-cover"
             alt="NextUI hero Image"
             src={
               data?.cover_image
@@ -35,7 +36,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
             width={150}
             height={150}
             onClick={() => setAddProfilescreen(true)}
-            className="absolute top-[-80px] left-10 b-10 w-32 h-32 rounded-full"
+            className="absolute top-[-60px] sm:top-[-80px] left-4 sm:left-10 w-24 h-24 sm:w-32 sm:h-32 rounded-full"
             alt="NextUI hero Image"
             src={
               data?.profile_picture?.length
@@ -46,13 +47,13 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
         </div>
         <div className=" rounded-lg pb-5">
           <div className="flex justify-between me-5 w-full">
-            <div className="mt-5 pt-16 ms-5">
-              <h1 className="text-2xl">{data?.name}</h1>
-              <p className="text-xl">
+            <div className="mt-5 pt-12 sm:pt-16 ms-3 sm:ms-5">
+              <h1 className="text-xl sm:text-2xl">{data?.name}</h1>
+              <p className="text-lg sm:text-xl">
                 {data?.role === "recruiter" ? "Recruiter" : ""}
               </p>
-              <p className="text-xl">{data?.headLine}</p>
-              <p className="text-xl">{data?.email}</p>
+              <p className="text-lg sm:text-xl">{data?.headLine}</p>
+              <p className="text-lg sm:text-xl">{data?.email}</p>
               <p className="mt-2">
                 {data?.location}, Kerala, India{" "}
                 <span className="text-blue-300 font-semibold">

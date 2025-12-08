@@ -1,200 +1,228 @@
-import { initFlowbite } from 'flowbite';
-import React, { useEffect, useState } from 'react';
-import { logout } from '../../../Api/user';
-import { useDispatch } from 'react-redux';
-import { userLogout } from '../../../app/slice/AuthSlice';
-import toast from 'react-hot-toast';
-import Swal from 'sweetalert2';
-import { useAppSelector } from '../../../app/store';
-import { MdOutlineMessage } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import { Avatar, Badge } from '@nextui-org/react';
-import { IoIosPeople, IoMdHome } from 'react-icons/io';
-import { FaBell, FaShoppingBag } from 'react-icons/fa';
-import { setSearchText } from 'app/slice/CommonSlice';
+import { initFlowbite } from "flowbite";
+import React, { useEffect, useState } from "react";
+import { logout } from "../../../Api/user";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../../app/slice/AuthSlice";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { useAppSelector } from "../../../app/store";
+import { MdOutlineMessage } from "react-icons/md";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Avatar,
+  Badge,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
+import { IoIosPeople, IoMdHome } from "react-icons/io";
+import { FaBell, FaShoppingBag, FaSearch } from "react-icons/fa";
+import { setSearchText } from "../../../app/slice/CommonSlice";
+import { LuLayoutGrid } from "react-icons/lu";
 
 function Header() {
-
-  const { user } = useAppSelector((state) => state.auth)
-  const [stateColor, setStateColor] = useState<string>();
-  const [search, setSearch] = useState<string>('')
-
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    initFlowbite()
-  }, [])
+    initFlowbite();
+  }, []);
 
-  const dispatch = useDispatch();
-
-  const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    try {
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
       dispatch(setSearchText(search));
-    } catch (error) {
-      console.log(error as Error);
     }
-  }
+  };
 
   const handleLogout = async () => {
-    try {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          logout().then(() => console.log(''))
-          dispatch(userLogout());
-          toast.success("You are logged out!")
-        }
-      });
-    } catch (error) {
-      console.log(error as Error);
+    const result = await Swal.fire({
+      title: "Logout?",
+      text: "You will be signed out of your account",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout",
+    });
+
+    if (result.isConfirmed) {
+      await logout();
+      dispatch(userLogout());
+      toast.success("Logged out successfully!");
     }
-  }
-  const changeColor = (key: string) => {
-    switch (key) {
-      case 'home':
-        setStateColor('home')
-        break;
-      case 'network':
-        setStateColor('network')
-        break;
-      case 'findjobs':
-        setStateColor('findjobs')
-        break;
-      case 'message':
-        setStateColor('message')
-        break;
-      case 'notification':
-        setStateColor('notification')
-        break;
-      default:
-        break;
-    }
-  }
+  };
+
+  // Determine active route
+  const isActive = (path: string) => location.pathname.startsWith(path);
+
+  const navItems = [
+    { name: "Home", icon: IoMdHome, path: "/user/home" },
+    { name: "My Network", icon: IoIosPeople, path: "/user/my-network" },
+    { name: "Find Jobs", icon: FaShoppingBag, path: "/user/find-jobs" },
+    { name: "Messaging", icon: MdOutlineMessage, path: "/user/message" },
+    { name: "Notifications", icon: FaBell, path: "/user/notifications" },
+  ];
+
   return (
     <>
-      {/* <nav className="bg-gradient-to-b from-blue-800 
-                to-blue-950 bg-white  z-50
-                shadow-lg text-white dark:bg-black dark:text-white sticky top-0  p-4"> */}
-      <nav className="bg-gradient-to-b from-blue-800 
-                to-blue-950  z-50 sticky top-0
-                shadow-lg text-white dark:bg-black dark:text-white w-[480px] sm:w-full p-4">
-        <div className="flex flex-wrap items-center justify-between">
-          <div className="flex">
-            <Link to='/'>
-              <span className="self-center text-sm sm:text-2xl font-semibold whitespace-nowrap dark:text-white">JobberWin</span>
-            </Link>
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyUp={handleSearch}
-              className='bg-transparent border border-gray-950 shadow-black  ms-8 rounded-full p-2'
-              placeholder='Search' />
-          </div>
-
-          <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-              <span className="sr-only">Open user menu</span>
-              <Avatar
-                radius="full"
-                src={user ? user?.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
-              />
-            </button>
-            {/* Dropdown menu */}
-            <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-              <Link to='/user/profile' className="px-4 py-3 flex cursor-pointer">
-                <Badge content="" color="success" shape="circle" placement="bottom-right">
-                  <Avatar
-                    radius="full"
-                    src={user ? user?.profile_picture : 'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'}
-                  />
-                </Badge>
-                <div className='ms-3'>
-                  <span className="block text-sm text-gray-900 dark:text-white">{user ? user?.name : 'user'}</span>
-                  <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user ? user?.email : ''}</span>
-                </div>
-
+      {/* Desktop & Tablet Header */}
+      <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo + Search */}
+            <div className="flex items-center flex-1">
+              <Link to="/" className="flex-shrink-0">
+                <h1 className="text-2xl font-bold text-blue-600">JobberWin</h1>
               </Link>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                <li>
-                  {user?.role === 'recruiter' && <Link to='/recruiter' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Go to Recruiter Dashboard
-                  </Link>}
 
-                </li>
-                <li>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Get started with Premium</a>
-                </li>
-                <li>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Services</a>
-                </li>
-                <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer"
-                  onClick={handleLogout}>
-                  Sign out
-                </li>
-              </ul>
+              {/* Search Bar */}
+              <div className="hidden md:block ml-10 flex-1 max-w-md">
+                <div className="relative">
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onKeyUp={handleSearch}
+                    placeholder="Search jobs, people, companies..."
+                    className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white dark:focus:bg-gray-900 transition"
+                  />
+                </div>
+              </div>
             </div>
-            <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hidden sm:block md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
-              <span className="sr-only">Open main menu</span>
-              <svg className="w-5 h-5" aria-hidden="true" xmlns="" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-              </svg>
-            </button>
-          </div>
-          <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
 
-              <li>
-                <Link to='/user/home' className="py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <div onClick={() => changeColor('home')} style={{ color: `${stateColor === 'home' ? 'black' : '#fff'}` }}>
-                    <IoMdHome className=' ms-2 text-2xl' />
-                    <span className=''>Home</span>
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link to='/user/my-network' className="py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <div onClick={() => changeColor('network')} style={{ color: `${stateColor === 'network' ? 'black' : '#fff'}` }}>
-                    <IoIosPeople className=' ms-7 text-2xl' />
-                    <span className=''>My Network</span>
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link to='/user/find-jobs' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <div onClick={() => changeColor('findjobs')} style={{ color: `${stateColor === 'findjobs' ? 'black' : '#fff'}` }} >
-                    <FaShoppingBag className='ms-6 text-2xl' />
-                    <span>Find Jobs</span>
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link to='/user/message' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <div onClick={() => changeColor('message')} style={{ color: `${stateColor === 'message' ? 'black' : '#fff'}` }} >
-                    <MdOutlineMessage className='ms-6 text-2xl' />
-                    <span>Messaging</span>
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link to='/user/notifications' className="block py-2 px-3 text-gray-200 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  <div onClick={() => changeColor('notification')} style={{ color: `${stateColor === 'notification' ? 'black' : '#fff'}` }}  >
-                    <FaBell className='text-2xl ms-8' />
-                    <span>Notifications</span>
-                  </div>
-                </Link>
-              </li>
-            </ul>
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-8">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.path);
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`flex flex-col items-center space-y-1 px-3 py-2 rounded-lg transition-all ${
+                      active
+                        ? "text-blue-600 dark:text-blue-500"
+                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                  >
+                    <Icon className="text-2xl" />
+                    <p className="text-xs font-medium">{item.name}</p>
+                    {active && (
+                      <div className="w-12 h-1 bg-blue-600 rounded-full mt-1"></div>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* User Menu */}
+            <div className="flex items-center ml-8">
+              <Dropdown className="bg-white shadow-lg" placement="bottom-end">
+                <DropdownTrigger>
+                  <Avatar
+                    isBordered
+                    as="button"
+                    className="transition-transform"
+                    color="primary"
+                    size="md"
+                    src={
+                      user?.profile_picture ||
+                      "https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg"
+                    }
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem
+                    key="profile"
+                    className="h-14 gap-3"
+                    onClick={() => navigate("/user/profile")}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Avatar
+                        radius="md"
+                        src={
+                          user?.profile_picture ||
+                          "https://i.pravatar.cc/150?u=default"
+                        }
+                      />
+                      <div>
+                        <p className="font-semibold">{user?.name || "User"}</p>
+                        <p className="text-xs text-gray-500">
+                          {user?.email || "user@example.com"}
+                        </p>
+                      </div>
+                    </div>
+                  </DropdownItem>
+                  {user && user?.role === "recruiter" && (
+                    <DropdownItem
+                      key="recruiter"
+                      onClick={() => navigate("/recruiter")}
+                      className="py-1"
+                    >
+                      Go to Recruiter Dashboard
+                    </DropdownItem>
+                  )}
+                  <DropdownItem key="premium" className="py-1">
+                    Get Premium
+                  </DropdownItem>
+                  <DropdownItem
+                    key="logout"
+                    onClick={handleLogout}
+                    className="py-1 hover:text-red-500"
+                  >
+                    Sign Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+          </div>
+
+          {/* Mobile Search Bar */}
+          <div className="md:hidden pb-3 px-2">
+            <div className="relative">
+              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyUp={handleSearch}
+                placeholder="Search..."
+                className="w-full pl-12 pr-4 py-3 bg-gray-100 dark:bg-gray-800 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
           </div>
         </div>
-      </nav >
+      </nav>
 
+      {/* Mobile Bottom Navigation */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-50">
+        <div className="flex justify-around items-center py-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.path);
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`flex flex-col items-center py-2 px-4 rounded-lg transition-all ${
+                  active ? "text-blue-600" : "text-gray-500"
+                }`}
+              >
+                <Icon className="text-2xl" />
+                <span className="text-xs mt-1">{item.name.split(" ")[0]}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Add padding to body content on mobile to avoid overlap with bottom nav */}
+      <div className="lg:hidden pb-20"></div>
     </>
   );
 }
