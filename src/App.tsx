@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import User from "./Components/User/userCommon/User";
 import Admin from "./Components/Admin/Admin";
 import { Toaster } from "react-hot-toast";
@@ -6,9 +10,11 @@ import UserLoggedOut from "./Components/User/userCommon/UserLoggedOut";
 import UserLoggedIn from "./Components/User/userCommon/UserLoggedIn";
 import AdminLoggedOut from "./Components/Admin/AdminLoggedOut";
 import AdminLoggedIn from "./Components/Admin/AdminLoggedIn";
-import Test from "./Components/User/userCommon/BottomNavbar";
 import React, { lazy } from "react";
 import SuspenseLayout from "./Components/Common/SuspenseLayout";
+import AllJobs from "Components/User/FindJobPage/AllJobs";
+import SavedJobScreen from "Components/User/FindJobPage/SavedJobScreen";
+import AppliedJobScreen from "Components/User/FindJobPage/AppliedJobScreen";
 
 const AdminLogin = lazy(() => import("./Pages/admin/AdminLogin"));
 const LandingPage = lazy(() => import("./Pages/user/LandingPage"));
@@ -104,10 +110,19 @@ const router = createBrowserRouter([
               {
                 path: "find-jobs",
                 element: <FindJobPage />,
-              },
-              {
-                path: "for-test",
-                element: <Test />,
+
+                children: [
+                  {
+                    index: true,
+                    element: <Navigate to="all-jobs" replace />,
+                  },
+                  {
+                    path: "all-jobs",
+                    element: <AllJobs />,
+                  },
+                  { path: "saved-jobs", element: <SavedJobScreen /> },
+                  { path: "applied-jobs", element: <AppliedJobScreen /> },
+                ],
               },
               {
                 path: "room/:roomId",

@@ -9,7 +9,7 @@ const User = () => {
     <>
       <Header />
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
       <BottomNavbar />
     </>
   );
