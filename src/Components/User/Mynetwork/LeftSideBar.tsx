@@ -11,7 +11,7 @@ const LeftSideBar: React.FC<ILeftSideBar> = ({
   setShowFriendScreen,
 }) => {
   return (
-    <div className="md:col-span-3 col-span-12 min-h-[100px] bg-white shadow-xl rounded-lg">
+    <div className="md:col-span-3  min-h-[100px] bg-white shadow-xl rounded-lg">
       <div className="p-3">
         <h1 className="font-bold text-xl ">Manage My network</h1>
         <div

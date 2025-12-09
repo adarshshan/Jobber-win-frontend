@@ -222,7 +222,7 @@ function Header() {
       </div>
 
       {/* Add padding to body content on mobile to avoid overlap with bottom nav */}
-      <div className="lg:hidden pb-20"></div>
+      {/* <div className="lg:hidden pb-20"></div> */}
     </>
   );
 }
