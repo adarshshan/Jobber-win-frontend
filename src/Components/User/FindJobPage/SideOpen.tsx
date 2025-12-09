@@ -9,19 +9,20 @@ import {
   useDisclosure,
   Button,
 } from "@chakra-ui/react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface ISideOpenProps {
   children: ReactNode;
-  setShowAllJobs: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowApplied: React.Dispatch<React.SetStateAction<boolean>>;
-  openSavedJobPage: () => Promise<void>;
+  listItems: {
+    title: string;
+    handleClick?: () => void;
+    icon: ReactNode;
+    pathTo?: string;
+  }[];
 }
-const SideOpen: React.FC<ISideOpenProps> = ({
-  children,
-  setShowAllJobs,
-  setShowApplied,
-  openSavedJobPage,
-}) => {
+const SideOpen: React.FC<ISideOpenProps> = ({ children, listItems }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<any>();
 
@@ -42,35 +43,21 @@ const SideOpen: React.FC<ISideOpenProps> = ({
           <DrawerHeader>menu</DrawerHeader>
 
           <DrawerBody>
-            <div className="w-full rounded-md p-3">
-              <div
-                onClick={() => {
-                  setShowAllJobs(true);
-                  setShowApplied(false);
-                  onClose();
-                }}
-                className="w-full p-4 hover:bg-gray-500 hover:text-white shadow-md m-2"
-              >
-                All Jobs
-              </div>
-              <div
-                onClick={() => {
-                  openSavedJobPage();
-                  onClose();
-                }}
-                className="w-full p-4 hover:bg-gray-500 hover:text-white shadow-md m-2"
-              >
-                Saved Jobs
-              </div>
-              <div
-                onClick={() => {
-                  setShowApplied(true);
-                  onClose();
-                }}
-                className="w-full p-4 hover:bg-gray-500 hover:text-white shadow-md m-2"
-              >
-                Applied Jobs
-              </div>
+            <div className="w-full rounded-md bg-white sm:block hidden py-4">
+              {listItems?.map((item, index) => (
+                <div
+                  key={`menuitem-${index}`}
+                  onClick={() => item?.pathTo && navigate(item?.pathTo)}
+                  className={`${
+                    item?.pathTo &&
+                    location.pathname.includes(item?.pathTo) &&
+                    "bg-[#efefef] font-semibold"
+                  } flex gap-2 items-center w-full p-4 hover:bg-[#f5f5f5] hover:text-[black] shadow-md`}
+                >
+                  {item?.icon}
+                  {item?.title}
+                </div>
+              ))}
             </div>
           </DrawerBody>
         </DrawerContent>

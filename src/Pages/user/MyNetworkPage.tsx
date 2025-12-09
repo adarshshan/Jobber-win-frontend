@@ -129,7 +129,7 @@ const MyNetworkPage: React.FC<IMyNetworkPageProps> = () => {
 
   return (
     <div className="min-h-screen p-3 bg-blue-50">
-      <div className="grid md:grid-cols-12 gap-2 sm:gap-5 sm:container py-5">
+      <div className="grid md:grid-cols-12 gap-2 sm:gap-5 sm:container md:py-5">
         <LeftSideBar
           setShowFriendScreen={setShowFriendScreen}
           toatalFriends={friendList?.length ? friendList.length : 0}
