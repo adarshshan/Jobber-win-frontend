@@ -3,8 +3,7 @@ import ChatBox from "Components/Message/ChatBox";
 import Mychats from "Components/Message/Mychats";
 import SideDrawer from "Components/Message/SideDrawer";
 import { ChatState } from "Context/ChatProvider";
-import userRoutes from "Services/Endpoints.ts/userEndPoints";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const ChatPage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
@@ -21,8 +20,8 @@ const ChatPage = () => {
   }, []);
 
   return (
-    <div className=" sm:w-full w-[440px] ms-4 sm:ms-0">
-      {userRoutes && <SideDrawer />}
+    <div style={{ width: "100%" }} className="sm:container sm:py-5">
+      {userr && <SideDrawer />}
       <Box
         display="flex"
         justifyContent="space-between"
