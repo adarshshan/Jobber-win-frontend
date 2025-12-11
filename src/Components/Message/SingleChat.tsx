@@ -1,285 +1,327 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Box, FormControl, IconButton, Input, Spinner, Text, useToast } from '@chakra-ui/react'
-import animationData from '../../animations/typing.json'
-import Lottie from 'react-lottie'
-import io from 'socket.io-client'
-import { ChatState } from 'Context/ChatProvider'
-import { ArrowBackIcon } from '@chakra-ui/icons'
-import { getSender } from 'config/chatLogics'
-import ScrollableChat from './ScrollableChat'
-import UpdateGroupChatModal from './UpdateGroupChatModal'
-import { getMessages, sendMessages } from 'Api/chat'
-import { FaRegSmileWink } from 'react-icons/fa'
-import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
-import { IoSendSharp } from 'react-icons/io5'
-import { MdOutlineVideoCameraFront } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom'
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Box,
+  FormControl,
+  IconButton,
+  Input,
+  Spinner,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import animationData from "../../animations/typing.json";
+import Lottie from "react-lottie";
+import io from "socket.io-client";
+import { ChatState } from "Context/ChatProvider";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { getSender } from "config/chatLogics";
+import ScrollableChat from "./ScrollableChat";
+import UpdateGroupChatModal from "./UpdateGroupChatModal";
+import { getMessages, sendMessages } from "Api/chat";
+import { FaRegSmileWink } from "react-icons/fa";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+import { IoSendSharp } from "react-icons/io5";
+import { MdOutlineVideoCameraFront } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const ENDPOINT = process.env.REACT_APP_B_URI;
 export var socket: any, selectedChatCompare: any;
 
 interface ISingleChat {
-    fetchAgain: boolean;
-    setFetchAgain: React.Dispatch<React.SetStateAction<boolean>>
+  fetchAgain: boolean;
+  setFetchAgain: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SingleChat: React.FC<ISingleChat> = ({ fetchAgain, setFetchAgain }) => {
-    const [messages, setMessages] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [newMessage, setNewMessage] = useState('');
-    const [socketConnected, setSocketConnected] = useState(false);
-    const [typing, setTyping] = useState(false);
-    const [isTyping, setIstyping] = useState(false);
-    const [visibleImogy, SetVisibleImogy] = useState(false);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState("");
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIstyping] = useState(false);
+  const [visibleImogy, SetVisibleImogy] = useState(false);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-        rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice",
-        },
-    };
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
-    const toast = useToast();
+  const toast = useToast();
 
-    const { userr,
-        selectedChat,
-        setSelectedChat,
-        notification,
-        setNotification,
-        videoLink,
-        again } = ChatState()
+  const {
+    userr,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+    videoLink,
+    again,
+  } = ChatState();
 
-    useEffect(() => {
-        if (ENDPOINT) {
-            socket = io(ENDPOINT)
-            socket.emit("setup", userr);
-            socket.on("connected", () => setSocketConnected(true));
-            socket.on("typing", () => setIstyping(true))
-            socket.on("stop typing", () => setIstyping(false))
-        }
-    }, [])
-
-
-    const fetchMessages = async () => {
-        if (!selectedChat) return;
-        try {
-            setLoading(true);
-            const res = await getMessages(selectedChat._id);
-            if (res?.data.success) {
-                console.log(res);
-                setMessages(res.data.data);
-                socket.emit('join chat', selectedChat._id);
-            }
-            setLoading(false);
-        } catch (error) {
-            console.log(error);
-            toast({
-                title: "Error occured!",
-                description: "failed to send the message",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-                position: 'bottom',
-            })
-        }
+  useEffect(() => {
+    if (ENDPOINT) {
+      socket = io(ENDPOINT);
+      socket.emit("setup", userr);
+      socket.on("connected", () => setSocketConnected(true));
+      socket.on("typing", () => setIstyping(true));
+      socket.on("stop typing", () => setIstyping(false));
     }
+  }, []);
 
-
-    useEffect(() => {
-        fetchMessages();
-        selectedChatCompare = selectedChat;
-    }, [selectedChat, fetchAgain, again])
-
-    useEffect(() => {
-        socket.on("message recieved", (newMessageReceived: any) => {
-            if (!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id) {
-                if (!notification.includes(newMessageReceived)) {
-                    setNotification([newMessageReceived, ...notification]);
-                    setFetchAgain(!fetchAgain);
-                }
-            } else {
-                setMessages([...messages, newMessageReceived]);
-            }
-        })
-        socket.on("receivedNotifications", (notification: any) => {
-            alert('notification received...');
-            console.log(notification);
-        })
-    })
-
-    useEffect(() => {
-        if (videoLink && videoLink !== undefined) {
-            setMessages([...messages, videoLink]);
-            socket.emit("new message", videoLink);
-        }
-    }, [again])
-
-    const sendMessage = async () => {
-        try {
-            setNewMessage("");
-            const res = await sendMessages(newMessage, selectedChat._id)
-            if (res?.data.success) {
-                socket.emit("new message", res.data.data);
-                setMessages([...messages, res.data.data]);
-            }
-        } catch (error) {
-            console.log(error)
-            toast({
-                title: "Error occured!",
-                description: "failed to send the message",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-                position: 'bottom',
-            })
-        }
+  const fetchMessages = async () => {
+    if (!selectedChat) return;
+    try {
+      setLoading(true);
+      const res = await getMessages(selectedChat._id);
+      if (res?.data.success) {
+        console.log(res);
+        setMessages(res.data.data);
+        socket.emit("join chat", selectedChat._id);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error occured!",
+        description: "failed to send the message",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     }
+  };
 
-    const typingHandler = async (e: any) => {
-        setNewMessage(e.target.value);
-        if (!socketConnected) return;
-        if (!typing) {
-            setTyping(true);
-            socket.emit("typing", selectedChat._id);
+  useEffect(() => {
+    fetchMessages();
+    selectedChatCompare = selectedChat;
+  }, [selectedChat, fetchAgain, again]);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageReceived: any) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageReceived.chat._id
+      ) {
+        if (!notification.includes(newMessageReceived)) {
+          setNotification([newMessageReceived, ...notification]);
+          setFetchAgain(!fetchAgain);
         }
-        let lastTypingTime = new Date().getTime();
-        var timerLength = 3000;
-        setTimeout(() => {
-            var timeNow = new Date().getTime();
-            var timeDiff = timeNow - lastTypingTime;
+      } else {
+        setMessages([...messages, newMessageReceived]);
+      }
+    });
+    socket.on("receivedNotifications", (notification: any) => {
+      alert("notification received...");
+      console.log(notification);
+    });
+  });
 
-            if (timeDiff >= timerLength && typing) {
-                socket.emit("stop typing", selectedChat._id);
-                setTyping(false);
-            }
-        }, timerLength)
+  useEffect(() => {
+    if (videoLink && videoLink !== undefined) {
+      setMessages([...messages, videoLink]);
+      socket.emit("new message", videoLink);
     }
+  }, [again]);
 
-    const handleEmojiSelect = (emoji: any) => {
-        SetVisibleImogy(!visibleImogy);
-        setNewMessage((prevMessage) => prevMessage + emoji.native);
-    };
-    const newMsg = (data: any) => {
-        socket.emit("new message", data);
+  const sendMessage = async () => {
+    try {
+      setNewMessage("");
+      const res = await sendMessages(newMessage, selectedChat._id);
+      if (res?.data.success) {
+        socket.emit("new message", res.data.data);
+        setMessages([...messages, res.data.data]);
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error occured!",
+        description: "failed to send the message",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     }
-    const handleJoinRoom = useCallback((value: string) => {
-        navigate(`/user/room/${value}`)
-    }, []);
+  };
 
-    return (
+  const typingHandler = async (e: any) => {
+    setNewMessage(e.target.value);
+    if (!socketConnected) return;
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
+  };
+
+  const handleEmojiSelect = (emoji: any) => {
+    SetVisibleImogy(!visibleImogy);
+    setNewMessage((prevMessage) => prevMessage + emoji.native);
+  };
+  const newMsg = (data: any) => {
+    socket.emit("new message", data);
+  };
+  const handleJoinRoom = useCallback((value: string) => {
+    navigate(`/user/room/${value}`);
+  }, []);
+
+  return (
+    <>
+      {selectedChat ? (
         <>
-            {selectedChat ? (
-                <>
-                    <Text
-                        fontSize={{ base: "28px", md: "30px" }}
-                        pb={3}
-                        px={2}
-                        w="100%"
-                        fontFamily="Work sans"
-                        display="flex"
-                        justifyContent={{ base: "space-between" }}
-                        alignItems="center"
-                    >
-                        <IconButton
-                            aria-label="Close"
-                            display={{ base: "flex", md: "none" }}
-                            icon={<ArrowBackIcon />}
-                            onClick={() => setSelectedChat("")}
-                        />
-                        {selectedChat.isGroupChat ? (
-                            <>
-                                {selectedChat.chatName.toUpperCase()}
-                                <UpdateGroupChatModal
-                                    fetchMessages={fetchMessages}
-                                    fetchAgain={fetchAgain}
-                                    setFetchAgain={setFetchAgain}>
-                                    edit
-                                </UpdateGroupChatModal>
-                            </>
-                        ) : (
-                            <>
-                                {getSender(userr, selectedChat.users)}
-                                <MdOutlineVideoCameraFront
-                                    onClick={() => handleJoinRoom(userr.name)} />
-                            </>
-                        )}
-                    </Text>
-                    <Box
-                        display="flex"
-                        flexDir="column"
-                        justifyContent="flex-end"
-                        p={3}
-                        bg="#E8E8E8"
-                        w="100%"
-                        h="100%"
-                        borderRadius="lg"
-                        overflowY="hidden"
-                    >
-                        {loading ? (<Spinner
-                            size="xl"
-                            w={20}
-                            h={20}
-                            alignSelf="center"
-                            margin="auto" />) : (
-
-                            <div className='messages'>
-                                <ScrollableChat
-                                    newMsgFn={newMsg}
-                                    messages={messages}
-                                    setFetchAgain={setFetchAgain} />
-                            </div>
-
-                        )}
-                        <FormControl
-                            onKeyDown={(e: any) => { if (e.key === 'Enter') sendMessage() }}
-                            id="first-name"
-                            isRequired
-                            mt={3}
-                        >
-                            {isTyping ? (
-                                <div>
-                                    <Lottie
-                                        options={defaultOptions}
-                                        width={70}
-                                        style={{ marginBottom: 15, marginLeft: 0 }}
-                                    />
-                                </div>
-                            ) : (
-                                <></>
-                            )}
-                            <div className={`${visibleImogy ? 'block' : 'hidden'}`}>
-                                <Picker data={data} previewPosition='none' onEmojiSelect={handleEmojiSelect} />
-                            </div>
-                            <div className="flex">
-                                <button
-                                    onClick={() => SetVisibleImogy(!visibleImogy)}
-                                    className='text-3xl p-1'><FaRegSmileWink /></button>
-                                <Input
-                                    variant="filled"
-                                    bg="#E0E0E0"
-                                    placeholder="Enter a message.."
-                                    value={newMessage}
-                                    onChange={typingHandler}
-                                />
-                                <IoSendSharp onClick={sendMessage} className='text-4xl mb-2  ms-2' />
-                            </div>
-
-                        </FormControl>
-                    </Box>
-                </>
+          <Text
+            fontSize={{ base: "28px", md: "30px" }}
+            pb={3}
+            px={2}
+            w="100%"
+            fontFamily="Work sans"
+            display="flex"
+            justifyContent={{ base: "space-between" }}
+            alignItems="center"
+          >
+            <IconButton
+              aria-label="Close"
+              display={{ base: "flex", md: "none" }}
+              icon={<ArrowBackIcon />}
+              onClick={() => setSelectedChat("")}
+            />
+            {selectedChat.isGroupChat ? (
+              <>
+                {selectedChat.chatName.toUpperCase()}
+                <UpdateGroupChatModal
+                  fetchMessages={fetchMessages}
+                  fetchAgain={fetchAgain}
+                  setFetchAgain={setFetchAgain}
+                >
+                  edit
+                </UpdateGroupChatModal>
+              </>
             ) : (
-                <Box display='flex' alignItems='center' justifyContent="center" h="80%">
-                    <Text fontSize="3xl" pb={3} fontFamily="Work sans">
-                        Click on a user to start chatting
-                    </Text>
-                </Box>
+              <>
+                {getSender(userr, selectedChat.users)}
+                <MdOutlineVideoCameraFront
+                  onClick={() => handleJoinRoom(userr.name)}
+                />
+              </>
             )}
+          </Text>
+          <Box
+            display="flex"
+            flexDir="column"
+            justifyContent="flex-end"
+            p={3}
+            bg="#F0F2F5"
+            w="100%"
+            h="100%"
+            borderRadius="lg"
+            overflowY="hidden"
+          >
+            {loading ? (
+              <Spinner
+                size="xl"
+                w={20}
+                h={20}
+                alignSelf="center"
+                margin="auto"
+              />
+            ) : (
+              <div className="messages">
+                <ScrollableChat
+                  newMsgFn={newMsg}
+                  messages={messages}
+                  setFetchAgain={setFetchAgain}
+                />
+              </div>
+            )}
+            <FormControl
+              onKeyDown={(e: any) => {
+                if (e.key === "Enter") sendMessage();
+              }}
+              id="first-name"
+              isRequired
+              mt={3}
+            >
+              {isTyping ? (
+                <div>
+                  <Lottie
+                    options={defaultOptions}
+                    width={70}
+                    style={{ marginBottom: 15, marginLeft: 0 }}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+              <div
+                className={`${visibleImogy ? "block" : "hidden"}`}
+                style={{
+                  position: "absolute",
+                  bottom: "80px",
+                  right: "20px",
+                  zIndex: 100,
+                }}
+              >
+                <Picker
+                  data={data}
+                  previewPosition="none"
+                  onEmojiSelect={handleEmojiSelect}
+                />
+              </div>
+              <div className="flex items-center w-full">
+                <button
+                  onClick={() => SetVisibleImogy(!visibleImogy)}
+                  className="text-3xl p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  <FaRegSmileWink />
+                </button>
+                <Input
+                  variant="filled"
+                  bg="#E0E0E0"
+                  placeholder="Enter a message.."
+                  value={newMessage}
+                  onChange={typingHandler}
+                  borderRadius="20px"
+                  size="lg"
+                  flex="1"
+                  mx={2}
+                />
+                <IconButton
+                  aria-label="Send message"
+                  icon={<IoSendSharp />}
+                  onClick={sendMessage}
+                  colorScheme="teal"
+                  isRound
+                  size="lg"
+                />
+              </div>
+            </FormControl>
+          </Box>
         </>
-    )
-}
+      ) : (
+        <Box display="flex" alignItems="center" justifyContent="center" h="80%">
+          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
+            Click on a user to start chatting
+          </Text>
+        </Box>
+      )}
+    </>
+  );
+};
 
-export default SingleChat
+export default SingleChat;

@@ -65,8 +65,9 @@ const Mychats: React.FC<IMyChats> = ({ fetchAgain }) => {
                 <GroupChatModel>
                     <Button
                         display="flex"
-                        fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+                        fontSize="md"
                         rightIcon={<AddIcon />}
+                        colorScheme="teal"
                     >
                         New Group Chat
                     </Button>
@@ -87,12 +88,16 @@ const Mychats: React.FC<IMyChats> = ({ fetchAgain }) => {
                             <Box
                                 onClick={() => setSelectedChat(chat)}
                                 cursor="pointer"
-                                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                                bg={selectedChat === chat ? "#38B2AC" : "transparent"}
                                 color={selectedChat === chat ? "white" : "black"}
                                 px={3}
                                 py={2}
                                 borderRadius="lg"
                                 key={chat._id}
+                                _hover={{
+                                    bg: selectedChat === chat ? "#38B2AC" : "#E8E8E8",
+                                }}
+                                transition="background 0.2s"
                             >
                                 <Text>
                                     {!chat.isGroupChat
