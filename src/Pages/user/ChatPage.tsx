@@ -29,7 +29,9 @@ const ChatPage = () => {
         h="91.5vh"
         p="10px"
       >
-        {userr && <Mychats fetchAgain={fetchAgain} />}
+        {userr && (
+          <Mychats fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        )}
         {userr && (
           <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         )}
