@@ -6,6 +6,7 @@ const userRoutes = {
   updateNewPassword: "/user/update-newpassword",
   resendOtp: "/user/resend-otp",
   uploadResume: "/user/upload-resume",
+  uploadPostImg: "/user/upload-post-img",
   veryfyOtp: "/user/veryfy-otp",
   logout: "/user/logout",
   getProfile: "/user/profile",
