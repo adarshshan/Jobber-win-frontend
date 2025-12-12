@@ -57,16 +57,18 @@ const PostComponent: React.FC<IPostComponentProps> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user } = useAppSelector((state) => state.auth);
-  const userId = user._id;
+  const userId = user?._id;
 
   useLayoutEffect(() => {
     const fetchLikeDetails = async () => {
       try {
-        const res = await getLikes(item._id);
-        let arr = res?.data.data.likedUsers.map((item: any) => item.userId);
+        const res = await getLikes(item?._id);
+        let arr = res?.data?.data?.likedUsers?.map((item: any) => item?.userId);
         setUserDetails(arr);
-        setLike(res?.data.data.likeCount);
-        let ar = res?.data.data.likedUsers.map((item: any) => item.userId._id);
+        setLike(res?.data?.data?.likeCount);
+        let ar = res?.data?.data?.likedUsers?.map(
+          (item: any) => item?.userId?._id
+        );
         if (ar) {
           setLikedUser(ar);
         }
@@ -80,8 +82,8 @@ const PostComponent: React.FC<IPostComponentProps> = ({
   const handleLike = async (postId: string) => {
     try {
       const res = await likePost(postId);
-      if (res?.data.success) {
-        setLike(res?.data.data.likeCount);
+      if (res?.data?.success) {
+        setLike(res?.data?.data?.likeCount);
       } else console.log(res?.data.message);
     } catch (error) {
       console.log(error as Error);

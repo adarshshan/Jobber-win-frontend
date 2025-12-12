@@ -59,6 +59,7 @@ const MiddleSide: React.FC<IMiddleSideProps> = ({ userProfile }) => {
     };
     fetchData();
   }, []);
+
   useEffect(() => {
     if (ENDPOINT) {
       socket = io(ENDPOINT);

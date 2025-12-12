@@ -304,6 +304,17 @@ const uploadResume = async (formData: FormData) => {
     console.log(error as Error);
   }
 };
+const uploadPostImage = async (formData: FormData) => {
+  try {
+    return await Api.post(userRoutes.uploadPostImg, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  } catch (error) {
+    console.log(error as Error);
+  }
+};
 const getAllAppliedandSaved = async () => {
   try {
     return await Api.get(userRoutes.getAllAppliedandSaved);
@@ -531,4 +542,5 @@ export {
   deletePost,
   updatePostCaption,
   postShareSuggession,
+  uploadPostImage,
 };

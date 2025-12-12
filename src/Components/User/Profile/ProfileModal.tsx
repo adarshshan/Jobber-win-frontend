@@ -1,7 +1,6 @@
 import { UserData } from "@/components/user/ProfilePage";
 import {
   Modal,
-  ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalBody,
@@ -17,6 +16,7 @@ import {
   getAllSkills,
   updateAbout,
   updateUser,
+  uploadPostImage,
 } from "Api/user";
 import { changeAbout, isUpdateProfile, saveUser } from "app/slice/AuthSlice";
 import { useAppSelector } from "app/store";
@@ -38,9 +38,11 @@ interface IProfileModalProps {
   skillAdd?: boolean;
   setUpdateScreen?: React.Dispatch<React.SetStateAction<boolean>>;
   updateScreen?: boolean;
+  onClickFn?: () => void;
 }
 
 const ProfileModal: React.FC<IProfileModalProps> = ({
+  onClickFn,
   children,
   createPostScreen,
   userProfile,
@@ -82,30 +84,18 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
     if (butn) butn.click();
   };
 
-  const postDetails = (pics: File | null) => {
-    if (!pics) return setPicMessage("Please Select an image!");
-    setPicMessage("");
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "noteziper");
-      data.append("cloud_name", "dnn1ree80");
-      fetch("https://api.cloudinary.com/v1_1/dnn1ree80/image/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data.url.toString());
-          setPic(data.url.toString());
-          dispatch(isUpdateProfile(!isUpdate));
-        })
-        .catch((err) => {
-          console.log(err);
-          setPicMessage("Somthing went wrong, please try again");
-        });
-    } else {
-      setPicMessage("please select a valid image.");
+  const postDetails = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const result = await uploadPostImage(formData);
+      if (result?.status === 200 && result?.data?.success) {
+        setPic(result?.data?.data);
+      } else {
+        setPic("");
+      }
+    } catch (error) {
+      console.log(error as Error);
     }
   };
 
@@ -200,10 +190,17 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
   };
   return (
     <>
-      <Button onClick={onOpen}>{children}</Button>
+      <button
+        onClick={() => {
+          onClickFn && onClickFn();
+          onOpen();
+        }}
+        className="rounded-full px-3 text-sm sm:text-base border border-blue-400 hover:bg-blue-600 hover:text-white"
+      >
+        {children}
+      </button>
 
       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
         <ModalContent>
           <ModalHeader>
             {createPostScreen
@@ -336,16 +333,16 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
             {/* --------Create Post Screen ------*/}
 
             {createPostScreen && (
-              <div className=" shadow-2xl rounded-2xl  z-0 text-black">
+              <div className="rounded-2xl  z-0 text-black">
                 <div className="flex justify-start">
                   <img
                     className="rounded-full w-[50px] h-[50px] m-2 border border-x-white"
-                    src="https://media.licdn.com/dms/image/D5603AQF_xN3GHo924g/profile-displayphoto-shrink_800_800/0/1706861171963?e=1719446400&v=beta&t=ReNGteDNl9rU6N94YJI2XlyFTNSqO--qi3ryaWNhGrE"
-                    alt=""
+                    src={user?.profile_picture}
+                    alt="//profile image"
                   />
                   <div>
-                    <h1 className="mt-2 ms-3 font-semibold">{user.name}</h1>
-                    <h1 className="ms-3 font-light">{user.headLine}</h1>
+                    <h1 className="mt-2 ms-3 font-semibold">{user?.name}</h1>
+                    <h1 className="ms-3 font-light">{user?.headLine}</h1>
                   </div>
                 </div>
                 <div className="w-full p-5">
@@ -362,7 +359,7 @@ const ProfileModal: React.FC<IProfileModalProps> = ({
                 <input
                   id="openGallery"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    postDetails(e.target.files?.[0] ?? null)
+                    e.target.files?.[0] && postDetails(e.target.files?.[0])
                   }
                   type="file"
                   className="hidden"
